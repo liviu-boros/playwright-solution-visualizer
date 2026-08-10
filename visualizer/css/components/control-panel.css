@@ -1,0 +1,180 @@
+/* css/components/control-panel.css */
+
+/* ==========================================================================
+   1. Control Panel Header & Bar Layout
+   ========================================================================== */
+.control-panel {
+  position: fixed;
+  top: 12px;
+  left: 50%;
+  transform: translateX(-50%);
+  z-index: 1000;
+  background: color-mix(in srgb, var(--color-panel-bg) 30%, transparent);
+  backdrop-filter: blur(8px) saturate(180%);
+  -webkit-backdrop-filter: blur(8px) saturate(180%);
+  border: 1px solid var(--color-border-panel);
+  padding: 12px 12px;
+  border-radius: var(--radius-panel);
+  display: flex;
+  align-items: center;
+  gap: 16px;
+  box-shadow: 0 12px 40px rgba(0, 0, 0, 0.65);
+}
+
+.panel-select-wrapper {
+  display: flex;
+  align-items: center;
+  gap: 16px;
+}
+
+.panel-select-label {
+  font-size: var(--panel-label-font-size);
+  font-weight: var(--weight-bold);
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+  color: var(--panel-label-color);
+  white-space: nowrap;
+}
+
+.panel-compare-badge {
+  font-size: var(--compare-badge-font-size);
+  font-weight: 900;
+  text-transform: uppercase;
+  letter-spacing: 1px;
+  color: var(--compare-badge-color);
+  background: var(--compare-badge-bg);
+  padding: 4px 8px;
+  user-select: none;
+}
+
+/* ==========================================================================
+   2. Custom Select Widget Component
+   ========================================================================== */
+.custom-select-component {
+  position: relative;
+  display: inline-block;
+}
+
+.custom-select-trigger {
+  background: var(--select-bg);
+  color: var(--select-text-color);
+  border: 1px solid var(--select-border-color);
+  padding: 8px 12px;
+  border-radius: var(--radius-badge);
+  font-family: var(--font-family-system);
+  font-size: var(--select-font-size);
+  line-height: var(--line-height-subtitle);
+  outline: none;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 16px;
+  width: max-content;
+  white-space: nowrap;
+  user-select: none;
+}
+
+.custom-select-trigger:hover {
+  border-color: var(--select-border-color-hover);
+  background: var(--select-bg-hover);
+}
+
+.custom-select-label-text {
+  white-space: nowrap;
+}
+
+.custom-select-arrow--open {
+  transform: rotate(180deg);
+  color: var(--select-arrow-color-active);
+}
+
+/* Dropdown Menu Container */
+.custom-select-dropdown {
+  display: none;
+  position: absolute;
+  top: calc(100% + 6px);
+  left: 0;
+  min-width: 100%;
+  width: max-content;
+  background: var(--select-dropdown-bg);
+  border: 1px solid var(--select-dropdown-border);
+  border-radius: 0;
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.85);
+  z-index: 1100;
+  max-height: 260px;
+  overflow-y: auto;
+  overflow-x: hidden;
+  scrollbar-width: thin;
+  scrollbar-gutter: stable;
+  box-sizing: border-box;
+}
+
+.custom-select-dropdown::-webkit-scrollbar {
+  width: 6px;
+}
+
+.custom-select-dropdown::-webkit-scrollbar-track {
+  background: var(--select-dropdown-bg);
+}
+
+.custom-select-dropdown::-webkit-scrollbar-thumb {
+  background: var(--color-border-default);
+}
+
+.custom-select-dropdown--open {
+  display: block;
+}
+
+/* Options List & Option Items */
+.custom-select-options-list {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  border-radius: 0;
+}
+
+.custom-select-option {
+  padding: 8px 16px;
+  font-size: var(--select-option-font-size);
+  color: var(--select-option-color);
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 24px;
+  white-space: nowrap;
+  border-bottom: 1px solid var(--select-option-divider);
+  border-radius: 0;
+}
+
+.custom-select-option:last-child {
+  border-bottom: none;
+}
+
+.custom-select-option:hover {
+  background: var(--select-option-bg-hover);
+  color: var(--select-option-color-hover);
+}
+
+.is-selected {
+  font-weight: var(--weight-bold);
+  color: var(--select-option-color-selected);
+  background: var(--select-option-bg-selected);
+}
+
+.is-disabled {
+  opacity: 0.35;
+  cursor: not-allowed;
+  background: var(--select-option-bg-disabled);
+  color: var(--select-option-color);
+}
+
+.is-disabled:hover {
+  background: var(--select-option-bg-disabled);
+  color: var(--select-option-color);
+}
+
+.option-text {
+  white-space: nowrap;
+}

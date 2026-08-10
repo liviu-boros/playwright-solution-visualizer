@@ -1,0 +1,29 @@
+/* css/components/method-item.css */
+
+.method-item {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  font-size: var(--font-size-body);
+  line-height: var(--line-height-body);
+  color: var(--color-text-body);
+  padding: 4px 8px 4px 4px;
+  border-radius: var(--radius-flag);
+  white-space: nowrap;
+}
+
+.method-item:hover {
+  background: color-mix(in srgb, var(--color-accent-green) 20%, transparent);
+}
+
+.method-item--indented {
+  padding-left: 16px;
+}
+
+.method-item--removed {
+  color: var(--color-text-muted);
+}
+
+.method-item--removed:hover {
+  background: color-mix(in srgb, var(--color-accent-red) 20%, transparent);
+}

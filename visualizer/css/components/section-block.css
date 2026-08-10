@@ -1,0 +1,48 @@
+/* css/components/section-block.css */
+.section-container {
+  display: flex;
+  align-items: flex-start;
+  gap: var(--gap-section-anchor);
+  position: relative;
+  border-right: 4px dashed color-mix(in srgb, var(--color-text-main) 10%, transparent);
+  padding-right: var(--gap-section-main);
+}
+
+.section-container:has(.is-active-source) {
+  z-index: 20;
+}
+
+.section-container:has(.is-active-target) {
+  z-index: 20;
+}
+
+.section-container:has(.is-active-dependency) {
+  z-index: 20;
+}
+
+.section-container:has(.is-active-reference) {
+  z-index: 20;
+}
+
+.section-container:last-child {
+  border-right: none;
+  padding-right: 0;
+}
+
+.section-lanes {
+  display: flex;
+  flex-direction: column;
+  gap: var(--gap-lane-stack);
+}
+
+.lane-row {
+  display: flex;
+  align-items: flex-start;
+  gap: var(--gap-lane-row);
+}
+
+.lane-content {
+  display: flex;
+  align-items: flex-start;
+  gap: var(--gap-module-cards);
+}

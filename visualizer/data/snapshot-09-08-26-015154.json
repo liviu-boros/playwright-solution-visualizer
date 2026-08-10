@@ -1,0 +1,2671 @@
+[
+  {
+    "title": "Api Models",
+    "folder": "./api",
+    "description": "HTTP request specs and route validations",
+    "icon": "icons/api.svg",
+    "lanes": [
+      {
+        "laneBadges": [
+          {
+            "type": "tag",
+            "value": "TagA"
+          }
+        ],
+        "modules": [
+          {
+            "id": "taga-metrics-api",
+            "fileName": "taga-metrics-api.ts",
+            "title": "Metrics Api",
+            "tags": [
+              "TagA"
+            ],
+            "imports": [],
+            "items": [
+              {
+                "name": "MetricsApi",
+                "methods": [
+                  {
+                    "name": "async getSystemMetrics()"
+                  },
+                  {
+                    "name": "async pushTelemetryEvent()"
+                  },
+                  {
+                    "name": "async streamLiveTelemetry()"
+                  }
+                ]
+              }
+            ],
+            "itemType": "class"
+          },
+          {
+            "id": "taga-telemetry-api",
+            "fileName": "taga-telemetry-api.ts",
+            "title": "Telemetry Api",
+            "tags": [
+              "TagA"
+            ],
+            "imports": [],
+            "items": [
+              {
+                "name": "TelemetryApi",
+                "methods": [
+                  {
+                    "name": "async sendTelemetryPayload()"
+                  },
+                  {
+                    "name": "async fetchLiveAlerts()"
+                  }
+                ]
+              }
+            ],
+            "itemType": "class"
+          },
+          {
+            "id": "taga-notifications-api",
+            "fileName": "taga-notifications-api.ts",
+            "title": "Notifications Api",
+            "tags": [
+              "TagA"
+            ],
+            "imports": [],
+            "items": [
+              {
+                "name": "NotificationsApi",
+                "methods": [
+                  {
+                    "name": "async sendPushNotification()"
+                  },
+                  {
+                    "name": "async getChannelPreferences()"
+                  }
+                ]
+              }
+            ],
+            "itemType": "class"
+          }
+        ]
+      },
+      {
+        "laneBadges": [
+          {
+            "type": "tag",
+            "value": "TagA"
+          },
+          {
+            "type": "tag",
+            "value": "TagB"
+          }
+        ],
+        "modules": [
+          {
+            "id": "taga-tagb-gateway-router",
+            "fileName": "taga-tagb-gateway-router.ts",
+            "title": "Gateway Router",
+            "tags": [
+              "TagA",
+              "TagB"
+            ],
+            "imports": [],
+            "items": [
+              {
+                "name": "GatewayRouterApi",
+                "methods": [
+                  {
+                    "name": "async routeIncomingRequest()"
+                  },
+                  {
+                    "name": "async getActiveRoutes()"
+                  }
+                ]
+              }
+            ],
+            "itemType": "class"
+          },
+          {
+            "id": "tagb-stripe-webhooks-api",
+            "fileName": "tagb-stripe-webhooks-api.ts",
+            "title": "Stripe Webhooks Api",
+            "tags": [
+              "TagB"
+            ],
+            "imports": [],
+            "items": [
+              {
+                "name": "StripeWebhooksApi",
+                "methods": [
+                  {
+                    "name": "async processInvoiceEvent()"
+                  }
+                ]
+              }
+            ],
+            "itemType": "class"
+          }
+        ]
+      },
+      {
+        "laneBadges": [
+          {
+            "type": "tag",
+            "value": "TagB"
+          }
+        ],
+        "modules": [
+          {
+            "id": "tagb-payment-gateway",
+            "fileName": "tagb-payment-gateway.ts",
+            "title": "Payment Gateway",
+            "tags": [
+              "TagB"
+            ],
+            "imports": [],
+            "items": [
+              {
+                "name": "PaymentGatewayApi",
+                "methods": [
+                  {
+                    "name": "async verifyTransaction()"
+                  },
+                  {
+                    "name": "async cancelSubscription()"
+                  }
+                ]
+              }
+            ],
+            "itemType": "class"
+          },
+          {
+            "id": "tagb-subscription-api",
+            "fileName": "tagb-subscription-api.ts",
+            "title": "Subscription Api",
+            "tags": [
+              "TagB"
+            ],
+            "imports": [],
+            "items": [
+              {
+                "name": "SubscriptionApi",
+                "methods": [
+                  {
+                    "name": "async fetchSubscriptionTiers()"
+                  },
+                  {
+                    "name": "async updatePlanSubscription()"
+                  }
+                ]
+              }
+            ],
+            "itemType": "class"
+          }
+        ]
+      },
+      {
+        "laneBadges": [
+          {
+            "type": "tag",
+            "value": "TagC"
+          }
+        ],
+        "modules": [
+          {
+            "id": "tagc-endpoints",
+            "fileName": "tagc-endpoints.ts",
+            "title": "Endpoints",
+            "tags": [
+              "TagC"
+            ],
+            "imports": [],
+            "items": [
+              {
+                "name": "AuthEndpoints",
+                "methods": [
+                  {
+                    "name": "async refreshToken()"
+                  }
+                ]
+              }
+            ],
+            "itemType": "class"
+          },
+          {
+            "id": "tagc-settings-api",
+            "fileName": "tagc-settings-api.ts",
+            "title": "Settings Api",
+            "tags": [
+              "TagC"
+            ],
+            "imports": [],
+            "items": [
+              {
+                "name": "SettingsApi",
+                "methods": [
+                  {
+                    "name": "async getAccountPreferences()"
+                  },
+                  {
+                    "name": "async updatePreference()"
+                  }
+                ]
+              }
+            ],
+            "itemType": "class"
+          },
+          {
+            "id": "tagc-audit-trail-api",
+            "fileName": "tagc-audit-trail-api.ts",
+            "title": "Audit Trail Api",
+            "tags": [
+              "TagC"
+            ],
+            "imports": [],
+            "items": [
+              {
+                "name": "AuditTrailApi",
+                "methods": [
+                  {
+                    "name": "async queryLogsByDate()"
+                  }
+                ]
+              }
+            ],
+            "itemType": "class"
+          }
+        ]
+      }
+    ],
+    "metrics": []
+  },
+  {
+    "title": "Workflows",
+    "folder": "./workflows",
+    "description": "Multi-step API orchestration controllers",
+    "icon": "icons/workflows.svg",
+    "lanes": [
+      {
+        "laneBadges": [
+          {
+            "type": "tag",
+            "value": "TagA"
+          }
+        ],
+        "modules": [
+          {
+            "id": "taga-data-export",
+            "fileName": "taga-data-export.ts",
+            "title": "Data Export",
+            "tags": [
+              "TagA"
+            ],
+            "imports": [
+              "taga-metrics-api"
+            ],
+            "items": [
+              {
+                "name": "triggerDataExport"
+              },
+              {
+                "name": "fetchExportProgress"
+              },
+              {
+                "name": "cancelExportJob"
+              }
+            ],
+            "itemType": "functions"
+          },
+          {
+            "id": "taga-metrics-collector",
+            "fileName": "taga-metrics-collector.ts",
+            "title": "Metrics Collector",
+            "tags": [
+              "TagA"
+            ],
+            "imports": [],
+            "items": [
+              {
+                "name": "collectSystemMetrics"
+              },
+              {
+                "name": "aggregateTelemetryData"
+              }
+            ],
+            "itemType": "functions"
+          },
+          {
+            "id": "taga-notification-flow",
+            "fileName": "taga-notification-flow.ts",
+            "title": "Notification Flow",
+            "tags": [
+              "TagA"
+            ],
+            "imports": [
+              "taga-tagb-gateway-router"
+            ],
+            "items": [
+              {
+                "name": "dispatchEmailAlert"
+              },
+              {
+                "name": "queueSMSNotification"
+              }
+            ],
+            "itemType": "functions"
+          }
+        ]
+      },
+      {
+        "laneBadges": [
+          {
+            "type": "tag",
+            "value": "TagA"
+          },
+          {
+            "type": "tag",
+            "value": "TagC"
+          }
+        ],
+        "modules": [
+          {
+            "id": "taga-tagc-sync-job",
+            "fileName": "taga-tagc-sync-job.ts",
+            "title": "Sync Job",
+            "tags": [
+              "TagA",
+              "TagC"
+            ],
+            "imports": [
+              "tagc-settings-api"
+            ],
+            "items": [
+              {
+                "name": "runFullSyncProcess"
+              },
+              {
+                "name": "validateSyncChecksum"
+              }
+            ],
+            "itemType": "functions"
+          }
+        ]
+      },
+      {
+        "laneBadges": [
+          {
+            "type": "tag",
+            "value": "TagB"
+          }
+        ],
+        "modules": [
+          {
+            "id": "tagb-billing-cycle",
+            "fileName": "tagb-billing-cycle.ts",
+            "title": "Billing Cycle",
+            "tags": [
+              "TagB"
+            ],
+            "imports": [
+              "tagb-payment-gateway"
+            ],
+            "items": [
+              {
+                "name": "processBillingCycle"
+              },
+              {
+                "name": "sendBillingNotifications"
+              }
+            ],
+            "itemType": "functions"
+          },
+          {
+            "id": "tagb-payment-checkout",
+            "fileName": "tagb-payment-checkout.ts",
+            "title": "Payment Checkout",
+            "tags": [
+              "TagB"
+            ],
+            "imports": [],
+            "items": [
+              {
+                "name": "processPaymentTransaction"
+              },
+              {
+                "name": "verifyPaymentAuth"
+              }
+            ],
+            "itemType": "functions"
+          },
+          {
+            "id": "tagb-checkout-flow",
+            "fileName": "tagb-checkout-flow.ts",
+            "title": "Checkout Flow",
+            "tags": [
+              "TagB"
+            ],
+            "imports": [],
+            "items": [
+              {
+                "name": "export async function executeOneClickCheckout()"
+              }
+            ],
+            "itemType": "functions"
+          }
+        ]
+      },
+      {
+        "laneBadges": [
+          {
+            "type": "tag",
+            "value": "TagC"
+          }
+        ],
+        "modules": [
+          {
+            "id": "tagc-optimization",
+            "fileName": "tagc-optimization.ts",
+            "title": "Optimization",
+            "tags": [
+              "TagC"
+            ],
+            "imports": [
+              "tagc-endpoints"
+            ],
+            "items": [
+              {
+                "name": "triggerOptimizationJob"
+              },
+              {
+                "name": "cancelOptimizationJob"
+              }
+            ],
+            "itemType": "functions"
+          },
+          {
+            "id": "tagc-user-cleanup",
+            "fileName": "tagc-user-cleanup.ts",
+            "title": "User Cleanup",
+            "tags": [
+              "TagC"
+            ],
+            "imports": [],
+            "items": [
+              {
+                "name": "purgeInactiveSessions"
+              },
+              {
+                "name": "auditUserPermissions"
+              }
+            ],
+            "itemType": "functions"
+          }
+        ]
+      }
+    ],
+    "metrics": []
+  },
+  {
+    "title": "Components",
+    "folder": "./components",
+    "description": "Shared global atomic locator abstractions",
+    "icon": "icons/components.svg",
+    "lanes": [
+      {
+        "laneBadges": [],
+        "modules": [
+          {
+            "id": "Dropdown",
+            "fileName": "Dropdown.ts",
+            "title": "Dropdown",
+            "tags": [],
+            "imports": [
+              "Hint"
+            ],
+            "items": [
+              {
+                "name": "DropdownComponent",
+                "methods": [
+                  {
+                    "name": "async SelectOption()"
+                  },
+                  {
+                    "name": "async GetSelectedValue()"
+                  }
+                ]
+              }
+            ],
+            "itemType": "class"
+          },
+          {
+            "id": "GridTable",
+            "fileName": "GridTable.ts",
+            "title": "Gridtable",
+            "tags": [],
+            "imports": [],
+            "items": [
+              {
+                "name": "GridIcon",
+                "methods": [
+                  {
+                    "name": "async Hover()"
+                  },
+                  {
+                    "name": "async Click()"
+                  },
+                  {
+                    "name": "async Tooltip()"
+                  }
+                ]
+              },
+              {
+                "name": "GridRow",
+                "methods": [
+                  {
+                    "name": "async Action()"
+                  }
+                ]
+              },
+              {
+                "name": "GridCell",
+                "methods": [
+                  {
+                    "name": "async Click()"
+                  },
+                  {
+                    "name": "async DblClick()"
+                  },
+                  {
+                    "name": "async Fill()"
+                  },
+                  {
+                    "name": "async Option()"
+                  },
+                  {
+                    "name": "Icon()"
+                  },
+                  {
+                    "name": "async Action()"
+                  },
+                  {
+                    "name": "async PasteExcelData()"
+                  }
+                ]
+              },
+              {
+                "name": "GridHeader",
+                "methods": [
+                  {
+                    "name": "Icon()"
+                  }
+                ]
+              },
+              {
+                "name": "GridTable",
+                "methods": [
+                  {
+                    "name": "Cell()"
+                  },
+                  {
+                    "name": "Row()"
+                  },
+                  {
+                    "name": "Header()"
+                  },
+                  {
+                    "name": "async InitHeaders()"
+                  },
+                  {
+                    "name": "async FindRowIndexByValue()"
+                  },
+                  {
+                    "name": "async scrollColumnIntoView()"
+                  },
+                  {
+                    "name": "getColumnIndex()"
+                  },
+                  {
+                    "name": "tryGetCachedColumnIndex()"
+                  },
+                  {
+                    "name": "async pasteRowData()"
+                  }
+                ]
+              }
+            ],
+            "itemType": "class"
+          },
+          {
+            "id": "Hint",
+            "fileName": "Hint.ts",
+            "title": "Hint",
+            "tags": [],
+            "imports": [],
+            "items": [
+              {
+                "name": "Hint",
+                "methods": []
+              }
+            ],
+            "itemType": "class"
+          },
+          {
+            "id": "Modal",
+            "fileName": "Modal.ts",
+            "title": "Modal",
+            "tags": [],
+            "imports": [],
+            "items": [
+              {
+                "name": "ModalComponent",
+                "methods": [
+                  {
+                    "name": "async OpenModal()"
+                  },
+                  {
+                    "name": "async CloseModal()"
+                  },
+                  {
+                    "name": "async ConfirmAction()"
+                  }
+                ]
+              }
+            ],
+            "itemType": "class"
+          },
+          {
+            "id": "Textbox",
+            "fileName": "Textbox.ts",
+            "title": "Textbox",
+            "tags": [],
+            "imports": [
+              "Hint"
+            ],
+            "items": [
+              {
+                "name": "TextboxComponent",
+                "methods": [
+                  {
+                    "name": "async FillText()"
+                  },
+                  {
+                    "name": "async AppendValue()"
+                  },
+                  {
+                    "name": "async GetValue()"
+                  }
+                ]
+              }
+            ],
+            "itemType": "class"
+          },
+          {
+            "id": "modal-wrapper",
+            "fileName": "modal-wrapper.ts",
+            "title": "Modal Wrapper",
+            "tags": [],
+            "imports": [],
+            "items": [
+              {
+                "name": "ModalWrapper",
+                "methods": [
+                  {
+                    "name": "async openDialog()"
+                  },
+                  {
+                    "name": "async closeDialog()"
+                  }
+                ]
+              }
+            ],
+            "itemType": "class"
+          },
+          {
+            "id": "toast-notification",
+            "fileName": "toast-notification.ts",
+            "title": "Toast Notification",
+            "tags": [],
+            "imports": [],
+            "items": [
+              {
+                "name": "ToastNotification",
+                "methods": [
+                  {
+                    "name": "async showToast()"
+                  }
+                ]
+              }
+            ],
+            "itemType": "class"
+          }
+        ]
+      }
+    ],
+    "metrics": []
+  },
+  {
+    "title": "Pages",
+    "folder": "./pages",
+    "description": "Application interface maps and browser actions",
+    "icon": "icons/pages.svg",
+    "lanes": [
+      {
+        "laneBadges": [
+          {
+            "type": "tag",
+            "value": "TagA"
+          }
+        ],
+        "modules": [
+          {
+            "id": "taga-analytics",
+            "fileName": "taga-analytics.ts",
+            "title": "Analytics",
+            "tags": [
+              "TagA"
+            ],
+            "imports": [
+              "GridTable",
+              "Hint"
+            ],
+            "items": [
+              {
+                "name": "AnalyticsPage",
+                "methods": [
+                  {
+                    "name": "async viewSystemMetrics()"
+                  }
+                ]
+              }
+            ],
+            "itemType": "class"
+          },
+          {
+            "id": "taga-boards",
+            "fileName": "taga-boards.ts",
+            "title": "Boards",
+            "tags": [
+              "TagA"
+            ],
+            "imports": [
+              "Modal",
+              "Dropdown"
+            ],
+            "items": [
+              {
+                "name": "BoardsPage",
+                "methods": [
+                  {
+                    "name": "async createNewBoard()"
+                  },
+                  {
+                    "name": "async deleteActiveBoard()"
+                  },
+                  {
+                    "name": "async exportBoard()"
+                  },
+                  {
+                    "name": "async cloneBoard()"
+                  }
+                ]
+              }
+            ],
+            "itemType": "class"
+          },
+          {
+            "id": "taga-dashboard",
+            "fileName": "taga-dashboard.ts",
+            "title": "Dashboard",
+            "tags": [
+              "TagA"
+            ],
+            "imports": [
+              "GridTable",
+              "Modal"
+            ],
+            "items": [
+              {
+                "name": "DashboardPage",
+                "methods": [
+                  {
+                    "name": "async renderDashboardGrid()"
+                  }
+                ]
+              }
+            ],
+            "itemType": "class"
+          },
+          {
+            "id": "taga-notifications-center",
+            "fileName": "taga-notifications-center.ts",
+            "title": "Notifications Center",
+            "tags": [
+              "TagA"
+            ],
+            "imports": [
+              "Modal",
+              "Hint"
+            ],
+            "items": [
+              {
+                "name": "NotificationsCenterPage",
+                "methods": [
+                  {
+                    "name": "async viewNotificationAlerts()"
+                  }
+                ]
+              }
+            ],
+            "itemType": "class"
+          },
+          {
+            "id": "taga-reports",
+            "fileName": "taga-reports.ts",
+            "title": "Reports",
+            "tags": [
+              "TagA"
+            ],
+            "imports": [
+              "GridTable",
+              "Dropdown"
+            ],
+            "items": [
+              {
+                "name": "ReportsPage",
+                "methods": [
+                  {
+                    "name": "async generateSummaryReport()"
+                  }
+                ]
+              }
+            ],
+            "itemType": "class"
+          },
+          {
+            "id": "taga-telemetry-panel",
+            "fileName": "taga-telemetry-panel.ts",
+            "title": "Telemetry Panel",
+            "tags": [
+              "TagA"
+            ],
+            "imports": [
+              "GridTable",
+              "Hint"
+            ],
+            "items": [
+              {
+                "name": "TelemetryPanelPage",
+                "methods": [
+                  {
+                    "name": "async viewTelemetryStream()"
+                  }
+                ]
+              }
+            ],
+            "itemType": "class"
+          },
+          {
+            "id": "taga-widgets-view",
+            "fileName": "taga-widgets-view.ts",
+            "title": "Widgets View",
+            "tags": [
+              "TagA"
+            ],
+            "imports": [
+              "Textbox",
+              "Hint"
+            ],
+            "items": [
+              {
+                "name": "WidgetsViewPage",
+                "methods": [
+                  {
+                    "name": "async configureWidgets()"
+                  }
+                ]
+              }
+            ],
+            "itemType": "class"
+          },
+          {
+            "id": "taga-analytics-page",
+            "fileName": "taga-analytics-page.ts",
+            "title": "Analytics Page",
+            "tags": [
+              "TagA"
+            ],
+            "imports": [],
+            "items": [
+              {
+                "name": "AnalyticsPage",
+                "methods": [
+                  {
+                    "name": "async renderMetricsChart()"
+                  },
+                  {
+                    "name": "async exportPdfReport()"
+                  }
+                ]
+              }
+            ],
+            "itemType": "class"
+          }
+        ]
+      },
+      {
+        "laneBadges": [
+          {
+            "type": "tag",
+            "value": "TagA"
+          },
+          {
+            "type": "tag",
+            "value": "TagB"
+          }
+        ],
+        "modules": [
+          {
+            "id": "taga-tagb-gateway-portal",
+            "fileName": "taga-tagb-gateway-portal.ts",
+            "title": "Gateway Portal",
+            "tags": [
+              "TagA",
+              "TagB"
+            ],
+            "imports": [
+              "Modal",
+              "Textbox"
+            ],
+            "items": [
+              {
+                "name": "GatewayPortalPage",
+                "methods": [
+                  {
+                    "name": "async viewGatewayStatus()"
+                  }
+                ]
+              }
+            ],
+            "itemType": "class"
+          },
+          {
+            "id": "tagb-billing-modal",
+            "fileName": "tagb-billing-modal.ts",
+            "title": "Billing Modal",
+            "tags": [
+              "TagB"
+            ],
+            "imports": [],
+            "items": [
+              {
+                "name": "BillingModal",
+                "methods": [
+                  {
+                    "name": "async fillCreditCard()"
+                  },
+                  {
+                    "name": "async submitPayment()"
+                  }
+                ]
+              }
+            ],
+            "itemType": "class"
+          },
+          {
+            "id": "taga-tagb-workspace-settings",
+            "fileName": "taga-tagb-workspace-settings.ts",
+            "title": "Workspace Settings",
+            "tags": [
+              "TagA",
+              "TagB"
+            ],
+            "imports": [],
+            "items": [
+              {
+                "name": "WorkspaceSettingsPage",
+                "methods": [
+                  {
+                    "name": "async updateSeatLimit()"
+                  }
+                ]
+              }
+            ],
+            "itemType": "class"
+          }
+        ]
+      },
+      {
+        "laneBadges": [
+          {
+            "type": "tag",
+            "value": "TagA"
+          },
+          {
+            "type": "tag",
+            "value": "TagC"
+          }
+        ],
+        "modules": [
+          {
+            "id": "taga-tagc-master-dashboard",
+            "fileName": "taga-tagc-master-dashboard.ts",
+            "title": "Master Dashboard",
+            "tags": [
+              "TagA",
+              "TagC"
+            ],
+            "imports": [
+              "GridTable",
+              "Modal",
+              "Dropdown"
+            ],
+            "items": [
+              {
+                "name": "MasterDashboardPage",
+                "methods": [
+                  {
+                    "name": "async renderDashboard()"
+                  }
+                ]
+              }
+            ],
+            "itemType": "class"
+          },
+          {
+            "id": "tagc-user-profile-page",
+            "fileName": "tagc-user-profile-page.ts",
+            "title": "User Profile Page",
+            "tags": [
+              "TagC"
+            ],
+            "imports": [],
+            "items": [
+              {
+                "name": "UserProfilePage",
+                "methods": [
+                  {
+                    "name": "async updateAvatar()"
+                  },
+                  {
+                    "name": "async toggleTwoFactor()"
+                  }
+                ]
+              }
+            ],
+            "itemType": "class"
+          }
+        ]
+      },
+      {
+        "laneBadges": [
+          {
+            "type": "tag",
+            "value": "TagB"
+          }
+        ],
+        "modules": [
+          {
+            "id": "tagb-billing-history",
+            "fileName": "tagb-billing-history.ts",
+            "title": "Billing History",
+            "tags": [
+              "TagB"
+            ],
+            "imports": [
+              "GridTable",
+              "Textbox"
+            ],
+            "items": [
+              {
+                "name": "BillingHistoryPage",
+                "methods": [
+                  {
+                    "name": "async viewBillingHistory()"
+                  }
+                ]
+              }
+            ],
+            "itemType": "class"
+          },
+          {
+            "id": "tagb-cart-summary",
+            "fileName": "tagb-cart-summary.ts",
+            "title": "Cart Summary",
+            "tags": [
+              "TagB"
+            ],
+            "imports": [
+              "GridTable",
+              "Modal"
+            ],
+            "items": [
+              {
+                "name": "CartSummaryPage",
+                "methods": [
+                  {
+                    "name": "async viewCartItems()"
+                  }
+                ]
+              }
+            ],
+            "itemType": "class"
+          },
+          {
+            "id": "tagb-checkout",
+            "fileName": "tagb-checkout.ts",
+            "title": "Checkout",
+            "tags": [
+              "TagB"
+            ],
+            "imports": [
+              "Modal",
+              "Textbox",
+              "Dropdown"
+            ],
+            "items": [
+              {
+                "name": "CheckoutPage",
+                "methods": [
+                  {
+                    "name": "async proceedToCheckout()"
+                  }
+                ]
+              }
+            ],
+            "itemType": "class"
+          },
+          {
+            "id": "tagb-invoice-details",
+            "fileName": "tagb-invoice-details.ts",
+            "title": "Invoice Details",
+            "tags": [
+              "TagB"
+            ],
+            "imports": [
+              "GridTable",
+              "Hint"
+            ],
+            "items": [
+              {
+                "name": "InvoiceDetailsPage",
+                "methods": [
+                  {
+                    "name": "async viewInvoiceBreakdown()"
+                  }
+                ]
+              }
+            ],
+            "itemType": "class"
+          },
+          {
+            "id": "tagb-login",
+            "fileName": "tagb-login.ts",
+            "title": "Login",
+            "tags": [
+              "TagB"
+            ],
+            "imports": [
+              "Textbox",
+              "Hint"
+            ],
+            "items": [
+              {
+                "name": "LoginPage",
+                "methods": [
+                  {
+                    "name": "async loginUser()"
+                  }
+                ]
+              }
+            ],
+            "itemType": "class"
+          },
+          {
+            "id": "tagb-payment-methods",
+            "fileName": "tagb-payment-methods.ts",
+            "title": "Payment Methods",
+            "tags": [
+              "TagB"
+            ],
+            "imports": [
+              "Dropdown",
+              "Textbox"
+            ],
+            "items": [
+              {
+                "name": "PaymentMethodsPage",
+                "methods": [
+                  {
+                    "name": "async selectPaymentMethod()"
+                  }
+                ]
+              }
+            ],
+            "itemType": "class"
+          },
+          {
+            "id": "tagb-subscription-plans",
+            "fileName": "tagb-subscription-plans.ts",
+            "title": "Subscription Plans",
+            "tags": [
+              "TagB"
+            ],
+            "imports": [
+              "GridTable",
+              "Dropdown"
+            ],
+            "items": [
+              {
+                "name": "SubscriptionPlansPage",
+                "methods": [
+                  {
+                    "name": "async viewSubscriptionOptions()"
+                  }
+                ]
+              }
+            ],
+            "itemType": "class"
+          }
+        ]
+      },
+      {
+        "laneBadges": [
+          {
+            "type": "tag",
+            "value": "TagC"
+          }
+        ],
+        "modules": [
+          {
+            "id": "tagc-permissions-grid",
+            "fileName": "tagc-permissions-grid.ts",
+            "title": "Permissions Grid",
+            "tags": [
+              "TagC"
+            ],
+            "imports": [
+              "GridTable",
+              "Dropdown"
+            ],
+            "items": [
+              {
+                "name": "PermissionsGridPage",
+                "methods": [
+                  {
+                    "name": "async modifyRolePermissions()"
+                  }
+                ]
+              }
+            ],
+            "itemType": "class"
+          },
+          {
+            "id": "tagc-security-audit",
+            "fileName": "tagc-security-audit.ts",
+            "title": "Security Audit",
+            "tags": [
+              "TagC"
+            ],
+            "imports": [
+              "GridTable",
+              "Hint"
+            ],
+            "items": [
+              {
+                "name": "SecurityAuditPage",
+                "methods": [
+                  {
+                    "name": "async viewAuditLogs()"
+                  }
+                ]
+              }
+            ],
+            "itemType": "class"
+          },
+          {
+            "id": "tagc-session-manager",
+            "fileName": "tagc-session-manager.ts",
+            "title": "Session Manager",
+            "tags": [
+              "TagC"
+            ],
+            "imports": [
+              "Modal",
+              "Hint"
+            ],
+            "items": [
+              {
+                "name": "SessionManagerPage",
+                "methods": [
+                  {
+                    "name": "async revokeActiveSession()"
+                  }
+                ]
+              }
+            ],
+            "itemType": "class"
+          },
+          {
+            "id": "tagc-settings",
+            "fileName": "tagc-settings.ts",
+            "title": "Settings",
+            "tags": [
+              "TagC"
+            ],
+            "imports": [
+              "Textbox",
+              "Dropdown"
+            ],
+            "items": [
+              {
+                "name": "SettingsPage",
+                "methods": [
+                  {
+                    "name": "async updateSettings()"
+                  }
+                ]
+              }
+            ],
+            "itemType": "class"
+          },
+          {
+            "id": "tagc-system-logs",
+            "fileName": "tagc-system-logs.ts",
+            "title": "System Logs",
+            "tags": [
+              "TagC"
+            ],
+            "imports": [
+              "GridTable",
+              "Hint"
+            ],
+            "items": [
+              {
+                "name": "SystemLogsPage",
+                "methods": [
+                  {
+                    "name": "async viewRawSystemLogs()"
+                  }
+                ]
+              }
+            ],
+            "itemType": "class"
+          },
+          {
+            "id": "tagc-user-activity",
+            "fileName": "tagc-user-activity.ts",
+            "title": "User Activity",
+            "tags": [
+              "TagC"
+            ],
+            "imports": [
+              "GridTable",
+              "Textbox"
+            ],
+            "items": [
+              {
+                "name": "UserActivityPage",
+                "methods": [
+                  {
+                    "name": "async viewUserActivityStream()"
+                  }
+                ]
+              }
+            ],
+            "itemType": "class"
+          },
+          {
+            "id": "tagc-user-profile",
+            "fileName": "tagc-user-profile.ts",
+            "title": "User Profile",
+            "tags": [
+              "TagC"
+            ],
+            "imports": [
+              "Textbox",
+              "Modal"
+            ],
+            "items": [
+              {
+                "name": "UserProfilePage",
+                "methods": [
+                  {
+                    "name": "async viewProfile()"
+                  }
+                ]
+              }
+            ],
+            "itemType": "class"
+          }
+        ]
+      }
+    ],
+    "metrics": []
+  },
+  {
+    "title": "Tests",
+    "folder": "./tests",
+    "description": "End-to-end regression automation suites",
+    "icon": "icons/tests.svg",
+    "lanes": [
+      {
+        "laneBadges": [
+          {
+            "type": "tag",
+            "value": "TagA"
+          },
+          {
+            "type": "subfolder",
+            "value": "UI"
+          }
+        ],
+        "modules": [
+          {
+            "id": "taga-02-widgets.spec",
+            "fileName": "taga-02-widgets.spec.ts",
+            "title": "02 Widgets",
+            "tags": [
+              "TagA"
+            ],
+            "imports": [
+              "taga-metrics-api",
+              "taga-data-export",
+              "taga-metrics-collector",
+              "taga-analytics",
+              "taga-boards",
+              "taga-dashboard",
+              "taga-widgets-view"
+            ],
+            "items": [
+              {
+                "name": "UI > Widgets > Render Chart Widget"
+              },
+              {
+                "name": "UI > Widgets > Drag and Drop Cards"
+              },
+              {
+                "name": "UI > Widgets > Filter Widget Data Stream"
+              },
+              {
+                "name": "UI > Widgets > Export Widget Snapshot as PDF"
+              },
+              {
+                "name": "UI > Widgets > Refresh Realtime Analytics Grid"
+              }
+            ],
+            "itemType": "test"
+          },
+          {
+            "id": "taga-03-navigation.spec",
+            "fileName": "taga-03-navigation.spec.ts",
+            "title": "03 Navigation",
+            "tags": [
+              "TagA"
+            ],
+            "imports": [
+              "taga-metrics-api",
+              "taga-telemetry-api",
+              "taga-notification-flow",
+              "taga-metrics-collector",
+              "taga-reports",
+              "taga-telemetry-panel",
+              "taga-notifications-center"
+            ],
+            "items": [
+              {
+                "name": "UI > Navigation > Verify Top Bar Navigation"
+              },
+              {
+                "name": "UI > Navigation > Collapse Left Sidebar"
+              },
+              {
+                "name": "UI > Navigation > Switch Theme Mode Dark Light"
+              },
+              {
+                "name": "UI > Navigation > Breadcrumb Hierarchy Trail"
+              }
+            ],
+            "itemType": "test"
+          },
+          {
+            "id": "taga-04-realtime.spec",
+            "fileName": "taga-04-realtime.spec.ts",
+            "title": "04 Realtime",
+            "subfolder": "UI",
+            "tags": [
+              "TagA"
+            ],
+            "imports": [],
+            "items": [
+              {
+                "name": "E2E > Dashboard > Realtime Stream"
+              },
+              {
+                "name": "E2E > Dashboard > Socket Connection"
+              },
+              {
+                "name": "E2E > Dashboard > Reconnect Buffer"
+              },
+              {
+                "name": "E2E > Dashboard > Fallback Polling"
+              }
+            ],
+            "itemType": "test"
+          }
+        ]
+      },
+      {
+        "laneBadges": [
+          {
+            "type": "tag",
+            "value": "TagA"
+          },
+          {
+            "type": "tag",
+            "value": "TagB"
+          },
+          {
+            "type": "subfolder",
+            "value": "UI"
+          }
+        ],
+        "modules": [
+          {
+            "id": "taga-tagb-01-dashboard.spec",
+            "fileName": "taga-tagb-01-dashboard.spec.ts",
+            "title": "01 Dashboard",
+            "tags": [
+              "TagA",
+              "TagB"
+            ],
+            "imports": [
+              "taga-metrics-api",
+              "taga-tagb-gateway-router",
+              "taga-data-export",
+              "tagb-billing-cycle",
+              "taga-boards",
+              "taga-analytics",
+              "tagb-billing-history",
+              "tagb-checkout",
+              "taga-tagb-gateway-portal"
+            ],
+            "items": [
+              {
+                "name": "E2E > Dashboard > Load Metrics Overview"
+              },
+              {
+                "name": "E2E > Dashboard > Export Charts to PNG"
+              },
+              {
+                "name": "E2E > Dashboard > Filter Revenue Stream by Region"
+              },
+              {
+                "name": "E2E > Dashboard > Realtime Gateway Latency Monitor"
+              },
+              {
+                "name": "E2E > Dashboard > Toggle Multi-Tenant Billing View"
+              },
+              {
+                "name": "E2E > Dashboard > Synchronize Analytics Cache"
+              },
+              {
+                "name": "E2E > Dashboard > Custom Date Range Filter"
+              },
+              {
+                "name": "E2E > Dashboard > Export Executive Summary PDF"
+              },
+              {
+                "name": "E2E > Dashboard > Drilldown into User Cohorts"
+              },
+              {
+                "name": "E2E > Dashboard > Configure KPI Target Alerts"
+              },
+              {
+                "name": "E2E > Dashboard > Auto Refresh Interval Settings"
+              },
+              {
+                "name": "E2E > Dashboard > Compare Period Over Period Performance"
+              },
+              {
+                "name": "E2E > Dashboard > Download Raw Data Matrix CSV"
+              },
+              {
+                "name": "E2E > Dashboard > Pin Custom Cards to Top"
+              },
+              {
+                "name": "E2E > Dashboard > Share Dashboard Snapshot URL"
+              },
+              {
+                "name": "E2E > Dashboard > Save Custom Layout Template"
+              },
+              {
+                "name": "E2E > Dashboard > Reset Workspace Grid Defaults"
+              },
+              {
+                "name": "E2E > Dashboard > Refresh Live Stream"
+              },
+              {
+                "name": "E2E > Dashboard > Export Charts"
+              },
+              {
+                "name": "E2E > Dashboard > Filter Time Range"
+              },
+              {
+                "name": "E2E > Dashboard > Pin Favorite Board"
+              }
+            ],
+            "itemType": "test"
+          },
+          {
+            "id": "tagb-04-discounts.spec",
+            "fileName": "tagb-04-discounts.spec.ts",
+            "title": "04 Discounts",
+            "subfolder": "SERVICE",
+            "tags": [
+              "TagB"
+            ],
+            "imports": [],
+            "items": [
+              {
+                "name": "SERVICE > Discount > Validate Promo Code"
+              },
+              {
+                "name": "SERVICE > Discount > Apply Coupon"
+              },
+              {
+                "name": "SERVICE > Discount > Expire Flash Sale"
+              }
+            ],
+            "itemType": "test"
+          }
+        ]
+      },
+      {
+        "laneBadges": [
+          {
+            "type": "tag",
+            "value": "TagB"
+          },
+          {
+            "type": "subfolder",
+            "value": "UI"
+          }
+        ],
+        "modules": [
+          {
+            "id": "tagb-02-checkout-flow.spec",
+            "fileName": "tagb-02-checkout-flow.spec.ts",
+            "title": "02 Checkout Flow",
+            "tags": [
+              "TagB"
+            ],
+            "imports": [
+              "tagb-payment-gateway",
+              "tagb-subscription-api",
+              "tagb-billing-cycle",
+              "tagb-payment-checkout",
+              "tagb-checkout",
+              "tagb-billing-history",
+              "tagb-cart-summary",
+              "tagb-payment-methods"
+            ],
+            "items": [
+              {
+                "name": "E2E > Checkout > Validate Express Checkout Options"
+              },
+              {
+                "name": "E2E > Checkout > Apply Coupon Promo Code"
+              },
+              {
+                "name": "E2E > Checkout > Validate Saved Credit Card CVV"
+              },
+              {
+                "name": "E2E > Checkout > Toggle Tax Exemption Certificate"
+              },
+              {
+                "name": "E2E > Checkout > Verify Order Confirmation Summary"
+              }
+            ],
+            "itemType": "test"
+          },
+          {
+            "id": "tagb-03-cart.spec",
+            "fileName": "tagb-03-cart.spec.ts",
+            "title": "03 Cart",
+            "tags": [
+              "TagB"
+            ],
+            "imports": [
+              "tagb-payment-gateway",
+              "tagb-payment-checkout",
+              "tagb-cart-summary",
+              "tagb-login",
+              "tagb-invoice-details"
+            ],
+            "items": [
+              {
+                "name": "UI > Cart > Add Items to Cart"
+              },
+              {
+                "name": "UI > Cart > Remove Items from Cart"
+              },
+              {
+                "name": "UI > Cart > Update Quantity Selector"
+              },
+              {
+                "name": "UI > Cart > Save Cart Items for Later"
+              }
+            ],
+            "itemType": "test"
+          }
+        ]
+      },
+      {
+        "laneBadges": [
+          {
+            "type": "tag",
+            "value": "TagC"
+          },
+          {
+            "type": "subfolder",
+            "value": "UI"
+          }
+        ],
+        "modules": [
+          {
+            "id": "tagc-01-profile-management.spec",
+            "fileName": "tagc-01-profile-management.spec.ts",
+            "title": "01 Profile Management",
+            "tags": [
+              "TagC"
+            ],
+            "imports": [
+              "tagc-endpoints",
+              "tagc-settings-api",
+              "tagc-optimization",
+              "tagc-user-cleanup",
+              "tagc-user-profile",
+              "tagc-settings",
+              "tagc-security-audit",
+              "tagc-permissions-grid"
+            ],
+            "items": [
+              {
+                "name": "UI > Profile > Edit User Bio"
+              },
+              {
+                "name": "UI > Profile > Upload Avatar Image"
+              },
+              {
+                "name": "UI > Profile > Update Contact Preferences"
+              },
+              {
+                "name": "UI > Profile > Change Timezone and Locale"
+              },
+              {
+                "name": "UI > Profile > Upload Avatar Crop"
+              },
+              {
+                "name": "UI > Profile > Link OAuth Provider"
+              }
+            ],
+            "itemType": "test"
+          },
+          {
+            "id": "tagc-02-settings-panel.spec",
+            "fileName": "tagc-02-settings-panel.spec.ts",
+            "title": "02 Settings Panel",
+            "tags": [
+              "TagC"
+            ],
+            "imports": [
+              "tagc-settings-api",
+              "tagc-user-cleanup",
+              "tagc-optimization",
+              "tagc-settings",
+              "tagc-user-activity",
+              "tagc-session-manager"
+            ],
+            "items": [
+              {
+                "name": "UI > Settings > Update Theme Preference"
+              },
+              {
+                "name": "UI > Settings > Toggle Desktop Notifications"
+              },
+              {
+                "name": "UI > Settings > Configure API Rate Limit Warnings"
+              },
+              {
+                "name": "UI > Settings > Enable Push Notifications"
+              },
+              {
+                "name": "UI > Settings > Set Dark Theme Preferred"
+              }
+            ],
+            "itemType": "test"
+          },
+          {
+            "id": "tagc-03-notifications-ui.spec",
+            "fileName": "tagc-03-notifications-ui.spec.ts",
+            "title": "03 Notifications Ui",
+            "tags": [
+              "TagC"
+            ],
+            "imports": [
+              "tagc-endpoints",
+              "tagc-optimization",
+              "tagc-system-logs",
+              "tagc-user-profile",
+              "tagc-permissions-grid"
+            ],
+            "items": [
+              {
+                "name": "UI > Notifications > Clear System Toast Alerts"
+              },
+              {
+                "name": "UI > Notifications > Mark All Unread Notifications"
+              },
+              {
+                "name": "UI > Notifications > Filter Alerts by Severity Warning"
+              },
+              {
+                "name": "UI > Notifications > Mute Channel Push Notifications"
+              }
+            ],
+            "itemType": "test"
+          }
+        ]
+      },
+      {
+        "laneBadges": [
+          {
+            "type": "tag",
+            "value": "TagA"
+          },
+          {
+            "type": "subfolder",
+            "value": "API"
+          }
+        ],
+        "modules": [
+          {
+            "id": "taga-01-metrics.spec",
+            "fileName": "taga-01-metrics.spec.ts",
+            "title": "01 Metrics",
+            "tags": [
+              "TagA"
+            ],
+            "imports": [
+              "taga-metrics-api",
+              "taga-telemetry-api",
+              "taga-metrics-collector",
+              "taga-data-export",
+              "taga-analytics",
+              "taga-reports",
+              "taga-dashboard"
+            ],
+            "items": [
+              {
+                "name": "API > Metrics > Fetch System Health Metrics"
+              },
+              {
+                "name": "API > Metrics > Query CPU Utilization Timeseries"
+              },
+              {
+                "name": "API > Metrics > Query Memory Consumption Peak"
+              },
+              {
+                "name": "API > Metrics > Query Disk Read Write Throughput"
+              },
+              {
+                "name": "API > Metrics > Query Network Interface Dropped Packets"
+              },
+              {
+                "name": "API > Metrics > Aggregate Database Query Latencies"
+              },
+              {
+                "name": "API > Metrics > Fetch Active Worker Node Status"
+              },
+              {
+                "name": "API > Metrics > Stream Realtime Metrics SSE Payload"
+              },
+              {
+                "name": "API > Metrics > Post Custom Influx Metric Point"
+              },
+              {
+                "name": "API > Metrics > Validate PromQL Histogram Quantile"
+              },
+              {
+                "name": "API > Metrics > Get System Uptime Summary"
+              },
+              {
+                "name": "API > Metrics > Purge Historical Metrics Log"
+              },
+              {
+                "name": "API > Metrics > Export Prometheus Scraping Endpoint"
+              },
+              {
+                "name": "API > Metrics > Verify Grafana Datasource Auth"
+              },
+              {
+                "name": "API > Metrics > Calculate 99th Percentile SLA SLA"
+              },
+              {
+                "name": "API > Metrics > Check Cluster Node Heartbeat Timeout"
+              }
+            ],
+            "itemType": "test"
+          },
+          {
+            "id": "taga-02-endpoints.spec",
+            "fileName": "taga-02-endpoints.spec.ts",
+            "title": "02 Endpoints",
+            "tags": [
+              "TagA"
+            ],
+            "imports": [
+              "taga-metrics-api",
+              "taga-metrics-collector",
+              "taga-widgets-view",
+              "taga-telemetry-panel",
+              "taga-boards"
+            ],
+            "items": [
+              {
+                "name": "API > Endpoints > Validate REST API Route"
+              },
+              {
+                "name": "API > Endpoints > Validate OpenAPI v3 Schema Spec"
+              },
+              {
+                "name": "API > Endpoints > Verify CORS Options Preflight Response"
+              },
+              {
+                "name": "API > Endpoints > Check Gzip Compression Header"
+              }
+            ],
+            "itemType": "test"
+          },
+          {
+            "id": "taga-03-telemetry.spec",
+            "fileName": "taga-03-telemetry.spec.ts",
+            "title": "03 Telemetry",
+            "tags": [
+              "TagA"
+            ],
+            "imports": [
+              "taga-telemetry-api",
+              "taga-metrics-api",
+              "taga-metrics-collector",
+              "taga-notification-flow",
+              "taga-telemetry-panel",
+              "taga-notifications-center",
+              "taga-analytics"
+            ],
+            "items": [
+              {
+                "name": "API > Telemetry > Stream Log Payloads"
+              },
+              {
+                "name": "API > Telemetry > OpenTelemetry Trace ID Propagation"
+              },
+              {
+                "name": "API > Telemetry > Batch Send Span Batches to Collector"
+              },
+              {
+                "name": "API > Telemetry > Verify Jaeger Tracing Metadata"
+              },
+              {
+                "name": "API > Telemetry > Flush Buffer on Process Terminate"
+              }
+            ],
+            "itemType": "test"
+          }
+        ]
+      },
+      {
+        "laneBadges": [
+          {
+            "type": "tag",
+            "value": "TagA"
+          },
+          {
+            "type": "tag",
+            "value": "TagC"
+          },
+          {
+            "type": "subfolder",
+            "value": "API"
+          }
+        ],
+        "modules": [
+          {
+            "id": "taga-tagc-03-integration.spec",
+            "fileName": "taga-tagc-03-integration.spec.ts",
+            "title": "03 Integration",
+            "tags": [
+              "TagA",
+              "TagC"
+            ],
+            "imports": [
+              "taga-metrics-api",
+              "tagc-endpoints",
+              "taga-tagc-sync-job",
+              "taga-tagc-master-dashboard",
+              "taga-analytics",
+              "tagc-settings",
+              "tagc-security-audit"
+            ],
+            "items": [
+              {
+                "name": "API > Integration > Run Full Cross Tag Sync"
+              },
+              {
+                "name": "API > Integration > Validate Cross-Domain Auth Handshake"
+              },
+              {
+                "name": "API > Integration > Sync Audit Event Stream to TagA Telemetry"
+              },
+              {
+                "name": "API > Integration > Verify Mutual TLS Socket Encryption"
+              },
+              {
+                "name": "API > Integration > Validate Distributed Transaction Rollback"
+              },
+              {
+                "name": "API > Integration > Check Multi-Region Data Replication Status"
+              }
+            ],
+            "itemType": "test"
+          }
+        ]
+      },
+      {
+        "laneBadges": [
+          {
+            "type": "tag",
+            "value": "TagC"
+          },
+          {
+            "type": "subfolder",
+            "value": "API"
+          }
+        ],
+        "modules": [
+          {
+            "id": "tagc-01-session.spec",
+            "fileName": "tagc-01-session.spec.ts",
+            "title": "01 Session",
+            "tags": [
+              "TagC"
+            ],
+            "imports": [
+              "tagc-settings-api",
+              "tagc-user-cleanup",
+              "tagc-session-manager",
+              "tagc-user-profile",
+              "tagc-security-audit"
+            ],
+            "items": [
+              {
+                "name": "API > Session > Validate Auth Token Lifecycle"
+              },
+              {
+                "name": "API > Session > Refresh OAuth2 Access Token"
+              },
+              {
+                "name": "API > Session > Revoke Active JWT Bearer Token"
+              },
+              {
+                "name": "API > Session > Validate Concurrent Session Limits"
+              }
+            ],
+            "itemType": "test"
+          },
+          {
+            "id": "tagc-02-auth.spec",
+            "fileName": "tagc-02-auth.spec.ts",
+            "title": "02 Auth",
+            "tags": [
+              "TagC"
+            ],
+            "imports": [
+              "tagc-endpoints",
+              "tagc-settings-api",
+              "tagc-user-cleanup",
+              "tagc-optimization",
+              "tagc-permissions-grid",
+              "tagc-user-activity",
+              "tagc-settings"
+            ],
+            "items": [
+              {
+                "name": "API > Auth > Check User Token Roles"
+              },
+              {
+                "name": "API > Auth > Enforce Multi-Factor Authentication Challenge"
+              },
+              {
+                "name": "API > Auth > Validate SAML 2.0 Identity Provider Response"
+              },
+              {
+                "name": "API > Auth > Verify Password Reset Token Hash Expiry"
+              }
+            ],
+            "itemType": "test"
+          }
+        ]
+      },
+      {
+        "laneBadges": [
+          {
+            "type": "tag",
+            "value": "TagA"
+          },
+          {
+            "type": "subfolder",
+            "value": "SERVICE"
+          }
+        ],
+        "modules": [
+          {
+            "id": "taga-02-notifications.spec",
+            "fileName": "taga-02-notifications.spec.ts",
+            "title": "02 Notifications",
+            "tags": [
+              "TagA"
+            ],
+            "imports": [
+              "taga-telemetry-api",
+              "taga-notification-flow",
+              "taga-notifications-center",
+              "taga-reports",
+              "taga-boards"
+            ],
+            "items": [
+              {
+                "name": "Service > Notifications > Process Outbound Queue"
+              },
+              {
+                "name": "Service > Notifications > Retry Failed Webhook Delivery"
+              },
+              {
+                "name": "Service > Notifications > Validate APNS Apple Push Token"
+              },
+              {
+                "name": "Service > Notifications > Rate Limit Outbound Email Digest"
+              }
+            ],
+            "itemType": "test"
+          },
+          {
+            "id": "taga-03-webhooks.spec",
+            "fileName": "taga-03-webhooks.spec.ts",
+            "title": "03 Webhooks",
+            "tags": [
+              "TagA"
+            ],
+            "imports": [
+              "taga-metrics-api",
+              "taga-data-export",
+              "taga-metrics-collector",
+              "taga-telemetry-panel",
+              "taga-widgets-view",
+              "taga-analytics"
+            ],
+            "items": [
+              {
+                "name": "Service > Webhooks > Validate Webhook Signature"
+              },
+              {
+                "name": "Service > Webhooks > HMAC SHA256 Signature Verification"
+              },
+              {
+                "name": "Service > Webhooks > Exponential Backoff Retry Policy"
+              }
+            ],
+            "itemType": "test"
+          }
+        ]
+      },
+      {
+        "laneBadges": [
+          {
+            "type": "tag",
+            "value": "TagB"
+          },
+          {
+            "type": "subfolder",
+            "value": "SERVICE"
+          }
+        ],
+        "modules": [
+          {
+            "id": "tagb-01-billing.spec",
+            "fileName": "tagb-01-billing.spec.ts",
+            "title": "01 Billing",
+            "tags": [
+              "TagB"
+            ],
+            "imports": [
+              "tagb-payment-gateway",
+              "tagb-subscription-api",
+              "tagb-billing-cycle",
+              "tagb-billing-history",
+              "tagb-subscription-plans",
+              "tagb-invoice-details",
+              "tagb-checkout"
+            ],
+            "items": [
+              {
+                "name": "Service > Billing > Process Recurring Invoices"
+              },
+              {
+                "name": "Service > Billing > Calculate Prorated Upgrade Charges"
+              },
+              {
+                "name": "Service > Billing > Retry Failed Dunning Payment Attempts"
+              },
+              {
+                "name": "Service > Billing > Issue Automatic Refund Credit Memo"
+              },
+              {
+                "name": "Service > Billing > Generate Annual Tax Invoice Summary PDF"
+              },
+              {
+                "name": "SERVICE > Billing > Retry Failed Charge"
+              },
+              {
+                "name": "SERVICE > Billing > Apply Tax Exemption"
+              }
+            ],
+            "itemType": "test"
+          },
+          {
+            "id": "tagb-02-subscriptions.spec",
+            "fileName": "tagb-02-subscriptions.spec.ts",
+            "title": "02 Subscriptions",
+            "tags": [
+              "TagB"
+            ],
+            "imports": [
+              "tagb-subscription-api",
+              "tagb-billing-cycle",
+              "tagb-subscription-plans",
+              "tagb-payment-methods",
+              "tagb-login"
+            ],
+            "items": [
+              {
+                "name": "Service > Subscriptions > Upgrade Account Tier"
+              },
+              {
+                "name": "Service > Subscriptions > Downgrade Account Tier to Starter"
+              },
+              {
+                "name": "Service > Subscriptions > Pause Subscription for 30 Days"
+              },
+              {
+                "name": "Service > Subscriptions > Resume Paused Subscription"
+              }
+            ],
+            "itemType": "test"
+          },
+          {
+            "id": "tagb-03-payments.spec",
+            "fileName": "tagb-03-payments.spec.ts",
+            "title": "03 Payments",
+            "tags": [
+              "TagB"
+            ],
+            "imports": [
+              "tagb-payment-gateway",
+              "tagb-payment-checkout",
+              "tagb-payment-methods",
+              "tagb-cart-summary",
+              "tagb-billing-history"
+            ],
+            "items": [
+              {
+                "name": "Service > Payments > Refund Payment Request"
+              },
+              {
+                "name": "Service > Payments > Authorize Credit Card Hold"
+              },
+              {
+                "name": "Service > Payments > Capture Authorized Pre-Auth Hold"
+              },
+              {
+                "name": "Service > Payments > Void Authorization Transaction"
+              },
+              {
+                "name": "Service > Payments > Verify 3D Secure v2 OTP Verification"
+              },
+              {
+                "name": "Service > Payments > Handle Chargeback Fraud Alert Payload"
+              }
+            ],
+            "itemType": "test"
+          }
+        ]
+      },
+      {
+        "laneBadges": [
+          {
+            "type": "tag",
+            "value": "TagC"
+          },
+          {
+            "type": "subfolder",
+            "value": "SERVICE"
+          }
+        ],
+        "modules": [
+          {
+            "id": "tagc-01-audit.spec",
+            "fileName": "tagc-01-audit.spec.ts",
+            "title": "01 Audit",
+            "tags": [
+              "TagC"
+            ],
+            "imports": [
+              "tagc-settings-api",
+              "tagc-user-cleanup",
+              "tagc-security-audit",
+              "tagc-system-logs",
+              "tagc-user-activity"
+            ],
+            "items": [
+              {
+                "name": "Service > Audit > Generate Security Compliance Log"
+              },
+              {
+                "name": "Service > Audit > Stream HIPAA Compliance Event Log"
+              },
+              {
+                "name": "Service > Audit > Validate SOC2 Type II Evidence Vault"
+              },
+              {
+                "name": "Service > Audit > Audit Data Encryption Key Rotation"
+              },
+              {
+                "name": "Service > Audit > Verify Write-Once Read-Many Storage WORM"
+              },
+              {
+                "name": "Service > Audit > Track Privileged Escalation Events"
+              },
+              {
+                "name": "Service > Audit > Export Cryptographic Audit Trail Signature"
+              },
+              {
+                "name": "Service > Audit > Detect Suspicious IP Geo-Location Anomalies"
+              },
+              {
+                "name": "Service > Audit > Capture Database Schema DDL Alterations"
+              },
+              {
+                "name": "Service > Audit > Monitor Admin API Key Generation"
+              },
+              {
+                "name": "Service > Audit > Check GDPR Data Erasure Request Log"
+              },
+              {
+                "name": "Service > Audit > Validate PCI-DSS Vault Compliance Rules"
+              },
+              {
+                "name": "Service > Audit > Flag Bulk Data Export Threshold Violations"
+              },
+              {
+                "name": "Service > Audit > Audit Service Account Token Issuance"
+              },
+              {
+                "name": "Service > Audit > Verify Immutable Blockchain Hash Log Chain"
+              },
+              {
+                "name": "Service > Audit > Check Multi-Factor Auth Bypass Attempt Log"
+              },
+              {
+                "name": "Service > Audit > Archive Quarterly Security Assessment Data"
+              },
+              {
+                "name": "Service > Audit > Verify Log Integrity Signature HMAC"
+              },
+              {
+                "name": "SERVICE > Audit > Stream Audit Logs"
+              },
+              {
+                "name": "SERVICE > Audit > Compress Archive File"
+              }
+            ],
+            "itemType": "test"
+          },
+          {
+            "id": "tagc-02-logs.spec",
+            "fileName": "tagc-02-logs.spec.ts",
+            "title": "02 Logs",
+            "tags": [
+              "TagC"
+            ],
+            "imports": [
+              "tagc-endpoints",
+              "tagc-optimization",
+              "tagc-system-logs",
+              "tagc-session-manager",
+              "tagc-settings"
+            ],
+            "items": [
+              {
+                "name": "Service > Logs > Rotate Server Event Logs"
+              },
+              {
+                "name": "Service > Logs > Compress Archive Logs to AWS S3 Bucket"
+              },
+              {
+                "name": "Service > Logs > Stream Realtime Tail Logs over WebSocket"
+              },
+              {
+                "name": "Service > Logs > Parse Syslog Severity Filter Levels"
+              }
+            ],
+            "itemType": "test"
+          }
+        ]
+      }
+    ],
+    "metrics": [
+      {
+        "label": "TagA",
+        "tags": [
+          "TagA"
+        ],
+        "count": 41,
+        "files": [
+          {
+            "id": "taga-02-widgets.spec",
+            "fileName": "taga-02-widgets.spec.ts",
+            "title": "02 Widgets",
+            "subfolder": "UI",
+            "count": 5
+          },
+          {
+            "id": "taga-03-navigation.spec",
+            "fileName": "taga-03-navigation.spec.ts",
+            "title": "03 Navigation",
+            "subfolder": "UI",
+            "count": 4
+          },
+          {
+            "id": "taga-01-metrics.spec",
+            "fileName": "taga-01-metrics.spec.ts",
+            "title": "01 Metrics",
+            "subfolder": "API",
+            "count": 16
+          },
+          {
+            "id": "taga-02-endpoints.spec",
+            "fileName": "taga-02-endpoints.spec.ts",
+            "title": "02 Endpoints",
+            "subfolder": "API",
+            "count": 4
+          },
+          {
+            "id": "taga-03-telemetry.spec",
+            "fileName": "taga-03-telemetry.spec.ts",
+            "title": "03 Telemetry",
+            "subfolder": "API",
+            "count": 5
+          },
+          {
+            "id": "taga-02-notifications.spec",
+            "fileName": "taga-02-notifications.spec.ts",
+            "title": "02 Notifications",
+            "subfolder": "SERVICE",
+            "count": 4
+          },
+          {
+            "id": "taga-03-webhooks.spec",
+            "fileName": "taga-03-webhooks.spec.ts",
+            "title": "03 Webhooks",
+            "subfolder": "SERVICE",
+            "count": 3
+          }
+        ]
+      },
+      {
+        "label": "TagA TagB",
+        "tags": [
+          "TagA",
+          "TagB"
+        ],
+        "count": 17,
+        "files": [
+          {
+            "id": "taga-tagb-01-dashboard.spec",
+            "fileName": "taga-tagb-01-dashboard.spec.ts",
+            "title": "01 Dashboard",
+            "subfolder": "UI",
+            "count": 17
+          }
+        ]
+      },
+      {
+        "label": "TagB",
+        "tags": [
+          "TagB"
+        ],
+        "count": 24,
+        "files": [
+          {
+            "id": "tagb-02-checkout-flow.spec",
+            "fileName": "tagb-02-checkout-flow.spec.ts",
+            "title": "02 Checkout Flow",
+            "subfolder": "UI",
+            "count": 5
+          },
+          {
+            "id": "tagb-03-cart.spec",
+            "fileName": "tagb-03-cart.spec.ts",
+            "title": "03 Cart",
+            "subfolder": "UI",
+            "count": 4
+          },
+          {
+            "id": "tagb-01-billing.spec",
+            "fileName": "tagb-01-billing.spec.ts",
+            "title": "01 Billing",
+            "subfolder": "SERVICE",
+            "count": 5
+          },
+          {
+            "id": "tagb-02-subscriptions.spec",
+            "fileName": "tagb-02-subscriptions.spec.ts",
+            "title": "02 Subscriptions",
+            "subfolder": "SERVICE",
+            "count": 4
+          },
+          {
+            "id": "tagb-03-payments.spec",
+            "fileName": "tagb-03-payments.spec.ts",
+            "title": "03 Payments",
+            "subfolder": "SERVICE",
+            "count": 6
+          }
+        ]
+      },
+      {
+        "label": "TagC",
+        "tags": [
+          "TagC"
+        ],
+        "count": 46,
+        "files": [
+          {
+            "id": "tagc-01-profile-management.spec",
+            "fileName": "tagc-01-profile-management.spec.ts",
+            "title": "01 Profile Management",
+            "subfolder": "UI",
+            "count": 4
+          },
+          {
+            "id": "tagc-02-settings-panel.spec",
+            "fileName": "tagc-02-settings-panel.spec.ts",
+            "title": "02 Settings Panel",
+            "subfolder": "UI",
+            "count": 3
+          },
+          {
+            "id": "tagc-03-notifications-ui.spec",
+            "fileName": "tagc-03-notifications-ui.spec.ts",
+            "title": "03 Notifications Ui",
+            "subfolder": "UI",
+            "count": 4
+          },
+          {
+            "id": "tagc-01-session.spec",
+            "fileName": "tagc-01-session.spec.ts",
+            "title": "01 Session",
+            "subfolder": "API",
+            "count": 4
+          },
+          {
+            "id": "tagc-02-auth.spec",
+            "fileName": "tagc-02-auth.spec.ts",
+            "title": "02 Auth",
+            "subfolder": "API",
+            "count": 4
+          },
+          {
+            "id": "tagc-01-audit.spec",
+            "fileName": "tagc-01-audit.spec.ts",
+            "title": "01 Audit",
+            "subfolder": "SERVICE",
+            "count": 18
+          },
+          {
+            "id": "tagc-02-logs.spec",
+            "fileName": "tagc-02-logs.spec.ts",
+            "title": "02 Logs",
+            "subfolder": "SERVICE",
+            "count": 4
+          }
+        ]
+      },
+      {
+        "label": "TagA TagC",
+        "tags": [
+          "TagA",
+          "TagC"
+        ],
+        "count": 6,
+        "files": [
+          {
+            "id": "taga-tagc-03-integration.spec",
+            "fileName": "taga-tagc-03-integration.spec.ts",
+            "title": "03 Integration",
+            "subfolder": "API",
+            "count": 6
+          }
+        ]
+      }
+    ]
+  }
+]

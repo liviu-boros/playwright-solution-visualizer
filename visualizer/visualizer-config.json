@@ -1,0 +1,61 @@
+{
+  "tags": [
+    {
+      "name": "taga",
+      "displayName": "TagA",
+      "icon": "icons/tag-A.svg"
+    },
+    {
+      "name": "tagb",
+      "displayName": "TagB",
+      "icon": "icons/tag-B.svg"
+    },
+    {
+      "name": "tagc",
+      "displayName": "TagC",
+      "icon": "icons/tag-C.svg"
+    }
+  ],
+  "scanConfig": [
+    {
+      "name": "Api Models",
+      "dir": "./api",
+      "description": "HTTP request specs and route validations",
+      "icon": "icons/api.svg",
+      "type": "class",
+      "subfolders": []
+    },
+    {
+      "name": "Workflows",
+      "dir": "./workflows",
+      "description": "Multi-step API orchestration controllers",
+      "icon": "icons/workflows.svg",
+      "type": "functions",
+      "subfolders": []
+    },
+    {
+      "name": "Components",
+      "dir": "./components",
+      "description": "Shared global atomic locator abstractions",
+      "icon": "icons/components.svg",
+      "type": "class",
+      "subfolders": []
+    },
+    {
+      "name": "Pages",
+      "dir": "./pages",
+      "description": "Application interface maps and browser actions",
+      "icon": "icons/pages.svg",
+      "type": "class",
+      "subfolders": []
+    },
+    {
+      "name": "Tests",
+      "dir": "./tests",
+      "description": "End-to-end regression automation suites",
+      "icon": "icons/tests.svg",
+      "type": "test",
+      "subfolders": ["ui", "api", "service"]
+    }
+  ]
+}

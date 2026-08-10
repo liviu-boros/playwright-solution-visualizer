@@ -1,0 +1,29 @@
+/* css/components/test-item.css */
+
+.test-item {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  font-size: var(--font-size-body);
+  line-height: var(--line-height-body);
+  color: var(--color-text-body);
+  padding: 4px 8px 4px 4px;
+  border-radius: var(--radius-flag);
+  white-space: nowrap;
+}
+
+.test-item:hover {
+  background: color-mix(in srgb, var(--color-accent-green) 20%, transparent);
+}
+
+.test-item--removed {
+  color: var(--color-text-muted);
+}
+
+.test-item--removed:hover {
+  background: color-mix(in srgb, var(--color-accent-red) 20%, transparent);
+}
+
+.item-text {
+  transform: translateY(-1px);
+}

@@ -1,0 +1,173 @@
+/* css/components/section-anchor.css */
+
+/* ==========================================================================
+   Section Master Anchor Component Block
+   ========================================================================== */
+.section-anchor {
+  width: var(--anchor-width);
+  background-color: var(--color-card-bg);
+  padding: 24px;
+  border-radius: var(--radius-card);
+  flex-shrink: 0;
+  box-shadow: 0 8px 32px rgba(0, 0, 0, 1);
+  position: sticky;
+  left: var(--canvas-padding);
+}
+
+.is-dimmed {
+  opacity: 0.25;
+  z-index: 1;
+}
+
+.anchor-title {
+  font-size: var(--font-size-anchor-title);
+  line-height: var(--line-height-anchor-title);
+  font-weight: var(--weight-bold);
+  margin: 0 0 4px 0;
+  letter-spacing: -0.5px;
+}
+
+.anchor-path {
+  font-family: var(--font-family-mono);
+  color: var(--color-text-muted);
+  font-size: var(--font-size-subtitle);
+  line-height: var(--line-height-subtitle);
+  margin: 0 0 24px 0;
+  word-break: break-all;
+}
+
+.anchor-desc {
+  font-size: var(--font-size-body);
+  line-height: var(--line-height-body);
+  color: var(--color-text-body);
+  margin: 0 0 32px 0;
+}
+
+.anchor-metrics {
+  margin-top: 24px;
+  border-top: 1px solid color-mix(in srgb, var(--color-text-main) 4%, transparent);
+  padding-top: 24px;
+  display: flex;
+  flex-direction: column;
+  gap: 24px;
+}
+
+/* ==========================================================================
+   Metric Line Base & Modifiers
+   ========================================================================== */
+.metric-line {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.metric-line--total {
+  height: 24px;
+}
+
+.metric-line--summary {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.metric-line--folder {
+  gap: 8px;
+}
+
+.metric-line--file {
+  gap: 8px;
+}
+
+.metric-label-wrapper {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  color: var(--color-text-main);
+}
+
+.metric-lbl {
+  font-size: var(--font-size-subtitle);
+  line-height: var(--line-height-subtitle);
+  font-weight: var(--weight-semibold);
+  color: currentColor;
+  transform: translateY(-1px);
+}
+
+.metric-badges-container {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+}
+
+.total-metric-lbl {
+  font-size: var(--font-size-body);
+  font-weight: var(--weight-bold);
+  color: var(--color-text-main);
+}
+
+/* ==========================================================================
+   Category Block, Metric Tree Lists & File Breakdown
+   ========================================================================== */
+.metric-category-block {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+}
+
+.metric-summary-list {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  margin-top: 4px;
+}
+
+.metric-tree-list {
+  display: flex;
+  flex-direction: column;
+  padding-left: 12px;
+  border-left: 1px solid var(--color-border-subtle);
+}
+
+.metric-tree-list--folders {
+  gap: 8px;
+  margin-top: 4px;
+}
+
+.metric-tree-list--files {
+  gap: 2px;
+  margin-top: 2px;
+  margin-bottom: 2px;
+}
+
+.metric-folder-block {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+  margin-top: 4px;
+}
+
+.metric-folder-block:last-child {
+  margin-bottom: 4px;
+}
+
+.metric-folder-title {
+  font-family: var(--font-family-system);
+  font-size: var(--font-size-subtitle);
+  line-height: var(--line-height-subtitle);
+  font-weight: var(--weight-semibold);
+  color: var(--color-text-main);
+  letter-spacing: 0.5px;
+}
+
+.metric-file-title {
+  font-family: var(--font-family-system);
+  font-size: var(--font-size-subtitle);
+  line-height: var(--line-height-subtitle);
+  font-weight: var(--weight-regular);
+  color: var(--color-text-muted);
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  max-width: 170px;
+}

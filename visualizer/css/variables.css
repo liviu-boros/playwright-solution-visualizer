@@ -1,0 +1,176 @@
+:root {
+  /* ==========================================================================
+     Tier 1: Global Palette & Primitives
+     ========================================================================== */
+  --pr-color-dark-950: #030303;
+  --pr-color-dark-900: #121212;
+  --pr-color-dark-800: #1c1c1c;
+  --pr-color-dark-700: #2a2a2a;
+  --pr-color-dark-600: #333333;
+  --pr-color-dark-500: #555555;
+  
+  --pr-color-gray-400: #8a8a8a;
+  --pr-color-gray-200: #e0e0e0;
+  --pr-color-white: #ffffff;
+  
+  --pr-color-green: #3f8d69;
+  --pr-color-cyan: #00b4d8;
+  --pr-color-red: #A9565C;
+
+  /* ==========================================================================
+     Tier 2: System Semantic Tokens
+     ========================================================================== */
+  /* Surfaces & Canvas */
+  --color-bg-canvas: var(--pr-color-dark-900);
+  --color-bg-surface: var(--pr-color-dark-800);
+  --color-bg-surface-subtle: var(--pr-color-dark-700);
+  --color-bg-surface-darkest: var(--pr-color-dark-950);
+  --color-bg-subfolder: var(--pr-color-dark-600);
+
+  /* Legacy Compatibility Surface Aliases */
+  --color-canvas-bg: var(--color-bg-canvas);
+  --color-card-bg: var(--color-bg-surface);
+  --color-panel-bg: var(--color-bg-surface);
+  --color-badge-bg: var(--color-bg-surface-subtle);
+  --color-badge-subfolder: var(--color-bg-subfolder);
+  --color-input-bg: var(--color-bg-surface-subtle);
+  --color-accent-dark: var(--color-bg-surface-darkest);
+
+  /* Text States */
+  --color-text-main: var(--pr-color-white);
+  --color-text-muted: var(--pr-color-gray-400);
+  --color-text-body: var(--pr-color-gray-200);
+
+  /* Border Colors */
+  --color-border-subtle: var(--pr-color-dark-600);
+  --color-border-default: var(--pr-color-dark-500);
+  --color-border-panel: var(--color-border-subtle);
+  --color-border-input: var(--color-border-subtle);
+
+  /* Status Colors */
+  --color-status-success: var(--pr-color-green);
+  --color-status-info: var(--pr-color-cyan);
+  --color-status-error: var(--pr-color-red);
+
+  /* Legacy Compatibility Status Aliases */
+  --color-accent-green: var(--color-status-success);
+  --color-accent-cyan: var(--color-status-info);
+  --color-accent-red: var(--color-status-error);
+
+  /* ==========================================================================
+     Tier 3: Spatial Layout & Micro-Geometry
+     ========================================================================== */
+  /* Workspace Structural Dimensions & Gaps */
+  --canvas-padding: 150px;
+  --gap-section-anchor: 96px;
+  --gap-section-main: 256px;
+  --gap-lane-stack: 96px;
+  --gap-lane-row: 32px;
+  --gap-module-cards: 32px;
+  --gap-element-list: 2px;
+  --gap-side-badges: 8px;
+
+  /* Element Sizing Constraints */
+  --card-width: 420px;
+  --anchor-width: 280px;
+  --badge-width: 48px;
+  --badge-height: 56px;
+
+  /* Module Card Ticks (Crop Marks) & Micro-Geometry */
+  --card-tick-length: 16px;
+  --card-tick-thickness: 1px;
+  --card-tick-thickness-hover: 2px;
+  --card-tick-color: var(--color-border-default);
+  --badge-tick-color: var(--color-border-default);
+
+  /* Vertical Side Rail Badge Borders */
+  --badge-border-thickness: 1px;
+  --badge-v-line-length: 8px;
+
+  /* Standard Border Radii */
+  --radius-panel: 0px;
+  --radius-card: 0px;
+  --radius-badge: 0px;
+  --radius-flag: 0px;
+
+  /* ==========================================================================
+     Tier 4: Typography & Iconography
+     ========================================================================== */
+  --font-family-system: 'Inter', -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+  --font-family-mono: monospace;
+
+  /* Font Sizes & Unitless Line Height Ratios */
+  --font-size-anchor-title: 1.75rem;           /* 28px */
+  --line-height-anchor-title: calc(34 / 28);
+
+  --font-size-card-title: 1.375rem;            /* 22px */
+  --line-height-card-title: calc(28 / 22);
+
+  --font-size-body: 0.875rem;                  /* 14px */
+  --line-height-body: calc(20 / 14);
+
+  --font-size-subtitle: 0.75rem;               /* 12px */
+  --line-height-subtitle: calc(16 / 12);
+
+  --font-size-badge-text: 0.6875rem;           /* 11px */
+  --line-height-badge-text: calc(11 / 11);
+
+  --font-size-badge-macro: 0.625rem;           /* 10px */
+  --line-height-badge-macro: calc(10 / 10);
+
+  --font-size-badge-micro: 0.5625rem;           /* 9px */
+  --line-height-badge-micro: calc(9 / 9);
+
+  /* Font Weights */
+  --weight-regular: 400;
+  --weight-semibold: 600;
+  --weight-bold: 700;
+  --weight-black: 900;
+
+  /* Icon Sizing System */
+  --icon-size-lg: 36px;
+  --icon-size-md: 20px;
+  --icon-size-sm: 16px;
+
+  /* Flag Specific Dimensions */
+  --flag-container-size: 20px;
+  --flag-icon-size: 16px;
+
+  /* ==========================================================================
+     Tier 5: Component-Specific Bindings
+     ========================================================================== */
+  /* Control Panel Header */
+  --panel-label-font-size: var(--font-size-badge-text);
+  --panel-label-color: var(--color-text-muted);
+  --compare-badge-font-size: var(--font-size-badge-text);
+  --compare-badge-color: color-mix(in srgb, var(--color-status-success) 80%, var(--color-text-main));
+  --compare-badge-bg: color-mix(in srgb, var(--color-status-success) 40%, var(--color-bg-surface-darkest));
+
+  /* Select Trigger Component */
+  --select-font-size: var(--font-size-subtitle);
+  --select-text-color: var(--color-text-main);
+  --select-bg: var(--color-bg-surface-darkest);
+  --select-bg-hover: color-mix(in srgb, var(--color-status-success) 20%, var(--color-bg-surface-darkest));
+  --select-border-color: var(--color-border-input);
+  --select-border-color-hover: var(--color-status-success);
+  --select-arrow-size: 12px;
+  --select-arrow-color: var(--color-text-muted);
+  --select-arrow-color-active: var(--color-status-success);
+
+  /* Options Dropdown Menu */
+  --select-dropdown-bg: var(--color-bg-surface-darkest);
+  --select-dropdown-border: var(--color-border-panel);
+  --select-option-font-size: var(--font-size-subtitle);
+  --select-option-color: var(--color-text-main);
+  --select-option-divider: color-mix(in srgb, var(--color-text-main) 4%, transparent);
+  --select-option-bg-hover: color-mix(in srgb, var(--color-status-success) 40%, transparent);
+  --select-option-color-hover: var(--color-text-main);
+  --select-option-bg-selected: color-mix(in srgb, var(--color-status-success) 20%, var(--color-bg-surface-darkest));
+  --select-option-color-selected: color-mix(in srgb, var(--color-status-success) 80%, var(--color-text-main));
+  --select-option-bg-disabled: color-mix(in srgb, var(--color-bg-surface-darkest) 25%, transparent);
+
+  /* Option Badges */
+  --select-badge-font-size: var(--font-size-badge-micro);
+  --select-badge-color: var(--color-text-main);
+  --select-badge-bg: var(--color-bg-surface-darkest);
+}

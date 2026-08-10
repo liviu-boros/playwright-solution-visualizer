@@ -1,0 +1,24 @@
+{
+  "compilerOptions": {
+    "target": "ES2022",
+    "module": "nodenext",
+    "moduleResolution": "nodenext",
+    "paths": {
+      "@api/*": ["./api/*"],
+      "@components/*": ["./components/*"],
+      "@pages/*": ["./pages/*"],
+      "@tests/*": ["./tests/*"],
+      "@workflows": ["./workflows/index.ts"]
+    },
+    "strict": true,
+    "esModuleInterop": true,
+    "skipLibCheck": true
+  },
+  "include": [
+    "api/**/*",
+    "components/**/*",
+    "pages/**/*",
+    "workflows/**/*",
+    "tests/**/*"
+  ]
+}

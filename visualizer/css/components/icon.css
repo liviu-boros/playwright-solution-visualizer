@@ -1,0 +1,98 @@
+/* css/components/icon.css */
+
+/* ==========================================================================
+   1. Base Icon Component
+   ========================================================================== */
+.icon {
+  display: inline-block;
+  width: var(--icon-size-md);
+  height: var(--icon-size-md);
+  flex-shrink: 0;
+  background-color: currentColor;
+  -webkit-mask-repeat: no-repeat;
+  -webkit-mask-position: center;
+  -webkit-mask-size: contain;
+  mask-repeat: no-repeat;
+  mask-position: center;
+  mask-size: contain;
+}
+
+/* ==========================================================================
+   2. Size & Context Modifiers
+   ========================================================================== */
+.icon--sm {
+  width: var(--icon-size-sm);
+  height: var(--icon-size-sm);
+}
+
+.icon--lg {
+  width: var(--icon-size-lg);
+  height: var(--icon-size-lg);
+  margin-bottom: 12px;
+  background-color: var(--color-text-main);
+}
+
+.icon--flag {
+  width: var(--flag-icon-size);
+  height: var(--flag-icon-size);
+  background-color: var(--color-text-main);
+}
+
+.icon--badge {
+  margin-bottom: 4px;
+}
+
+/* ==========================================================================
+   3. SVG Image Modifiers
+   ========================================================================== */
+.icon--class {
+  -webkit-mask-image: url('../../icons/system/class-24dp.svg');
+  mask-image: url('../../icons/system/class-24dp.svg');
+}
+
+.icon--method {
+  -webkit-mask-image: url('../../icons/system/method-24dp.svg');
+  mask-image: url('../../icons/system/method-24dp.svg');
+}
+
+.icon--function {
+  -webkit-mask-image: url('../../icons/system/function-24dp.svg');
+  mask-image: url('../../icons/system/function-24dp.svg');
+}
+
+.icon--arrow {
+  -webkit-mask-image: url('../../icons/system/arrow_right_24dp.svg');
+  mask-image: url('../../icons/system/arrow_right_24dp.svg');
+}
+
+.icon--priority {
+  -webkit-mask-image: url('../../icons/system/priority_high_24dp.svg');
+  mask-image: url('../../icons/system/priority_high_24dp.svg');
+}
+
+.icon--removed {
+  -webkit-mask-image: url('../../icons/system/removed_24dp.svg');
+  mask-image: url('../../icons/system/removed_24dp.svg');
+}
+
+/* ==========================================================================
+   4. Non-SVG Symbol Components
+   ========================================================================== */
+.icon-code {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: var(--icon-size-md);
+  height: var(--icon-size-md);
+  flex-shrink: 0;
+  font-family: var(--font-family-mono);
+  font-size: var(--font-size-subtitle);
+  line-height: var(--line-height-subtitle);
+  font-weight: var(--weight-bold);
+  color: var(--color-text-muted);
+}
+
+.custom-select-arrow {
+  font-size: var(--select-arrow-size);
+  color: var(--select-arrow-color);
+}

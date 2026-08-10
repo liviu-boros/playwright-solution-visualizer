@@ -1,0 +1,15 @@
+# Dependencies
+node_modules/
+
+# Playwright & Test Output
+test-results/
+playwright-report/
+blob-report/
+playwright/.cache/
+
+# Environment & Temp Files
+.env
+.env.local
+.temp/
+temp/
+*.tmp

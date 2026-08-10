@@ -1,0 +1,51 @@
+/* css/styles.css */
+@import url('variables.css');
+
+/* Component Modular Stylesheets */
+
+/* Primitives & Atoms */
+@import url('decorations/decorations.css');
+@import url('components/badge.css');
+@import url('components/flag.css');
+@import url('components/icon.css');
+
+/* Molecules & Organisms */
+@import url('components/control-panel.css');
+@import url('components/section-block.css');
+@import url('components/section-anchor.css');
+@import url('components/lane-identifiers.css');
+@import url('components/module-card.css');
+@import url('components/test-item.css');
+@import url('components/method-item.css');
+
+
+/* ==========================================================================
+   Global Environment & Canvas Layout Resets
+   ========================================================================== */
+body, html {
+  margin: 0; padding: 0;
+  width: 100%; height: 100%;
+  overflow: hidden;
+  background-color: var(--color-canvas-bg);
+  font-family: var(--font-family-system);
+  color: var(--color-text-main);
+  user-select: none;
+}
+
+#viewport {
+  width: 100vw; height: 100vh;
+  position: relative; overflow: hidden;
+  cursor: grab;
+  /* Grid pattern in background to give Figma canvas feel */
+  background-image: 
+    radial-gradient(circle, #222222 1px, transparent 1px);
+  background-size: 24px 24px;
+}
+#viewport:active { cursor: grabbing; }
+
+#canvas {
+  position: absolute; transform-origin: 0 0;
+  display: flex; flex-direction: row;
+  gap: var(--gap-section-main);
+  padding: var(--canvas-padding);
+}

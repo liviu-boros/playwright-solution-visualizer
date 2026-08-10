@@ -1,0 +1,122 @@
+/* css/components/badge.css */
+
+/* ==========================================================================
+   1. Layout Containers
+   ========================================================================== */
+.badge-row {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 6px;
+  margin-bottom: 10px;
+}
+
+.badge-row:empty {
+  display: none;
+}
+
+.badge-left {
+  display: flex;
+  gap: 6px;
+}
+
+.badge-right {
+  display: flex;
+  align-items: center;
+  margin-left: auto;
+}
+
+/* ==========================================================================
+   2. Base Component
+   ========================================================================== */
+.badge {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  height: 20px;
+  padding: 0 8px;
+  box-sizing: border-box;
+  border-radius: var(--radius-flag);
+  font-size: var(--font-size-badge-macro);
+  line-height: var(--line-height-badge-macro);
+  font-weight: var(--weight-bold);
+  letter-spacing: 0.5px;
+  color: var(--color-text-main);
+  background: var(--color-accent-dark);
+  border: 1px solid var(--color-border-subtle);
+}
+
+/* ==========================================================================
+   3. Component Modifiers
+   ========================================================================== */
+.badge--muted {
+  color: var(--color-text-muted);
+}
+
+.badge--secondary {
+  border: none;
+  background: transparent;
+  color: var(--color-text-main);
+}
+
+.badge--clear {
+  border: none;
+  background: transparent;
+  color: var(--color-text-muted);
+}
+
+.badge--medium {
+  height: 24px;
+  font-size: var(--font-size-badge-text);
+  line-height: var(--line-height-badge-text);
+}
+
+/* ==========================================================================
+   4. Standalone / Specialized Components
+   ========================================================================== */
+.side-badge {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  width: var(--badge-width);
+  height: var(--badge-height);
+  padding: 0;
+  border: none;
+  border-radius: var(--radius-badge);
+  position: relative;
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.3);
+  color: var(--color-text-main);
+}
+
+.badge-text {
+  font-size: var(--font-size-badge-text);
+  line-height: var(--line-height-badge-text);
+  font-weight: var(--weight-bold);
+  color: currentColor;
+}
+
+.metric-diff-added {
+  color: var(--color-accent-green);
+  font-weight: var(--weight-bold);
+  font-size: var(--font-size-badge-macro);
+  line-height: var(--line-height-badge-macro);
+}
+
+.metric-diff-removed {
+  color: var(--color-accent-red);
+  font-weight: var(--weight-bold);
+  font-size: var(--font-size-badge-macro);
+  line-height: var(--line-height-badge-macro);
+}
+
+.option-badge {
+  font-size: var(--select-badge-font-size);
+  font-weight: var(--weight-bold);
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+  padding: 2px 6px;
+  background: var(--select-badge-bg);
+  color: var(--select-badge-color);
+  border: 1px solid var(--select-badge-bg);
+}

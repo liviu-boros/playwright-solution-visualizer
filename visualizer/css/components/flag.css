@@ -1,0 +1,39 @@
+/* css/components/flag.css */
+
+/* Status Indicator Flags (Diff & Snapshot Comparison) */
+
+.flag {
+  width: var(--flag-container-size);
+  height: var(--flag-container-size);
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: var(--radius-flag);
+  flex-shrink: 0;
+  animation: pulse-beacon 2s ease-out infinite;
+}
+
+.flag--new {
+  background-color: var(--color-accent-green);
+  --pulse-beacon-color: var(--color-accent-green);
+}
+
+.flag--removed {
+  background-color: var(--color-accent-red);
+  --pulse-beacon-color: var(--color-accent-red);
+}
+
+@keyframes pulse-beacon {
+  0% {
+    filter: brightness(1) drop-shadow(0 0 0px var(--pulse-beacon-color));
+  }
+  15% {
+    filter: brightness(2) drop-shadow(0 0 6px var(--pulse-beacon-color));
+  }
+  60% {
+    filter: brightness(1) drop-shadow(0 0 0px var(--pulse-beacon-color));
+  }
+  100% {
+    filter: brightness(1) drop-shadow(0 0 0px var(--pulse-beacon-color));
+  }
+}

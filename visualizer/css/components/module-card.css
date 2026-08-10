@@ -1,0 +1,141 @@
+/* css/components/module-card.css */
+
+/* ==========================================================================
+   Module Card Component Block
+   ========================================================================== */
+.module-card {
+  --card-bg-surface: var(--color-card-bg);
+  width: max-content;
+  min-width: max-content;
+  padding: 24px;
+  box-shadow: 0 8px 24px rgba(0, 0, 0, 1);
+  border-radius: var(--radius-card);
+  position: relative;
+  z-index: 2;
+  cursor: pointer;
+  background-color: var(--color-card-bg);
+}
+
+.module-card:hover {
+  --card-tick-color: var(--color-accent-green);
+  --card-tick-thickness: var(--card-tick-thickness-hover);
+  --card-bg-surface: color-mix(in srgb, var(--color-accent-green) 10%, var(--color-card-bg));
+}
+
+.card-header {
+  border-bottom: 1px solid color-mix(in srgb, var(--color-text-main) 4%, transparent);
+  padding-bottom: 16px;
+  margin-bottom: 16px;
+}
+
+.card-title {
+  font-size: var(--font-size-card-title);
+  line-height: var(--line-height-card-title);
+  font-weight: var(--weight-semibold);
+  margin: 0 0 4px 0;
+  letter-spacing: -0.5px;
+  white-space: nowrap;
+}
+
+.card-subtitle {
+  font-family: var(--font-family-mono);
+  font-size: var(--font-size-subtitle);
+  line-height: var(--line-height-subtitle);
+  color: var(--color-text-muted);
+  margin: 0;
+  white-space: nowrap;
+}
+
+.card-body {
+  display: flex;
+  flex-direction: column;
+  gap: var(--gap-element-list);
+}
+
+/* Class Group & Class Parent Row */
+.class-group {
+  margin-bottom: 6px;
+}
+
+.class-group:last-child {
+  margin-bottom: 0;
+}
+
+.class-parent-row {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  font-size: var(--font-size-body);
+  line-height: var(--line-height-body);
+  color: var(--color-text-muted);
+  padding: 4px 8px 4px 4px;
+  white-space: nowrap;
+  font-weight: var(--weight-semibold);
+}
+
+/* State Modifiers & Active Dependency Highlights */
+.is-active-source {
+  --card-tick-color: var(--color-accent-green);
+  --card-tick-thickness: var(--card-tick-thickness-hover);
+  --card-bg-surface: color-mix(in srgb, var(--color-accent-green) 18%, var(--color-card-bg));
+  z-index: 100;
+}
+
+.is-active-target {
+  --card-tick-color: var(--color-accent-green);
+  --card-tick-thickness: var(--card-tick-thickness-hover);
+  --card-bg-surface: color-mix(in srgb, var(--color-accent-green) 12%, var(--color-card-bg));
+  z-index: 100;
+}
+
+.is-active-dependency {
+  --card-tick-color: var(--color-accent-green);
+  --card-tick-thickness: var(--card-tick-thickness-hover);
+  --card-bg-surface: color-mix(in srgb, var(--color-accent-green) 12%, var(--color-card-bg));
+  z-index: 100;
+}
+
+.is-active-reference {
+  --card-tick-color: var(--color-accent-cyan);
+  --card-tick-thickness: var(--card-tick-thickness-hover);
+  --card-bg-surface: color-mix(in srgb, var(--color-accent-cyan) 12%, var(--color-card-bg));
+  z-index: 100;
+}
+
+.module-card--removed {
+  opacity: 0.7;
+}
+
+.is-dimmed {
+  opacity: 0.25;
+  z-index: 1;
+}
+
+/* ==========================================================================
+   SVG Connection Paths Layer (Specialized Sub-Block)
+   ========================================================================== */
+.connections-layer {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  pointer-events: none;
+  z-index: 10;
+  overflow: visible;
+}
+
+.connection-path {
+  fill: none;
+  stroke: var(--color-accent-green);
+  stroke-width: 2.5px;
+  stroke-linecap: round;
+}
+
+.dependency-path {
+  stroke: var(--color-accent-green);
+}
+
+.reference-path {
+  stroke: var(--color-accent-cyan);
+}

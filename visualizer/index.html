@@ -1,0 +1,48 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Playwright Solution Visualizer</title>
+    <link rel="icon" type="image/svg+xml" href="icons/system/favicon.svg?v=1" />
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;900&display=swap"
+      rel="stylesheet"
+    />
+    <link rel="stylesheet" href="css/styles.css" />
+  </head>
+  <body>
+    <div class="control-panel" id="controlPanel">
+      <div class="panel-select-wrapper">
+        <div id="leftSelectContainer"></div>
+        <span class="panel-select-label">Target</span>
+      </div>
+
+      <span class="panel-compare-badge">VS</span>
+
+      <div class="panel-select-wrapper">
+        <span class="panel-select-label">Baseline</span>
+        <div id="rightSelectContainer"></div>
+      </div>
+    </div>
+
+    <div id="viewport">
+      <div id="canvas">
+        <div
+          style="
+            padding: 100px;
+            text-align: center;
+            color: var(--color-text-muted);
+          "
+        >
+          <h1>Initializing Visualizer...</h1>
+          <p>Parsing dataset files and rendering layout lanes.</p>
+        </div>
+      </div>
+    </div>
+
+    <script type="module" src="js/app.js"></script>
+  </body>
+</html>

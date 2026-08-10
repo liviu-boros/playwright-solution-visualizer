@@ -1,0 +1,17 @@
+/* css/components/lane-identifiers.css */
+.lane-identifiers {
+  display: flex;
+  flex-direction: column;
+  gap: var(--gap-side-badges);
+  flex-shrink: 0;
+}
+
+.is-dimmed {
+  opacity: 0.25;
+  z-index: 1;
+}
+
+.lane-identifiers:empty {
+  display: none;
+}
+
