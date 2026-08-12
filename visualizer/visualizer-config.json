@@ -23,6 +23,7 @@
       "description": "HTTP request specs and route validations",
       "icon": "icons/api.svg",
       "type": "class",
+      "allowUntagged": false,
       "subfolders": []
     },
     {
@@ -31,6 +32,7 @@
       "description": "Multi-step API orchestration controllers",
       "icon": "icons/workflows.svg",
       "type": "functions",
+      "allowUntagged": false,
       "subfolders": []
     },
     {
@@ -39,6 +41,7 @@
       "description": "Shared global atomic locator abstractions",
       "icon": "icons/components.svg",
       "type": "class",
+      "allowUntagged": true,
       "subfolders": []
     },
     {
@@ -47,6 +50,7 @@
       "description": "Application interface maps and browser actions",
       "icon": "icons/pages.svg",
       "type": "class",
+      "allowUntagged": false,
       "subfolders": []
     },
     {
@@ -55,6 +59,7 @@
       "description": "End-to-end regression automation suites",
       "icon": "icons/tests.svg",
       "type": "test",
+      "allowUntagged": false,
       "subfolders": ["ui", "api", "service"]
     }
   ]

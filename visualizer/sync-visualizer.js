@@ -395,9 +395,10 @@ function runMiner() {
         }
       }
 
-      // Test Section Tag Enforcement
-      if (section.type === 'test' && fileTags.length === 0) {
-        console.warn(`Warning: Skipping untagged test file ${filePath}`);
+      // Untagged File Guard (via allowUntagged configuration)
+      const allowUntagged = section.allowUntagged ?? true;
+      if (!allowUntagged && fileTags.length === 0) {
+        console.warn(`Warning: Skipping untagged file ${filePath}`);
         return;
       }
 

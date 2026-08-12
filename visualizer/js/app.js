@@ -412,9 +412,9 @@ function clearDependencyHighlighting() {
   if (!canvas) return;
 
   // Clear state classes on cards, anchors, and lane identifiers
-  const dimmedElements = canvas.querySelectorAll('.is-dimmed, .is-active-source, .is-active-target, .is-active-dependency, .is-active-reference');
+  const dimmedElements = canvas.querySelectorAll('.is-dimmed, .is-active-source, .is-active-target, .is-active-dependency, .is-active-reference, .is-active-source--removed');
   dimmedElements.forEach(el => {
-    el.classList.remove('is-active-source', 'is-active-target', 'is-active-dependency', 'is-active-reference', 'is-dimmed');
+    el.classList.remove('is-active-source', 'is-active-target', 'is-active-dependency', 'is-active-reference', 'is-dimmed', 'is-active-source--removed');
   });
 
   // Clear SVG path layer
@@ -550,7 +550,10 @@ function setDependencyHighlighting(sourceCard) {
   if (!canvas || !sourceCard) return;
 
   activeSourceCard = sourceCard;
-  sourceCard.classList.add('is-active-source');
+  if (!sourceCard.classList.contains('module-card--removed'))
+    sourceCard.classList.add('is-active-source');
+  else
+    sourceCard.classList.add('is-active-source--removed');
 
   // Parse imports list from selected card data attribute
   let sourceImports = [];

@@ -5,7 +5,7 @@
    ========================================================================== */
 .control-panel {
   position: fixed;
-  top: 12px;
+  /* top: 0px; */
   left: 50%;
   transform: translateX(-50%);
   z-index: 1000;
@@ -13,8 +13,8 @@
   backdrop-filter: blur(8px) saturate(180%);
   -webkit-backdrop-filter: blur(8px) saturate(180%);
   border: 1px solid var(--color-border-panel);
-  padding: 12px 12px;
-  border-radius: var(--radius-panel);
+  padding: 8px 8px;
+  border-radius: 0px 0px var(--radius-panel) var(--radius-panel);
   display: flex;
   align-items: center;
   gap: 16px;
@@ -43,6 +43,7 @@
   letter-spacing: 1px;
   color: var(--compare-badge-color);
   background: var(--compare-badge-bg);
+  border-radius: var(--radius-badge);
   padding: 4px 8px;
   user-select: none;
 }
@@ -60,7 +61,7 @@
   color: var(--select-text-color);
   border: 1px solid var(--select-border-color);
   padding: 8px 12px;
-  border-radius: var(--radius-badge);
+  border-radius: var(--radius-items);
   font-family: var(--font-family-system);
   font-size: var(--select-font-size);
   line-height: var(--line-height-subtitle);
@@ -93,20 +94,20 @@
 .custom-select-dropdown {
   display: none;
   position: absolute;
-  top: calc(100% + 6px);
+  top: calc(100% + 4px);
   left: 0;
   min-width: 100%;
   width: max-content;
   background: var(--select-dropdown-bg);
   border: 1px solid var(--select-dropdown-border);
-  border-radius: 0;
+  border-radius: var(--radius-items);
   box-shadow: 0 10px 30px rgba(0, 0, 0, 0.85);
   z-index: 1100;
-  max-height: 260px;
+  max-height: 460px;
   overflow-y: auto;
   overflow-x: hidden;
   scrollbar-width: thin;
-  scrollbar-gutter: stable;
+  scrollbar-color: var(--color-border-default, #333) transparent;
   box-sizing: border-box;
 }
 
@@ -115,11 +116,20 @@
 }
 
 .custom-select-dropdown::-webkit-scrollbar-track {
-  background: var(--select-dropdown-bg);
+  background: transparent;
 }
 
 .custom-select-dropdown::-webkit-scrollbar-thumb {
   background: var(--color-border-default);
+  border-radius: 9999px;
+}
+
+.custom-select-dropdown::-webkit-scrollbar-thumb:hover {
+  background: var(--color-text-muted);
+}
+
+.custom-select-dropdown::-webkit-scrollbar-corner {
+  background: transparent;
 }
 
 .custom-select-dropdown--open {
@@ -135,7 +145,7 @@
 }
 
 .custom-select-option {
-  padding: 8px 16px;
+  padding: 8px 12px;
   font-size: var(--select-option-font-size);
   color: var(--select-option-color);
   cursor: pointer;

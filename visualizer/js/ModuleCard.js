@@ -44,7 +44,7 @@ export function ModuleCard(mod) {
   const importsJson = JSON.stringify(mod.imports || []);
 
   return `
-    <div class="module-card corner-ticks ambient-spotlight${mod.status === 'removed' ? ' module-card--removed' : ''}" data-module-id="${mod.id}" data-imports='${importsJson}'>
+    <div class="module-card ambient-spotlight${mod.status === 'removed' ? ' module-card--removed' : ''}" data-module-id="${mod.id}" data-imports='${importsJson}'>
       <div class="card-header">
         ${badgeRowHtml}
         <h2 class="card-title">${displayTitle}</h2>

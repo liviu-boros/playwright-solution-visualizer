@@ -9,7 +9,9 @@
   padding: 24px;
   border-radius: var(--radius-card);
   flex-shrink: 0;
-  box-shadow: 0 8px 32px rgba(0, 0, 0, 1);
+  border: 2px solid var(--pr-color-dark-950, #090a0f);
+  outline: 2px solid var(--card-border-color, var(--color-border-subtle));
+  outline-offset: 0;
   position: sticky;
   left: var(--canvas-padding);
 }
@@ -22,9 +24,9 @@
 .anchor-title {
   font-size: var(--font-size-anchor-title);
   line-height: var(--line-height-anchor-title);
-  font-weight: var(--weight-bold);
+  font-weight: var(--weight-semibold);
   margin: 0 0 4px 0;
-  letter-spacing: -0.5px;
+  letter-spacing: 1px;
 }
 
 .anchor-path {
@@ -45,7 +47,7 @@
 
 .anchor-metrics {
   margin-top: 24px;
-  border-top: 1px solid color-mix(in srgb, var(--color-text-main) 4%, transparent);
+  border-top: 1px solid var(--color-border-divider);
   padding-top: 24px;
   display: flex;
   flex-direction: column;

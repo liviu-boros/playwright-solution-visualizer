@@ -20,14 +20,14 @@ function renderLaneBadges(laneBadges, config) {
         if (badge.type === 'tag') {
           const iconPath = getTagIcon(badge.value, config);
           return `
-            <div class="side-badge rail-ticks" title="Project: ${badge.value}">
+            <div class="side-badge" title="Project: ${badge.value}">
               <span class="icon icon--badge" style="mask: url('${iconPath}') no-repeat center / contain; -webkit-mask: url('${iconPath}') no-repeat center / contain;" aria-hidden="true"></span>
               <span class="badge-text">${badge.value}</span>
             </div>
           `;
         } else {
           return `
-            <div class="side-badge rail-ticks" title="Subfolder: ${badge.value}">
+            <div class="side-badge" title="Subfolder: ${badge.value}">
               <span class="badge-text">${badge.value}</span>
             </div>
           `;
@@ -253,7 +253,7 @@ function renderMasterAnchor(section, config) {
   }
 
   return `
-    <div class="section-anchor corner-ticks">
+    <div class="section-anchor">
       <span class="icon icon--lg" style="mask: url('${section.icon}') no-repeat center / contain; -webkit-mask: url('${section.icon}') no-repeat center / contain;" aria-hidden="true"></span>
       <h1 class="anchor-title">${section.title}</h1>
       <p class="anchor-path">${section.folder}</p>

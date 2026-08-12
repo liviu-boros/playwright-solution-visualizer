@@ -44,6 +44,7 @@
   /* Border Colors */
   --color-border-subtle: var(--pr-color-dark-600);
   --color-border-default: var(--pr-color-dark-500);
+  --color-border-divider: var(--pr-color-dark-700);
   --color-border-panel: var(--color-border-subtle);
   --color-border-input: var(--color-border-subtle);
 
@@ -76,22 +77,19 @@
   --badge-width: 48px;
   --badge-height: 56px;
 
-  /* Module Card Ticks (Crop Marks) & Micro-Geometry */
-  --card-tick-length: 16px;
-  --card-tick-thickness: 1px;
-  --card-tick-thickness-hover: 2px;
-  --card-tick-color: var(--color-border-default);
-  --badge-tick-color: var(--color-border-default);
-
-  /* Vertical Side Rail Badge Borders */
-  --badge-border-thickness: 1px;
-  --badge-v-line-length: 8px;
+  /* Module Card Dual-Border System & Micro-Geometry */
+  --card-border-thickness: 1px;
+  --card-border-thickness-hover: 2px;
+  --card-border-color: var(--color-border-subtle);
 
   /* Standard Border Radii */
-  --radius-panel: 0px;
-  --radius-card: 0px;
-  --radius-badge: 0px;
-  --radius-flag: 0px;
+  --radius-panel: 16px;
+  --radius-items: 8px;
+  --radius-card: 8px;
+  --radius-badge: 4px;
+  --radius-badge-side: 8px;
+  --radius-flag: 4px;
+  --radius-active: 16px;
 
   /* ==========================================================================
      Tier 4: Typography & Iconography
