@@ -12,6 +12,16 @@ async function fetchJSON(url) {
   return res.json();
 }
 
+function getSubfolder(mod, lane) {
+  if (mod && mod.subfolder) return mod.subfolder;
+  if (lane && lane.subfolder) return lane.subfolder;
+  if (lane && Array.isArray(lane.laneBadges)) {
+    const subBadge = lane.laneBadges.find(b => b.type === 'subfolder' || b.type === 'folder');
+    if (subBadge && subBadge.value) return subBadge.value;
+  }
+  return 'ROOT';
+}
+
 // High-speed browser diffing engine: compares current target against baseline snapshot
 function diffSnapshots(currentData, baselineData, config) {
   const targetData = JSON.parse(JSON.stringify(currentData));
@@ -273,8 +283,9 @@ function diffSnapshots(currentData, baselineData, config) {
       const moduleMap = new Map();
       section.lanes.forEach(lane => {
         lane.modules.forEach(mod => {
-          if (mod.id) moduleMap.set(mod.id, mod);
-          if (mod.fileName) moduleMap.set(mod.fileName, mod);
+          const sub = getSubfolder(mod, lane);
+          if (mod.id) moduleMap.set(`${sub}|${mod.id}`, mod);
+          if (mod.fileName) moduleMap.set(`${sub}|${mod.fileName}`, mod);
         });
       });
 
@@ -303,18 +314,24 @@ function diffSnapshots(currentData, baselineData, config) {
 
           if (laneTags === metricTagKey) {
             lane.modules.forEach(mod => {
-              let f = metric.files.find(file => file.id === mod.id || file.fileName === mod.fileName);
+              const sub = getSubfolder(mod, lane);
+              let f = metric.files.find(file => 
+                (file.subfolder || getSubfolder(file, lane)) === sub && 
+                (file.id === mod.id || file.fileName === mod.fileName)
+              );
               if (!f) {
                 f = {
                   id: mod.id,
                   fileName: mod.fileName || mod.id,
                   title: mod.title || mod.fileName || mod.id,
-                  subfolder: mod.subfolder || 'ROOT',
+                  subfolder: sub,
                   count: 0,
                   added: 0,
                   removed: 0
                 };
                 metric.files.push(f);
+              } else {
+                f.subfolder = sub;
               }
             });
           }
@@ -330,7 +347,8 @@ function diffSnapshots(currentData, baselineData, config) {
           let fAdded = 0;
           let fRemoved = 0;
 
-          const mod = moduleMap.get(f.id) || moduleMap.get(f.fileName);
+          const subKey = f.subfolder || 'ROOT';
+          const mod = moduleMap.get(`${subKey}|${f.id}`) || moduleMap.get(`${subKey}|${f.fileName}`);
           if (mod) {
             if (mod.subfolder) {
               f.subfolder = mod.subfolder;
