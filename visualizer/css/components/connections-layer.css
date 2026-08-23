@@ -1,0 +1,29 @@
+/* SVG connection curve canvas overlay */
+.connections-layer {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  pointer-events: none;
+  z-index: 10;
+  overflow: visible;
+}
+
+/* Base Bezier connection path */
+.connection-path {
+  fill: none;
+  stroke: var(--color-accent-green);
+  stroke-width: 2.5px;
+  stroke-linecap: round;
+}
+
+/* Dependency curve stroke */
+.dependency-path {
+  stroke: var(--color-accent-green);
+}
+
+/* Reference curve stroke */
+.reference-path {
+  stroke: var(--color-accent-cyan);
+}

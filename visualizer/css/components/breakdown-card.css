@@ -1,0 +1,71 @@
+/* Breakdown cards horizontal row */
+.breakdown-cards-row {
+  display: flex;
+  gap: 16px;
+  align-items: start;
+}
+
+/* Breakdown card shell */
+.breakdown-card {
+  background: var(--color-bg-surface-dark);
+  border: 1px solid var(--color-border-subtle);
+  border-radius: var(--radius-card);
+  padding: 16px 20px;
+  width: max-content;
+  box-sizing: border-box;
+}
+
+/* Flat breakdown card variant without nested folder trees */
+.breakdown-card--flat {
+  display: flex;
+  flex-direction: column;
+}
+
+/* Nested breakdown card variant with subfolder trees */
+.breakdown-card--nested {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+
+/* Breakdown card content body */
+.breakdown-card-content {
+  display: flex;
+  flex-direction: column;
+}
+
+/* Flat content body with uniform vertical gap */
+.breakdown-card-content--flat {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+/* Nested content body container */
+.breakdown-card-content--nested {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+
+/* Breakdown card header title */
+.breakdown-card-title {
+  font-size: var(--font-size-subtitle);
+  line-height: var(--line-height-body);
+  font-weight: var(--weight-bold);
+  color: var(--color-text-muted);
+}
+
+.breakdown-group:last-child {
+  margin-bottom: 0;
+}
+
+/* Indented subfolder item list with vertical tree guide line */
+.breakdown-group-items {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+  margin-top: 8px;
+  padding-left: 8px;
+  border-left: 1px solid var(--color-border-divider);
+}

@@ -1,4 +1,4 @@
-/* css/components/lane-identifiers.css */
+/* Vertical side-rail container */
 .lane-identifiers {
   display: flex;
   flex-direction: column;
@@ -6,12 +6,31 @@
   flex-shrink: 0;
 }
 
-.is-dimmed {
-  opacity: 0.25;
-  z-index: 1;
-}
-
 .lane-identifiers:empty {
   display: none;
 }
 
+/* Individual side-rail tag badge */
+.side-badge {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  width: var(--badge-width);
+  height: var(--badge-height);
+  padding: 0;
+  border: 2px solid var(--pr-color-dark-950);
+  outline: 1px solid var(--card-border-color);
+  background-color: var(--color-card-bg);
+  border-radius: var(--radius-badge-side);
+  position: relative;
+  color: var(--color-text-main);
+}
+
+/* Side badge text label */
+.badge-text {
+  font-size: var(--font-size-badge-text);
+  line-height: var(--line-height-badge-text);
+  font-weight: var(--weight-bold);
+  color: currentColor;
+}

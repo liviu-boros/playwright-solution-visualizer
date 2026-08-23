@@ -1,5 +1,4 @@
-/* css/components/test-item.css */
-
+/* Individual test item row */
 .test-item {
   display: flex;
   align-items: center;
@@ -12,18 +11,22 @@
   white-space: nowrap;
 }
 
+/* Green tint hover on active test items */
 .test-item:hover {
   background: color-mix(in srgb, var(--color-accent-green) 20%, transparent);
 }
 
+/* Removed test item muted state */
 .test-item--removed {
   color: var(--color-text-muted);
 }
 
+/* Red tint hover on removed test items */
 .test-item--removed:hover {
   background: color-mix(in srgb, var(--color-accent-red) 20%, transparent);
 }
 
+/* Vertical optical alignment for item label */
 .item-text {
   transform: translateY(-1px);
 }

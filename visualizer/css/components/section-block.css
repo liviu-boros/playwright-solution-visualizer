@@ -1,13 +1,30 @@
-/* css/components/section-block.css */
-.section-container {
-  display: flex;
-  align-items: flex-start;
-  gap: var(--gap-section-anchor);
-  position: relative;
-  border-right: 4px dashed color-mix(in srgb, var(--color-text-main) 10%, transparent);
-  padding-right: var(--gap-section-main);
+/* Canvas layout grid */
+#canvas {
+  display: grid;
+  grid-auto-flow: column;
+  grid-auto-columns: max-content;
+  grid-template-rows: auto 1fr auto auto;
+  column-gap: var(--gap-section-main, 128px);
 }
 
+/* Section container subgrid definition */
+.section-container {
+  display: grid;
+  grid-template-rows: subgrid;
+  grid-row: span 4;
+  align-items: flex-start;
+  width: max-content;
+  position: relative;
+  border: none !important;
+}
+
+/* Clear legacy pseudo divider elements */
+.section-container::after,
+.section-container::before {
+  display: none !important;
+}
+
+/* Elevated stacking context for active card sections */
 .section-container:has(.is-active-source) {
   z-index: 20;
 }
@@ -24,23 +41,55 @@
   z-index: 20;
 }
 
-.section-container:last-child {
-  border-right: none;
-  padding-right: 0;
+/* Big hero section title (Row 1) */
+.section-hero-title {
+  align-self: start;
+  margin-bottom: var(--gap-lane-stack);
+  font-size: var(--font-size-hero-title);
+  line-height: var(--line-height-hero-title);
+  font-weight: var(--weight-semibold);
+  letter-spacing: 4px;
+  color: var(--color-text-main);
+  white-space: nowrap;
+  pointer-events: none;
+  user-select: none;
+  line-height: 1;
+  opacity: var(--section-title-opacity, 0);
+  transition: opacity;
 }
 
+/* Section anchor bottom alignment (Row 2) */
+.section-anchor {
+  align-self: end;
+  margin-bottom: var(--gap-lane-stack);
+}
+
+/* Continuous horizontal divider line (Row 3) */
+.section-divider-line {
+  width: calc(100% + var(--gap-section-main, 128px));
+  height: 4px;
+  background-color: var(--color-border-panel, #222);
+  pointer-events: none;
+}
+
+/* Lanes area vertical stack (Row 4) */
 .section-lanes {
   display: flex;
   flex-direction: column;
+  align-items: flex-start;
   gap: var(--gap-lane-stack);
+  padding-top: var(--gap-lane-stack);
+  width: 100%;
 }
 
+/* Lane row container with side badges */
 .lane-row {
   display: flex;
   align-items: flex-start;
   gap: var(--gap-lane-row);
 }
 
+/* Module card horizontal sequence */
 .lane-content {
   display: flex;
   align-items: flex-start;

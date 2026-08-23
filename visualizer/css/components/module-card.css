@@ -1,8 +1,4 @@
-/* css/components/module-card.css */
-
-/* ==========================================================================
-   Module Card Component Block
-   ========================================================================== */
+/* Module card container shell */
 .module-card {
   --card-bg-surface: var(--color-card-bg);
   width: max-content;
@@ -16,29 +12,34 @@
   border: 2px solid var(--pr-color-dark-950);
   outline: 1px solid var(--card-border-color);
   outline-offset: 0;
+  box-sizing: border-box;
 }
 
+/* Green highlight on hover */
 .module-card:not(.is-dimmed):hover {
   --card-border-color: var(--color-accent-green);
   --card-bg-surface: color-mix(in srgb, var(--color-accent-green) 7%, var(--color-card-bg));
   outline-width: 2px;
 }
 
+/* Card header section */
 .card-header {
   border-bottom: 1px solid var(--color-border-divider);
   padding-bottom: 16px;
   margin-bottom: 16px;
 }
 
+/* Module card main title */
 .card-title {
   font-size: var(--font-size-card-title);
   line-height: var(--line-height-card-title);
-  font-weight: var(--weight-regular);
+  font-weight: var(--weight-semibold);
   margin: 0 0 4px 0;
   letter-spacing: 1px;
   white-space: nowrap;
 }
 
+/* File name subtitle */
 .card-subtitle {
   font-family: var(--font-family-mono);
   font-size: var(--font-size-subtitle);
@@ -48,13 +49,14 @@
   white-space: nowrap;
 }
 
+/* List container for test or method items */
 .card-body {
   display: flex;
   flex-direction: column;
   gap: var(--gap-element-list);
 }
 
-/* Class Group & Class Parent Row */
+/* Class container in class-based modules */
 .class-group {
   margin-bottom: 6px;
 }
@@ -63,6 +65,7 @@
   margin-bottom: 0;
 }
 
+/* Class title row with class icon */
 .class-parent-row {
   display: flex;
   align-items: center;
@@ -75,11 +78,12 @@
   font-weight: var(--weight-semibold);
 }
 
-/* State Modifiers & Active Dependency Highlights */
+/* Dimmed state for removed modules */
 .module-card--removed {
   opacity: 0.5;
 }
 
+/* Clicked primary source card */
 .is-active-source {
   --card-border-color: var(--color-accent-green);
   --card-bg-surface: color-mix(in srgb, var(--color-accent-green) 10%, var(--color-card-bg));
@@ -88,6 +92,7 @@
   z-index: 100;
 }
 
+/* Target card in active connection */
 .is-active-target {
   --card-border-color: var(--color-accent-green);
   --card-bg-surface: color-mix(in srgb, var(--color-accent-green) 10%, var(--color-card-bg));
@@ -96,6 +101,7 @@
   z-index: 100;
 }
 
+/* Dependency target card highlight */
 .is-active-dependency {
   --card-border-color: var(--color-accent-green);
   --card-bg-surface: color-mix(in srgb, var(--color-accent-green) 10%, var(--color-card-bg));
@@ -104,6 +110,7 @@
   z-index: 100;
 }
 
+/* Reference target card highlight */
 .is-active-reference {
   --card-border-color: var(--color-accent-cyan);
   --card-bg-surface: color-mix(in srgb, var(--color-accent-cyan) 10%, var(--color-card-bg));
@@ -112,17 +119,14 @@
   z-index: 100;
 }
 
-.is-dimmed {
-  opacity: 0.25;
-  z-index: 1;
-}
-
+/* Red outline and background tint on hover for removed cards */
 .module-card--removed:not(.is-dimmed):hover {
   opacity: 1;
   --card-bg-surface: color-mix(in srgb, var(--color-accent-red) 10%, var(--color-card-bg));
   --card-border-color: var(--color-accent-red);
 }
 
+/* Active selected state for removed cards */
 .is-active-source--removed {
   --card-border-color: var(--color-accent-red);
   --card-bg-surface: color-mix(in srgb, var(--color-accent-red) 10%, var(--color-card-bg));
@@ -130,33 +134,4 @@
   outline-width: 2px;
   opacity: 1;
   z-index: 100;
-}
-
-/* ==========================================================================
-   SVG Connection Paths Layer (Specialized Sub-Block)
-   ========================================================================== */
-.connections-layer {
-  position: absolute;
-  top: 0;
-  left: 0;
-  width: 100%;
-  height: 100%;
-  pointer-events: none;
-  z-index: 10;
-  overflow: visible;
-}
-
-.connection-path {
-  fill: none;
-  stroke: var(--color-accent-green);
-  stroke-width: 2.5px;
-  stroke-linecap: round;
-}
-
-.dependency-path {
-  stroke: var(--color-accent-green);
-}
-
-.reference-path {
-  stroke: var(--color-accent-cyan);
 }

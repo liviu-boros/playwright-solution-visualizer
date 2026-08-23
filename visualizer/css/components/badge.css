@@ -1,8 +1,4 @@
-/* css/components/badge.css */
-
-/* ==========================================================================
-   1. Layout Containers
-   ========================================================================== */
+/* Module header badge row */
 .badge-row {
   display: flex;
   justify-content: space-between;
@@ -15,20 +11,20 @@
   display: none;
 }
 
+/* Tag badge list container */
 .badge-left {
   display: flex;
   gap: 6px;
 }
 
+/* Right-aligned status flag container */
 .badge-right {
   display: flex;
   align-items: center;
   margin-left: auto;
 }
 
-/* ==========================================================================
-   2. Base Component
-   ========================================================================== */
+/* Standard tag badge */
 .badge {
   display: inline-flex;
   align-items: center;
@@ -46,72 +42,13 @@
   border: 1px solid var(--color-border-subtle);
 }
 
-/* ==========================================================================
-   3. Component Modifiers
-   ========================================================================== */
+/* Muted badge variant */
 .badge--muted {
   letter-spacing: 0.5px;
   color: var(--color-text-muted);
 }
 
-.badge--secondary {
-  border: none;
-  background: transparent;
-  color: var(--color-text-main);
-}
-
-.badge--clear {
-  border: none;
-  background: transparent;
-  color: var(--color-text-muted);
-}
-
-.badge--medium {
-  height: 24px;
-  font-size: var(--font-size-badge-text);
-  line-height: var(--line-height-badge-text);
-}
-
-/* ==========================================================================
-   4. Standalone / Specialized Components
-   ========================================================================== */
-.side-badge {
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: center;
-  width: var(--badge-width);
-  height: var(--badge-height);
-  padding: 0;
-  border: 2px solid var(--pr-color-dark-950);
-  outline: 1px solid var(--card-border-color);
-  background-color: var(--color-card-bg);
-  border-radius: var(--radius-badge-side);
-  position: relative;
-  color: var(--color-text-main);
-}
-
-.badge-text {
-  font-size: var(--font-size-badge-text);
-  line-height: var(--line-height-badge-text);
-  font-weight: var(--weight-bold);
-  color: currentColor;
-}
-
-.metric-diff-added {
-  color: var(--color-accent-green);
-  font-weight: var(--weight-bold);
-  font-size: var(--font-size-badge-macro);
-  line-height: var(--line-height-badge-macro);
-}
-
-.metric-diff-removed {
-  color: var(--color-accent-red);
-  font-weight: var(--weight-bold);
-  font-size: var(--font-size-badge-macro);
-  line-height: var(--line-height-badge-macro);
-}
-
+/* Dropdown item option badge */
 .option-badge {
   font-size: var(--select-badge-font-size);
   font-weight: var(--weight-bold);

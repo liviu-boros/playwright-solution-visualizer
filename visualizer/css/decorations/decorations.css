@@ -1,12 +1,9 @@
-/* css/decorations/decorations.css */
-
-/* ==========================================================================
-   1. Ambient Top-Right Radial Glow Overlay (.ambient-spotlight)
-   ========================================================================== */
+/* Ambient top-right radial glow container */
 .ambient-spotlight {
   position: relative;
 }
 
+/* Pseudo-element radial gradient spotlight */
 .ambient-spotlight::after {
   content: '';
   position: absolute;
@@ -16,28 +13,36 @@
   z-index: -1;
   background: radial-gradient(
     circle at 90% 10%,
-    color-mix(in srgb, var(--card-glow-color, var(--color-accent-green)) 15%, transparent),
+    color-mix(in srgb, var(--card-glow-color, var(--color-accent-green)) 17%, transparent),
     transparent 60%
   );
   opacity: 0.5;
 }
 
+/* Spotlight glow on hover */
 .ambient-spotlight:hover::after {
   opacity: 1;
 }
 
+/* Spotlight glow on active source card */
 .is-active-source::after {
   opacity: 1;
 }
 
+/* Red spotlight glow on active removed card */
 .is-active-source--removed::after {
   --card-glow-color: var(--color-accent-red);
   opacity: 1;
 }
 
+/* Cyan spotlight glow on active reference card */
 .is-active-reference::after {
   --card-glow-color: var(--color-accent-cyan);
   opacity: 1;
 }
 
-
+/* Global interaction dimming utility */
+.is-dimmed {
+  opacity: 0.25;
+  z-index: 1;
+}

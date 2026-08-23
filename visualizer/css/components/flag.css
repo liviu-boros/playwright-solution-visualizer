@@ -1,7 +1,4 @@
-/* css/components/flag.css */
-
-/* Status Indicator Flags (Diff & Snapshot Comparison) */
-
+/* Status indicator flag base */
 .flag {
   width: var(--flag-container-size);
   height: var(--flag-container-size);
@@ -13,16 +10,19 @@
   animation: pulse-beacon 2s ease-out infinite;
 }
 
+/* Green indicator for added items */
 .flag--new {
   background-color: var(--color-accent-green);
   --pulse-beacon-color: var(--color-accent-green);
 }
 
+/* Red indicator for removed items */
 .flag--removed {
   background-color: var(--color-accent-red);
   --pulse-beacon-color: var(--color-accent-red);
 }
 
+/* Pulse animation for flag beacons */
 @keyframes pulse-beacon {
   0% {
     filter: brightness(1) drop-shadow(0 0 0px var(--pulse-beacon-color));

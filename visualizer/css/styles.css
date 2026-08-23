@@ -1,30 +1,35 @@
-/* css/styles.css */
 @import url('variables.css');
 
-/* Component Modular Stylesheets */
-
-/* Primitives & Atoms */
+/* Global primitives, utilities & atoms */
 @import url('decorations/decorations.css');
 @import url('components/badge.css');
 @import url('components/flag.css');
 @import url('components/icon.css');
 
-/* Molecules & Organisms */
+/* Controls & connection overlays */
 @import url('components/control-panel.css');
+@import url('components/select-component.css');
+@import url('components/connections-layer.css');
+
+/* Section & anchor hierarchy */
 @import url('components/section-block.css');
 @import url('components/section-anchor.css');
+@import url('components/summary-card.css');
+@import url('components/breakdown-card.css');
+@import url('components/metric-line.css');
+
+/* Lanes, module cards & content items */
 @import url('components/lane-identifiers.css');
 @import url('components/module-card.css');
 @import url('components/test-item.css');
 @import url('components/method-item.css');
 
-
-/* ==========================================================================
-   Global Environment & Canvas Layout Resets
-   ========================================================================== */
+/* Base page environment reset */
 body, html {
-  margin: 0; padding: 0;
-  width: 100%; height: 100%;
+  margin: 0;
+  padding: 0;
+  width: 100%;
+  height: 100%;
   overflow: hidden;
   background-color: var(--color-canvas-bg);
   font-family: var(--font-family-system);
@@ -32,20 +37,29 @@ body, html {
   user-select: none;
 }
 
+/* Infinite pan-zoom viewport container */
 #viewport {
-  width: 100vw; height: 100vh;
-  position: relative; overflow: hidden;
+  width: 100vw;
+  height: 100vh;
+  position: relative;
+  overflow: hidden;
   cursor: grab;
-  /* Grid pattern in background to give Figma canvas feel */
-  background-image: 
-    radial-gradient(circle, #222222 1px, transparent 1px);
+  background-image: radial-gradient(circle, var(--pr-color-dark-800) 1px, transparent 1px);
   background-size: 24px 24px;
 }
-#viewport:active { cursor: grabbing; }
 
+#viewport:active {
+  cursor: grabbing;
+}
+
+/* Multi-section canvas layout grid */
 #canvas {
-  position: absolute; transform-origin: 0 0;
-  display: flex; flex-direction: row;
-  gap: var(--gap-section-main);
+  position: absolute;
+  transform-origin: 0 0;
+  display: grid;
+  grid-auto-flow: column;
+  grid-auto-columns: max-content;
+  grid-template-rows: auto 1fr auto auto;
+  column-gap: var(--gap-section-main, 128px);
   padding: var(--canvas-padding);
 }

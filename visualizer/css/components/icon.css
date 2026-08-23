@@ -1,8 +1,4 @@
-/* css/components/icon.css */
-
-/* ==========================================================================
-   1. Base Icon Component
-   ========================================================================== */
+/* Base masked vector icon */
 .icon {
   display: inline-block;
   width: var(--icon-size-md);
@@ -17,67 +13,68 @@
   mask-size: contain;
 }
 
-/* ==========================================================================
-   2. Size & Context Modifiers
-   ========================================================================== */
+/* Small icon variant */
 .icon--sm {
   width: var(--icon-size-sm);
   height: var(--icon-size-sm);
 }
 
+/* Large icon for section anchor */
 .icon--lg {
   width: var(--icon-size-lg);
   height: var(--icon-size-lg);
-  margin-bottom: 12px;
   background-color: var(--color-text-main);
 }
 
+/* Flag status icon */
 .icon--flag {
   width: var(--flag-icon-size);
   height: var(--flag-icon-size);
   background-color: var(--color-text-main);
 }
 
+/* Badge icon spacing */
 .icon--badge {
   margin-bottom: 4px;
 }
 
-/* ==========================================================================
-   3. SVG Image Modifiers
-   ========================================================================== */
+/* Class icon mask */
 .icon--class {
   -webkit-mask-image: url('../../icons/system/class-24dp.svg');
   mask-image: url('../../icons/system/class-24dp.svg');
 }
 
+/* Method icon mask */
 .icon--method {
   -webkit-mask-image: url('../../icons/system/method-24dp.svg');
   mask-image: url('../../icons/system/method-24dp.svg');
 }
 
+/* Function icon mask */
 .icon--function {
   -webkit-mask-image: url('../../icons/system/function-24dp.svg');
   mask-image: url('../../icons/system/function-24dp.svg');
 }
 
+/* Arrow indicator mask */
 .icon--arrow {
   -webkit-mask-image: url('../../icons/system/arrow_right_24dp.svg');
   mask-image: url('../../icons/system/arrow_right_24dp.svg');
 }
 
+/* Priority / new item flag mask */
 .icon--priority {
   -webkit-mask-image: url('../../icons/system/priority_high_24dp.svg');
   mask-image: url('../../icons/system/priority_high_24dp.svg');
 }
 
+/* Removed item flag mask */
 .icon--removed {
   -webkit-mask-image: url('../../icons/system/removed_24dp.svg');
   mask-image: url('../../icons/system/removed_24dp.svg');
 }
 
-/* ==========================================================================
-   4. Non-SVG Symbol Components
-   ========================================================================== */
+/* Code symbol item */
 .icon-code {
   display: inline-flex;
   align-items: center;
@@ -92,6 +89,7 @@
   color: var(--color-text-muted);
 }
 
+/* Dropdown arrow symbol */
 .custom-select-arrow {
   font-size: var(--select-arrow-size);
   color: var(--select-arrow-color);
