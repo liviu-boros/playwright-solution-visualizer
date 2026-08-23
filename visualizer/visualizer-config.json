@@ -45,7 +45,7 @@
       "subfolders": []
     },
     {
-      "name": "Pages",
+      "name": "UI Models",
       "dir": "./pages",
       "description": "Application interface maps and browser actions",
       "icon": "icons/pages.svg",

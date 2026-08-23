@@ -1,411 +1,452 @@
-// js/app.js
-import { SectionBlock, getSectionType } from './SectionBlock.js';
+import { SectionBlock, getSectionType } from './components/SectionBlock.js';
 import { initPanZoom } from './pan-zoom.js';
-import { SelectComponent } from './SelectComponent.js';
+import { SelectComponent } from './components/SelectComponent.js';
 
 let leftSelectComponent = null;
 let rightSelectComponent = null;
+let activeSourceCard = null;
+let activeDependencyCards = [];
+let activeReferenceCards = [];
 
+// Fetches and parses a JSON endpoint
 async function fetchJSON(url) {
   const res = await fetch(url);
   if (!res.ok) throw new Error(`Failed to fetch ${url}`);
   return res.json();
 }
 
+// Extracts subfolder name from a module or lane
 function getSubfolder(mod, lane) {
-  if (mod && mod.subfolder) return mod.subfolder;
-  if (lane && lane.subfolder) return lane.subfolder;
-  if (lane && Array.isArray(lane.laneBadges)) {
-    const subBadge = lane.laneBadges.find(b => b.type === 'subfolder' || b.type === 'folder');
-    if (subBadge && subBadge.value) return subBadge.value;
-  }
-  return 'ROOT';
+  if (mod?.subfolder) return mod.subfolder;
+  if (lane?.subfolder) return lane.subfolder;
+  const subBadge = lane?.laneBadges?.find(b => b.type === 'subfolder' || b.type === 'folder');
+  return subBadge?.value || 'ROOT';
 }
 
-// High-speed browser diffing engine: compares current target against baseline snapshot
-function diffSnapshots(currentData, baselineData, config) {
-  const targetData = JSON.parse(JSON.stringify(currentData));
+// Normalizes directory path string
+function normalizeFolder(folder) {
+  if (!folder) return '';
+  return folder.trim().toLowerCase().replace(/^\.\//, '').replace(/\/$/, '');
+}
 
-  // Module key sets for module-level status
-  const baselineModuleKeys = new Set();
-  if (baselineData) {
-    baselineData.forEach(section => {
-      section.lanes.forEach(lane => {
-        lane.modules.forEach(mod => {
-          baselineModuleKeys.add(`${section.title}|${mod.id}`);
+// Matches section to visualizer-config.json entry
+function findConfigSection(section, config) {
+  const scanConfig = config?.scanConfig;
+  if (!Array.isArray(scanConfig)) return null;
+
+  const sFolder = normalizeFolder(section.folder || section.dir);
+  const sTitle = (section.title || section.name || '').toLowerCase();
+
+  return scanConfig.find(item => {
+    const itemDir = normalizeFolder(item.dir || item.folder);
+    if (itemDir && sFolder && itemDir === sFolder) return true;
+    return Boolean(item.name && sTitle && item.name.toLowerCase() === sTitle);
+  }) || null;
+}
+
+// Gets normalized canonical section identifier
+function getSectionFolder(section) {
+  const normalized = normalizeFolder(section.folder || section.dir);
+  if (normalized) return normalized;
+  return (section.title || section.name || '').toLowerCase();
+}
+
+// Collects unique module identifiers from snapshot data
+function collectModuleKeys(data) {
+  const keys = new Set();
+  if (!data) return keys;
+  for (const section of data) {
+    const sFolder = getSectionFolder(section);
+    for (const lane of section.lanes || []) {
+      for (const mod of lane.modules || []) {
+        keys.add(`${sFolder}|${mod.id}`);
+      }
+    }
+  }
+  return keys;
+}
+
+// Flattens a module's items and methods into indexed records
+function flattenModuleItems(mod, sFolder, laneBadges, sectionTitle) {
+  const items = [];
+  if (mod.itemType === 'class' && Array.isArray(mod.items)) {
+    for (const cls of mod.items) {
+      for (const m of cls.methods || []) {
+        items.push({
+          sectionFolder: sFolder,
+          sectionTitle,
+          laneBadges,
+          moduleId: mod.id,
+          itemType: mod.itemType,
+          className: cls.name,
+          itemName: m.name,
+          key: `${sFolder}|${mod.id}|${cls.name}|${m.name}`
         });
-      });
-    });
+      }
+    }
+    return items;
   }
 
-  const targetModuleKeys = new Set();
-  targetData.forEach(section => {
-    section.lanes.forEach(lane => {
-      lane.modules.forEach(mod => {
-        const modKey = `${section.title}|${mod.id}`;
-        targetModuleKeys.add(modKey);
-        if (baselineData && !baselineModuleKeys.has(modKey)) {
-          mod.status = 'new';
-        }
-      });
+  for (const item of mod.items || []) {
+    items.push({
+      sectionFolder: sFolder,
+      sectionTitle,
+      laneBadges,
+      moduleId: mod.id,
+      itemType: mod.itemType,
+      itemName: item.name,
+      key: `${sFolder}|${mod.id}|${item.name}`
     });
-  });
+  }
+  return items;
+}
 
-  if (baselineData) {
-    // Flatten baseline items & methods
-    const baselineItemSet = new Set();
-    const baselineItems = [];
+// Collects all individual items across sections
+function collectDataItems(data) {
+  const items = [];
+  if (!data) return items;
+  for (const section of data) {
+    const sFolder = getSectionFolder(section);
+    for (const lane of section.lanes || []) {
+      for (const mod of lane.modules || []) {
+        items.push(...flattenModuleItems(mod, sFolder, lane.laneBadges, section.title));
+      }
+    }
+  }
+  return items;
+}
 
-    baselineData.forEach(section => {
-      section.lanes.forEach(lane => {
-        lane.modules.forEach(mod => {
-          if (mod.itemType === 'class' && Array.isArray(mod.items)) {
-            mod.items.forEach(cls => {
-              if (cls.methods && Array.isArray(cls.methods)) {
-                cls.methods.forEach(m => {
-                  const key = `${section.title}|${mod.id}|${cls.name}|${m.name}`;
-                  baselineItemSet.add(key);
-                  baselineItems.push({
-                    sectionTitle: section.title,
-                    laneBadges: lane.laneBadges,
-                    moduleId: mod.id,
-                    itemType: mod.itemType,
-                    className: cls.name,
-                    itemName: m.name,
-                    key: key
-                  });
-                });
-              }
-            });
-          } else if (Array.isArray(mod.items)) {
-            mod.items.forEach(item => {
-              const key = `${section.title}|${mod.id}|${item.name}`;
-              baselineItemSet.add(key);
-              baselineItems.push({
-                sectionTitle: section.title,
-                laneBadges: lane.laneBadges,
-                moduleId: mod.id,
-                itemType: mod.itemType,
-                itemName: item.name,
-                key: key
-              });
-            });
-          }
-        });
-      });
-    });
-
-    // Mark newly added items in target
-    const targetItemSet = new Set();
-    targetData.forEach(section => {
-      section.lanes.forEach(lane => {
-        lane.modules.forEach(mod => {
-          if (mod.itemType === 'class' && Array.isArray(mod.items)) {
-            mod.items.forEach(cls => {
-              if (cls.methods && Array.isArray(cls.methods)) {
-                cls.methods.forEach(m => {
-                  const key = `${section.title}|${mod.id}|${cls.name}|${m.name}`;
-                  targetItemSet.add(key);
-                  if (!baselineItemSet.has(key)) {
-                    m.status = 'new';
-                  }
-                });
-              }
-            });
-          } else if (Array.isArray(mod.items)) {
-            mod.items.forEach(item => {
-              const key = `${section.title}|${mod.id}|${item.name}`;
+// Marks newly added items in target dataset
+function markNewTargetItems(targetData, baselineItemSet) {
+  const targetItemSet = new Set();
+  for (const section of targetData) {
+    const sFolder = getSectionFolder(section);
+    for (const lane of section.lanes || []) {
+      for (const mod of lane.modules || []) {
+        if (mod.itemType === 'class' && Array.isArray(mod.items)) {
+          for (const cls of mod.items) {
+            for (const m of cls.methods || []) {
+              const key = `${sFolder}|${mod.id}|${cls.name}|${m.name}`;
               targetItemSet.add(key);
-              if (!baselineItemSet.has(key)) {
-                item.status = 'new';
-              }
-            });
-          }
-        });
-      });
-    });
-
-    // Add completely removed modules from baseline to targetData
-    baselineData.forEach(section => {
-      section.lanes.forEach(lane => {
-        lane.modules.forEach(bMod => {
-          const modKey = `${section.title}|${bMod.id}`;
-          if (!targetModuleKeys.has(modKey)) {
-            let sectionTarget = targetData.find(s => s.title === section.title);
-            if (!sectionTarget) {
-              sectionTarget = {
-                title: section.title,
-                folder: section.folder,
-                description: section.description,
-                icon: section.icon,
-                lanes: [],
-                metrics: []
-              };
-              targetData.push(sectionTarget);
-            }
-            const laneKey = JSON.stringify(lane.laneBadges);
-            let laneTarget = sectionTarget.lanes.find(l => JSON.stringify(l.laneBadges) === laneKey);
-            if (!laneTarget) {
-              laneTarget = {
-                laneBadges: lane.laneBadges,
-                modules: []
-              };
-              sectionTarget.lanes.push(laneTarget);
-            }
-            let modTarget = laneTarget.modules.find(m => m.id === bMod.id);
-            if (!modTarget) {
-              const modCopy = JSON.parse(JSON.stringify(bMod));
-              modCopy.status = 'removed';
-              if (modCopy.itemType === 'class' && Array.isArray(modCopy.items)) {
-                modCopy.items.forEach(c => {
-                  if (c.methods) c.methods.forEach(m => m.status = 'removed');
-                });
-              } else if (Array.isArray(modCopy.items)) {
-                modCopy.items.forEach(i => i.status = 'removed');
-              }
-              laneTarget.modules.push(modCopy);
-              targetModuleKeys.add(modKey);
+              if (!baselineItemSet.has(key)) m.status = 'new';
             }
           }
-        });
-      });
-    });
-
-    // Process removed items from baseline for modules present in target
-    baselineItems.forEach(bItem => {
-      if (!targetItemSet.has(bItem.key)) {
-        let section = targetData.find(s => s.title === bItem.sectionTitle);
-        if (section) {
-          const laneKey = JSON.stringify(bItem.laneBadges);
-          let lane = section.lanes.find(l => JSON.stringify(l.laneBadges) === laneKey);
-          if (lane) {
-            let mod = lane.modules.find(m => m.id === bItem.moduleId);
-            if (mod) {
-              if (bItem.itemType === 'class') {
-                let cls = mod.items.find(c => c.name === bItem.className);
-                if (!cls) {
-                  cls = { name: bItem.className, methods: [] };
-                  mod.items.push(cls);
-                }
-                if (!cls.methods.some(m => m.name === bItem.itemName)) {
-                  cls.methods.push({
-                    name: bItem.itemName,
-                    status: 'removed'
-                  });
-                }
-              } else {
-                if (!mod.items.some(i => i.name === bItem.itemName)) {
-                  mod.items.push({
-                    name: bItem.itemName,
-                    status: 'removed'
-                  });
-                }
-              }
-            }
+        } else if (Array.isArray(mod.items)) {
+          for (const item of mod.items) {
+            const key = `${sFolder}|${mod.id}|${item.name}`;
+            targetItemSet.add(key);
+            if (!baselineItemSet.has(key)) item.status = 'new';
           }
         }
       }
-    });
+    }
+  }
+  return targetItemSet;
+}
+
+// Creates a deep copy of a removed module with removed status on all child elements
+function createRemovedModuleCopy(mod) {
+  const copy = JSON.parse(JSON.stringify(mod));
+  copy.status = 'removed';
+  if (copy.itemType === 'class' && Array.isArray(copy.items)) {
+    for (const cls of copy.items) {
+      for (const m of cls.methods || []) m.status = 'removed';
+    }
+  } else if (Array.isArray(copy.items)) {
+    for (const item of copy.items) item.status = 'removed';
+  }
+  return copy;
+}
+
+// Ensures target section exists in dataset
+function ensureTargetSection(targetData, section, sFolder, config) {
+  let sectionTarget = targetData.find(s => getSectionFolder(s) === sFolder);
+  if (!sectionTarget) {
+    const cfg = findConfigSection(section, config);
+    sectionTarget = {
+      title: cfg?.name || section.title,
+      folder: cfg?.dir || section.folder,
+      description: cfg?.description !== undefined ? cfg.description : section.description,
+      icon: cfg?.icon || section.icon,
+      lanes: [],
+      metrics: []
+    };
+    targetData.push(sectionTarget);
+  }
+  return sectionTarget;
+}
+
+// Ensures target lane exists within section
+function ensureTargetLane(sectionTarget, laneBadges) {
+  const laneKey = JSON.stringify(laneBadges);
+  let laneTarget = sectionTarget.lanes.find(l => JSON.stringify(l.laneBadges) === laneKey);
+  if (!laneTarget) {
+    laneTarget = { laneBadges, modules: [] };
+    sectionTarget.lanes.push(laneTarget);
+  }
+  return laneTarget;
+}
+
+// Injects removed modules from baseline into target
+function injectRemovedBaselineModules(targetData, baselineData, targetModuleKeys, config) {
+  for (const section of baselineData) {
+    const sFolder = getSectionFolder(section);
+    for (const lane of section.lanes || []) {
+      for (const bMod of lane.modules || []) {
+        const modKey = `${sFolder}|${bMod.id}`;
+        if (targetModuleKeys.has(modKey)) continue;
+
+        const sectionTarget = ensureTargetSection(targetData, section, sFolder, config);
+        const laneTarget = ensureTargetLane(sectionTarget, lane.laneBadges);
+
+        if (!laneTarget.modules.some(m => m.id === bMod.id)) {
+          laneTarget.modules.push(createRemovedModuleCopy(bMod));
+          targetModuleKeys.add(modKey);
+        }
+      }
+    }
+  }
+}
+
+// Injects removed items from baseline into existing target modules
+function injectRemovedBaselineItems(targetData, baselineItems, targetItemSet) {
+  for (const bItem of baselineItems) {
+    if (targetItemSet.has(bItem.key)) continue;
+
+    const section = targetData.find(s => getSectionFolder(s) === bItem.sectionFolder);
+    if (!section) continue;
+
+    const laneKey = JSON.stringify(bItem.laneBadges);
+    const lane = section.lanes.find(l => JSON.stringify(l.laneBadges) === laneKey);
+    if (!lane) continue;
+
+    const mod = lane.modules.find(m => m.id === bItem.moduleId);
+    if (!mod) continue;
+
+    if (bItem.itemType === 'class') {
+      let cls = mod.items.find(c => c.name === bItem.className);
+      if (!cls) {
+        cls = { name: bItem.className, methods: [] };
+        mod.items.push(cls);
+      }
+      if (!cls.methods.some(m => m.name === bItem.itemName)) {
+        cls.methods.push({ name: bItem.itemName, status: 'removed' });
+      }
+    } else if (!mod.items.some(i => i.name === bItem.itemName)) {
+      mod.items.push({ name: bItem.itemName, status: 'removed' });
+    }
+  }
+}
+
+// Computes summary metrics for class or function sections
+function computeStandardMetrics(section) {
+  section.totalLabel = `Total ${section.title}`;
+  section.metrics = [];
+  let totalCount = 0;
+  let totalAdded = 0;
+  let totalRemoved = 0;
+
+  for (const lane of section.lanes || []) {
+    const tagBadges = (lane.laneBadges || []).filter(b => b.type === 'tag');
+
+    if (tagBadges.length === 0) {
+      for (const mod of lane.modules || []) {
+        if (mod.status !== 'removed') totalCount++;
+        if (mod.status === 'new') totalAdded++;
+        if (mod.status === 'removed') totalRemoved++;
+      }
+      continue;
+    }
+
+    const catLabel = tagBadges.map(b => b.value).join(' ');
+    let metric = section.metrics.find(m => m.label === catLabel);
+    if (!metric) {
+      metric = { label: catLabel, tags: tagBadges.map(b => b.value), count: 0, added: 0, removed: 0 };
+      section.metrics.push(metric);
+    }
+
+    for (const mod of lane.modules || []) {
+      if (mod.status !== 'removed') {
+        metric.count++;
+        totalCount++;
+      }
+      if (mod.status === 'new') {
+        metric.added++;
+        totalAdded++;
+      }
+      if (mod.status === 'removed') {
+        metric.removed++;
+        totalRemoved++;
+      }
+    }
   }
 
-  // Compute metrics and total labels per section
-  targetData.forEach(section => {
-    const secType = getSectionType(section.title, config);
+  section.totalCount = totalCount;
+  section.totalAdded = totalAdded;
+  section.totalRemoved = totalRemoved;
+}
 
-    if (secType !== 'test') {
-      section.totalLabel = `Total ${section.title}`;
-      section.metrics = [];
+// Computes diff item totals for a test module
+function countModuleItemDiffs(mod) {
+  let active = 0, added = 0, removed = 0;
+  if (!mod || !Array.isArray(mod.items)) return { active, added, removed };
 
-      let secTotalCount = 0;
-      let secTotalAdded = 0;
-      let secTotalRemoved = 0;
+  for (const item of mod.items) {
+    if (item.methods && Array.isArray(item.methods)) {
+      for (const m of item.methods) {
+        if (m.status !== 'removed') active++;
+        if (m.status === 'new') added++;
+        if (m.status === 'removed') removed++;
+      }
+    } else {
+      if (item.status !== 'removed') active++;
+      if (item.status === 'new') added++;
+      if (item.status === 'removed') removed++;
+    }
+  }
+  return { active, added, removed };
+}
 
-      section.lanes.forEach(lane => {
-        const tagBadges = (lane.laneBadges || []).filter(b => b.type === 'tag');
-        if (tagBadges.length === 0) {
-          lane.modules.forEach(mod => {
-            if (mod.status !== 'removed') {
-              secTotalCount += 1;
-            }
-            if (mod.status === 'new') {
-              secTotalAdded += 1;
-            }
-            if (mod.status === 'removed') {
-              secTotalRemoved += 1;
-            }
-          });
-          return;
-        }
+// Computes summary metrics for test sections with subfolder groupings
+function computeTestMetrics(section) {
+  section.totalLabel = `Total ${section.title}`;
+  if (!Array.isArray(section.metrics)) section.metrics = [];
 
-        const catLabel = tagBadges.map(b => b.value).join(' ');
-        const catTags = tagBadges.map(b => b.value);
+  const moduleMap = new Map();
+  for (const lane of section.lanes || []) {
+    for (const mod of lane.modules || []) {
+      const sub = getSubfolder(mod, lane);
+      if (mod.id) moduleMap.set(`${sub}|${mod.id}`, mod);
+      if (mod.fileName) moduleMap.set(`${sub}|${mod.fileName}`, mod);
+    }
+  }
 
-        let metric = section.metrics.find(m => m.label === catLabel);
-        if (!metric) {
-          metric = {
-            label: catLabel,
-            tags: catTags,
+  let totalCount = 0;
+  let totalAdded = 0;
+  let totalRemoved = 0;
+
+  for (const metric of section.metrics) {
+    if (!Array.isArray(metric.files)) metric.files = [];
+
+    const metricTags = (metric.tags && metric.tags.length > 0) ? metric.tags : [metric.label];
+    const metricTagKey = metricTags.slice().sort().map(t => t.toLowerCase()).join('::');
+
+    for (const lane of section.lanes || []) {
+      const laneTags = (lane.laneBadges || [])
+        .filter(b => b.type === 'tag')
+        .map(b => b.value.toLowerCase())
+        .sort()
+        .join('::');
+
+      if (laneTags !== metricTagKey) continue;
+
+      for (const mod of lane.modules || []) {
+        const sub = getSubfolder(mod, lane);
+        let f = metric.files.find(file => 
+          (file.subfolder || getSubfolder(file, lane)) === sub && 
+          (file.id === mod.id || file.fileName === mod.fileName)
+        );
+        if (!f) {
+          f = {
+            id: mod.id,
+            fileName: mod.fileName || mod.id,
+            title: mod.title || mod.fileName || mod.id,
+            subfolder: sub,
             count: 0,
             added: 0,
             removed: 0
           };
-          section.metrics.push(metric);
+          metric.files.push(f);
+        } else {
+          f.subfolder = sub;
         }
+      }
+    }
 
-        lane.modules.forEach(mod => {
-          if (mod.status !== 'removed') {
-            metric.count += 1;
-            secTotalCount += 1;
-          }
-          if (mod.status === 'new') {
-            metric.added += 1;
-            secTotalAdded += 1;
-          }
-          if (mod.status === 'removed') {
-            metric.removed += 1;
-            secTotalRemoved += 1;
-          }
-        });
-      });
-
-      section.totalCount = secTotalCount;
-      section.totalAdded = secTotalAdded;
-      section.totalRemoved = secTotalRemoved;
-
-    } else {
-      section.totalLabel = 'Total Tests';
-
-      if (!section.metrics || !Array.isArray(section.metrics)) {
-        section.metrics = [];
+    let catCount = 0, catAdded = 0, catRemoved = 0;
+    for (const f of metric.files) {
+      const subKey = f.subfolder || 'ROOT';
+      const mod = moduleMap.get(`${subKey}|${f.id}`) || moduleMap.get(`${subKey}|${f.fileName}`);
+      if (mod) {
+        if (mod.subfolder) f.subfolder = mod.subfolder;
+        if (mod.title) f.title = mod.title;
       }
 
-      // Construct module lookup Map for section modules
-      const moduleMap = new Map();
-      section.lanes.forEach(lane => {
-        lane.modules.forEach(mod => {
-          const sub = getSubfolder(mod, lane);
-          if (mod.id) moduleMap.set(`${sub}|${mod.id}`, mod);
-          if (mod.fileName) moduleMap.set(`${sub}|${mod.fileName}`, mod);
-        });
-      });
+      const diffs = countModuleItemDiffs(mod);
+      f.count = diffs.active;
+      f.added = diffs.added;
+      f.removed = diffs.removed;
 
-      let secTotalCount = 0;
-      let secTotalAdded = 0;
-      let secTotalRemoved = 0;
-
-      section.metrics.forEach(metric => {
-        if (!metric.files || !Array.isArray(metric.files)) {
-          metric.files = [];
-        }
-
-        const metricTags = (metric.tags && metric.tags.length > 0)
-          ? metric.tags
-          : [metric.label];
-        const metricTagKey = metricTags.slice().sort().map(t => t.toLowerCase()).join('::');
-
-        // Module Aggregation & Dynamic File Matching
-        // Iterate over all modules present across section.lanes (including active & removed)
-        section.lanes.forEach(lane => {
-          const laneTags = (lane.laneBadges || [])
-            .filter(b => b.type === 'tag')
-            .map(b => b.value.toLowerCase())
-            .sort()
-            .join('::');
-
-          if (laneTags === metricTagKey) {
-            lane.modules.forEach(mod => {
-              const sub = getSubfolder(mod, lane);
-              let f = metric.files.find(file => 
-                (file.subfolder || getSubfolder(file, lane)) === sub && 
-                (file.id === mod.id || file.fileName === mod.fileName)
-              );
-              if (!f) {
-                f = {
-                  id: mod.id,
-                  fileName: mod.fileName || mod.id,
-                  title: mod.title || mod.fileName || mod.id,
-                  subfolder: sub,
-                  count: 0,
-                  added: 0,
-                  removed: 0
-                };
-                metric.files.push(f);
-              } else {
-                f.subfolder = sub;
-              }
-            });
-          }
-        });
-
-        // Accurate Item Diff Counting Per File (O(1) Map lookup)
-        let catCount = 0;
-        let catAdded = 0;
-        let catRemoved = 0;
-
-        metric.files.forEach(f => {
-          let fActive = 0;
-          let fAdded = 0;
-          let fRemoved = 0;
-
-          const subKey = f.subfolder || 'ROOT';
-          const mod = moduleMap.get(`${subKey}|${f.id}`) || moduleMap.get(`${subKey}|${f.fileName}`);
-          if (mod) {
-            if (mod.subfolder) {
-              f.subfolder = mod.subfolder;
-            }
-            if (mod.title) {
-              f.title = mod.title;
-            }
-
-            if (Array.isArray(mod.items)) {
-              mod.items.forEach(item => {
-                if (item.methods && Array.isArray(item.methods)) {
-                  item.methods.forEach(mth => {
-                    if (mth.status !== 'removed') fActive++;
-                    if (mth.status === 'new') fAdded++;
-                    if (mth.status === 'removed') fRemoved++;
-                  });
-                } else {
-                  if (item.status !== 'removed') fActive++;
-                  if (item.status === 'new') fAdded++;
-                  if (item.status === 'removed') fRemoved++;
-                }
-              });
-            }
-          }
-
-          f.count = fActive;
-          f.added = fAdded;
-          f.removed = fRemoved;
-
-          catCount += fActive;
-          catAdded += fAdded;
-          catRemoved += fRemoved;
-        });
-
-        metric.count = catCount;
-        metric.added = catAdded;
-        metric.removed = catRemoved;
-
-        secTotalCount += catCount;
-        secTotalAdded += catAdded;
-        secTotalRemoved += catRemoved;
-      });
-
-      section.totalCount = secTotalCount;
-      section.totalAdded = secTotalAdded;
-      section.totalRemoved = secTotalRemoved;
+      catCount += diffs.active;
+      catAdded += diffs.added;
+      catRemoved += diffs.removed;
     }
-  });
+
+    metric.count = catCount;
+    metric.added = catAdded;
+    metric.removed = catRemoved;
+
+    totalCount += catCount;
+    totalAdded += catAdded;
+    totalRemoved += catRemoved;
+  }
+
+  section.totalCount = totalCount;
+  section.totalAdded = totalAdded;
+  section.totalRemoved = totalRemoved;
+}
+
+// Compares target snapshot against baseline snapshot and flags diff states
+function diffSnapshots(currentData, baselineData, config) {
+  const targetData = JSON.parse(JSON.stringify(currentData));
+  const baselineModuleKeys = collectModuleKeys(baselineData);
+
+  // Mark newly added modules in target
+  const targetModuleKeys = new Set();
+  for (const section of targetData) {
+    const sFolder = getSectionFolder(section);
+    for (const lane of section.lanes || []) {
+      for (const mod of lane.modules || []) {
+        const modKey = `${sFolder}|${mod.id}`;
+        targetModuleKeys.add(modKey);
+        if (baselineData && !baselineModuleKeys.has(modKey)) {
+          mod.status = 'new';
+        }
+      }
+    }
+  }
+
+  if (baselineData) {
+    const baselineItems = collectDataItems(baselineData);
+    const baselineItemSet = new Set(baselineItems.map(i => i.key));
+    const targetItemSet = markNewTargetItems(targetData, baselineItemSet);
+
+    injectRemovedBaselineModules(targetData, baselineData, targetModuleKeys, config);
+    injectRemovedBaselineItems(targetData, baselineItems, targetItemSet);
+  }
+
+  // Bind titles and compute section metrics
+  for (const section of targetData) {
+    const cfg = findConfigSection(section, config);
+    if (cfg) {
+      section.title = cfg.name || section.title;
+      section.description = cfg.description !== undefined ? cfg.description : section.description;
+      section.icon = cfg.icon || section.icon;
+      section.folder = cfg.dir || section.folder;
+    }
+
+    const secType = getSectionType(section, config);
+    if (secType === 'test') {
+      computeTestMetrics(section);
+    } else {
+      computeStandardMetrics(section);
+    }
+  }
 
   return targetData;
 }
 
-
-let activeSourceCard = null;
-let activeDependencyCards = [];
-let activeReferenceCards = [];
-
+// Computes absolute position coordinates relative to canvas
 function getCanvasCoords(el, canvasEl) {
   let left = 0;
   let top = 0;
@@ -416,8 +457,8 @@ function getCanvasCoords(el, canvasEl) {
     current = current.offsetParent;
   }
   return {
-    left: left,
-    top: top,
+    left,
+    top,
     width: el.offsetWidth,
     height: el.offsetHeight,
     right: left + el.offsetWidth,
@@ -425,17 +466,16 @@ function getCanvasCoords(el, canvasEl) {
   };
 }
 
+// Clears all active card highlights and connection curves
 function clearDependencyHighlighting() {
   const canvas = document.getElementById('canvas');
   if (!canvas) return;
 
-  // Clear state classes on cards, anchors, and lane identifiers
   const dimmedElements = canvas.querySelectorAll('.is-dimmed, .is-active-source, .is-active-target, .is-active-dependency, .is-active-reference, .is-active-source--removed');
   dimmedElements.forEach(el => {
     el.classList.remove('is-active-source', 'is-active-target', 'is-active-dependency', 'is-active-reference', 'is-dimmed', 'is-active-source--removed');
   });
 
-  // Clear SVG path layer
   const connectionsLayer = document.getElementById('connectionsLayer');
   if (connectionsLayer) {
     connectionsLayer.innerHTML = '';
@@ -446,11 +486,48 @@ function clearDependencyHighlighting() {
   activeReferenceCards = [];
 }
 
+// Computes cubic Bezier SVG path element for card relationships
+function createBezierPath(sourceCoords, sourceCenter, targetCoords, isDependency) {
+  const targetCenter = {
+    x: targetCoords.left + targetCoords.width / 2,
+    y: targetCoords.top + targetCoords.height / 2
+  };
+
+  const deltaX = targetCenter.x - sourceCenter.x;
+  const deltaY = targetCenter.y - sourceCenter.y;
+
+  // Dependencies exit left; references exit right
+  const x1 = isDependency ? sourceCoords.left : sourceCoords.right;
+  const y1 = sourceCenter.y;
+  const cDistX = Math.max(Math.abs(deltaX) * 0.3, 30);
+  const cDistY = Math.max(Math.abs(deltaY) * 0.3, 30);
+
+  const cp1 = { x: isDependency ? x1 - cDistX : x1 + cDistX, y: y1 };
+
+  let x2, y2, cp2;
+  if (Math.abs(deltaX) > Math.abs(deltaY)) {
+    x2 = isDependency ? targetCoords.right : targetCoords.left;
+    y2 = targetCenter.y;
+    cp2 = { x: isDependency ? x2 + cDistX : x2 - cDistX, y: y2 };
+  } else {
+    x2 = targetCenter.x;
+    y2 = deltaY > 0 ? targetCoords.top : targetCoords.bottom;
+    cp2 = { x: x2, y: deltaY > 0 ? y2 - cDistY : y2 + cDistY };
+  }
+
+  const d = `M ${x1} ${y1} C ${cp1.x} ${cp1.y}, ${cp2.x} ${cp2.y}, ${x2} ${y2}`;
+  const pathEl = document.createElementNS('http://www.w3.org/2000/svg', 'path');
+  pathEl.setAttribute('d', d);
+  pathEl.setAttribute('class', `connection-path ${isDependency ? 'dependency-path' : 'reference-path'}`);
+  return pathEl;
+}
+
+// Draws SVG cubic Bezier dependency and reference curves
 function drawConnections(sourceCard, dependencyCards = [], referenceCards = []) {
   const canvas = document.getElementById('canvas');
-  let connectionsLayer = document.getElementById('connectionsLayer');
   if (!canvas) return;
 
+  let connectionsLayer = document.getElementById('connectionsLayer');
   if (!connectionsLayer) {
     connectionsLayer = document.createElementNS('http://www.w3.org/2000/svg', 'svg');
     connectionsLayer.id = 'connectionsLayer';
@@ -466,101 +543,37 @@ function drawConnections(sourceCard, dependencyCards = [], referenceCards = []) 
     y: sourceCoords.top + sourceCoords.height / 2
   };
 
-  // Draw Dependency Connections
-  // Selected card ALWAYS exits from LEFT edge
-  dependencyCards.forEach(targetCard => {
-    const targetCoords = getCanvasCoords(targetCard, canvas);
-    const targetCenter = {
-      x: targetCoords.left + targetCoords.width / 2,
-      y: targetCoords.top + targetCoords.height / 2
-    };
+  for (const card of dependencyCards) {
+    const targetCoords = getCanvasCoords(card, canvas);
+    connectionsLayer.appendChild(createBezierPath(sourceCoords, sourceCenter, targetCoords, true));
+  }
 
-    const deltaX = targetCenter.x - sourceCenter.x;
-    const deltaY = targetCenter.y - sourceCenter.y;
-
-    // Source exit anchor: strictly LEFT edge of selected card
-    const x1 = sourceCoords.left;
-    const y1 = sourceCenter.y;
-    const cDistX = Math.max(Math.abs(targetCenter.x - sourceCenter.x) * 0.3, 30);
-    const cDistY = Math.max(Math.abs(targetCenter.y - sourceCenter.y) * 0.3, 30);
-
-    const cp1 = { x: x1 - cDistX, y: y1 };
-
-    let x2, y2, cp2;
-
-    if (Math.abs(deltaX) > Math.abs(deltaY)) {
-      // Horizontal dominant: target connects at RIGHT edge
-      x2 = targetCoords.right;
-      y2 = targetCenter.y;
-      cp2 = { x: x2 + cDistX, y: y2 };
-    } else {
-      // Vertical dominant: target connects at TOP (if target below) or BOTTOM (if target above)
-      x2 = targetCenter.x;
-      if (deltaY > 0) {
-        y2 = targetCoords.top;
-        cp2 = { x: x2, y: y2 - cDistY };
-      } else {
-        y2 = targetCoords.bottom;
-        cp2 = { x: x2, y: y2 + cDistY };
-      }
-    }
-
-    const d = `M ${x1} ${y1} C ${cp1.x} ${cp1.y}, ${cp2.x} ${cp2.y}, ${x2} ${y2}`;
-
-    const pathEl = document.createElementNS('http://www.w3.org/2000/svg', 'path');
-    pathEl.setAttribute('d', d);
-    pathEl.setAttribute('class', 'connection-path dependency-path');
-    connectionsLayer.appendChild(pathEl);
-  });
-
-  // Draw Reference Connections
-  // Selected card ALWAYS exits from RIGHT edge
-  referenceCards.forEach(refCard => {
-    const refCoords = getCanvasCoords(refCard, canvas);
-    const refCenter = {
-      x: refCoords.left + refCoords.width / 2,
-      y: refCoords.top + refCoords.height / 2
-    };
-
-    const deltaX = refCenter.x - sourceCenter.x;
-    const deltaY = refCenter.y - sourceCenter.y;
-
-    // Source exit anchor: strictly RIGHT edge of selected card
-    const x1 = sourceCoords.right;
-    const y1 = sourceCenter.y;
-    const cDistX = Math.max(Math.abs(refCenter.x - sourceCenter.x) * 0.3, 30);
-    const cDistY = Math.max(Math.abs(refCenter.y - sourceCenter.y) * 0.3, 30);
-
-    const cp1 = { x: x1 + cDistX, y: y1 };
-
-    let x2, y2, cp2;
-
-    if (Math.abs(deltaX) > Math.abs(deltaY)) {
-      // Horizontal dominant: reference card connects at LEFT edge
-      x2 = refCoords.left;
-      y2 = refCenter.y;
-      cp2 = { x: x2 - cDistX, y: y2 };
-    } else {
-      // Vertical dominant: reference card connects at TOP (if reference below) or BOTTOM (if reference above)
-      x2 = refCenter.x;
-      if (deltaY > 0) {
-        y2 = refCoords.top;
-        cp2 = { x: x2, y: y2 - cDistY };
-      } else {
-        y2 = refCoords.bottom;
-        cp2 = { x: x2, y: y2 + cDistY };
-      }
-    }
-
-    const d = `M ${x1} ${y1} C ${cp1.x} ${cp1.y}, ${cp2.x} ${cp2.y}, ${x2} ${y2}`;
-
-    const pathEl = document.createElementNS('http://www.w3.org/2000/svg', 'path');
-    pathEl.setAttribute('d', d);
-    pathEl.setAttribute('class', 'connection-path reference-path');
-    connectionsLayer.appendChild(pathEl);
-  });
+  for (const card of referenceCards) {
+    const refCoords = getCanvasCoords(card, canvas);
+    connectionsLayer.appendChild(createBezierPath(sourceCoords, sourceCenter, refCoords, false));
+  }
 }
 
+// Parses imports array from card data attribute safely
+function parseCardImports(card) {
+  try {
+    return JSON.parse(card.dataset.imports || '[]');
+  } catch {
+    return [];
+  }
+}
+
+// Helper matcher for module IDs and path aliases
+function isModuleMatch(importId, targetModId, targetCleanId) {
+  if (!importId) return false;
+  if (importId === targetModId || importId === targetCleanId) return true;
+  if (importId.replace(/\.spec$/, '') === targetCleanId) return true;
+  if (importId.endsWith(`/${targetModId}`) || importId.endsWith(`/${targetCleanId}`)) return true;
+  const baseName = targetModId.split('/').pop();
+  return importId.endsWith(`/${baseName}`) || importId === baseName;
+}
+
+// Activates single card selection, highlights relations, and dims unrelated cards
 function setDependencyHighlighting(sourceCard) {
   clearDependencyHighlighting();
 
@@ -568,19 +581,10 @@ function setDependencyHighlighting(sourceCard) {
   if (!canvas || !sourceCard) return;
 
   activeSourceCard = sourceCard;
-  if (!sourceCard.classList.contains('module-card--removed'))
-    sourceCard.classList.add('is-active-source');
-  else
-    sourceCard.classList.add('is-active-source--removed');
+  const isRemoved = sourceCard.classList.contains('module-card--removed');
+  sourceCard.classList.add(isRemoved ? 'is-active-source--removed' : 'is-active-source');
 
-  // Parse imports list from selected card data attribute
-  let sourceImports = [];
-  try {
-    sourceImports = JSON.parse(sourceCard.dataset.imports || '[]');
-  } catch (e) {
-    console.warn('Could not parse card imports:', e);
-  }
-
+  const sourceImports = parseCardImports(sourceCard);
   const sourceModuleId = sourceCard.dataset.moduleId || '';
   const sourceCleanId = sourceModuleId.replace(/\.spec$/, '');
 
@@ -588,87 +592,59 @@ function setDependencyHighlighting(sourceCard) {
   const dependencyCards = [];
   const referenceCards = [];
 
-  allCards.forEach(card => {
-    if (card === sourceCard) return;
+  for (const card of allCards) {
+    if (card === sourceCard) continue;
+
     const cardModuleId = card.dataset.moduleId || '';
     const cardCleanId = cardModuleId.replace(/\.spec$/, '');
-    let cardImports = [];
-    try {
-      cardImports = JSON.parse(card.dataset.imports || '[]');
-    } catch (e) { }
+    const cardImports = parseCardImports(card);
 
-    // Helper matcher for module IDs and path aliases
-    const matchesId = (impId, targetModId, targetCleanId) => {
-      if (!impId) return false;
-      if (impId === targetModId || impId === targetCleanId) return true;
-      if (impId.replace(/\.spec$/, '') === targetCleanId) return true;
-      if (impId.endsWith('/' + targetModId) || impId.endsWith('/' + targetCleanId)) return true;
-      const baseName = targetModId.split('/').pop();
-      if (impId.endsWith('/' + baseName) || impId === baseName) return true;
-      return false;
-    };
+    const isDep = sourceImports.some(id => isModuleMatch(id, cardModuleId, cardCleanId));
+    const isRef = cardImports.some(id => isModuleMatch(id, sourceModuleId, sourceCleanId));
 
-    // Check if card is a DEPENDENCY (selected card imports this card)
-    const isDependency = sourceImports.some(impId => matchesId(impId, cardModuleId, cardCleanId));
-
-    // Check if card is a REFERENCE (this card imports the selected card)
-    const isReference = cardImports.some(impId => matchesId(impId, sourceModuleId, sourceCleanId));
-
-    if (isDependency) {
+    if (isDep) {
       card.classList.add('is-active-dependency', 'is-active-target');
       dependencyCards.push(card);
     }
-
-    if (isReference) {
+    if (isRef) {
       card.classList.add('is-active-reference');
       referenceCards.push(card);
     }
-  });
+  }
 
   activeDependencyCards = dependencyCards;
   activeReferenceCards = referenceCards;
 
-  // Dim all unrelated cards, section anchors, and lane badge containers
+  // Dim unrelated elements
   const activeSet = new Set([sourceCard, ...dependencyCards, ...referenceCards]);
-  allCards.forEach(card => {
-    if (!activeSet.has(card)) {
-      card.classList.add('is-dimmed');
-    }
-  });
+  for (const card of allCards) {
+    if (!activeSet.has(card)) card.classList.add('is-dimmed');
+  }
 
-  const sectionAnchors = canvas.querySelectorAll('.section-anchor');
-  sectionAnchors.forEach(anchor => anchor.classList.add('is-dimmed'));
+  canvas.querySelectorAll('.section-anchor, .lane-identifiers').forEach(el => el.classList.add('is-dimmed'));
 
-  const laneIdentifiers = canvas.querySelectorAll('.lane-identifiers');
-  laneIdentifiers.forEach(laneId => laneId.classList.add('is-dimmed'));
-
-  // 4. Draw SVG cubic Bezier connection lines
   if (dependencyCards.length > 0 || referenceCards.length > 0) {
     drawConnections(sourceCard, dependencyCards, referenceCards);
   }
 }
 
-
+// Injects section blocks into the DOM canvas
 function renderCanvas(data, config) {
   const canvas = document.getElementById('canvas');
   canvas.innerHTML = '';
 
-  // Ensure SVG connection layer exists inside canvas
   const connectionsLayer = document.createElementNS('http://www.w3.org/2000/svg', 'svg');
   connectionsLayer.id = 'connectionsLayer';
   connectionsLayer.classList.add('connections-layer');
   canvas.appendChild(connectionsLayer);
 
-  data.forEach(section => {
-    // Only render section if it has lanes containing modules
+  for (const section of data) {
     const hasModules = section.lanes.some(lane => lane.modules.length > 0);
-    if (hasModules) {
-      const sectionHtml = SectionBlock(section, config);
-      canvas.insertAdjacentHTML('beforeend', sectionHtml);
-    }
-  });
+    if (!hasModules) continue;
+    canvas.insertAdjacentHTML('beforeend', SectionBlock(section, config));
+  }
 
-  if (canvas.children.length <= 1) { // 1 for connectionsLayer
+  if (canvas.children.length <= 1) {
     canvas.innerHTML = `
       <div style="padding: 100px; text-align: center; color: var(--color-text-muted);">
         <h1>No scanned modules found</h1>
@@ -678,9 +654,42 @@ function renderCanvas(data, config) {
   }
 }
 
+// Formats ledger snapshot timestamp into a display label
+function formatSnapshotLabel(run) {
+  const labelPrefix = run.label || 'snapshot';
+  let timestampStr = run.timestamp;
+
+  if (!timestampStr && run.file) {
+    const match = run.file.match(/(\d{2}-\d{2}-\d{2}-\d{6})/);
+    if (match) timestampStr = match[1];
+  }
+
+  return timestampStr ? `${labelPrefix}-${timestampStr}` : labelPrefix;
+}
+
+// Handles canvas click selection and background deselection
+function handleCanvasClick(e, mouseDownPos) {
+  const dist = Math.hypot(e.clientX - mouseDownPos.x, e.clientY - mouseDownPos.y);
+  if (dist > 5) return;
+  if (e.target.closest('.control-panel')) return;
+
+  const card = e.target.closest('.module-card');
+  if (!card) {
+    if (activeSourceCard) clearDependencyHighlighting();
+    return;
+  }
+
+  if (activeSourceCard === card) {
+    clearDependencyHighlighting();
+    return;
+  }
+
+  setDependencyHighlighting(card);
+}
+
+// Application startup entry point
 async function init() {
   try {
-    // Fetch config and ledger index
     const config = await fetchJSON('visualizer-config.json');
     const ledger = await fetchJSON('data/index.json');
 
@@ -694,31 +703,14 @@ async function init() {
       return;
     }
 
-    // Prepare dropdown items list
-    const selectItems = ledger.map((run, idx) => {
-      const labelPrefix = run.label || 'snapshot';
-      let timestampStr = run.timestamp;
+    const selectItems = ledger.map((run, idx) => ({
+      value: idx,
+      label: formatSnapshotLabel(run)
+    }));
 
-      if (!timestampStr && run.file) {
-        const match = run.file.match(/(\d{2}-\d{2}-\d{2}-\d{6})/);
-        if (match) {
-          timestampStr = match[1];
-        }
-      }
-
-      const displayLabel = timestampStr ? `${labelPrefix}-${timestampStr}` : labelPrefix;
-
-      return {
-        value: idx,
-        label: displayLabel
-      };
-    });
-
-    // Default indices: Left = latest snapshot (0), Right = previous snapshot (1)
     let leftIndex = 0;
     let rightIndex = ledger.length > 1 ? 1 : 0;
 
-    // Load and render diffed snapshot data
     const loadDiffView = async (targetIdx, baselineIdx) => {
       clearDependencyHighlighting();
       const targetRun = ledger[targetIdx];
@@ -738,7 +730,6 @@ async function init() {
       renderCanvas(diffedData, config);
     };
 
-    // 2. Initialize Left Select Component (Target Snapshot)
     leftSelectComponent = new SelectComponent({
       id: 'leftTimelineSelect',
       ariaLabel: 'Select target snapshot',
@@ -756,7 +747,6 @@ async function init() {
     leftContainer.innerHTML = '';
     leftContainer.appendChild(leftSelectComponent.getElement());
 
-    // 3. Initialize Right Select Component (Baseline Snapshot)
     rightSelectComponent = new SelectComponent({
       id: 'rightTimelineSelect',
       ariaLabel: 'Select baseline snapshot',
@@ -774,13 +764,9 @@ async function init() {
     rightContainer.innerHTML = '';
     rightContainer.appendChild(rightSelectComponent.getElement());
 
-    // 4. Initial load with default left (0) vs right (1)
     await loadDiffView(leftIndex, rightIndex);
-
-    // 5. Initialize viewport interactions
     initPanZoom('viewport', 'canvas');
 
-    // 6. Interaction handler distinguishing click vs pan-drag & background deselection
     const viewport = document.getElementById('viewport');
     let mouseDownPos = { x: 0, y: 0 };
 
@@ -789,29 +775,9 @@ async function init() {
     });
 
     viewport.addEventListener('click', (e) => {
-      // Ignore click if mouse moved > 5px (canvas pan-drag gesture)
-      const dist = Math.hypot(e.clientX - mouseDownPos.x, e.clientY - mouseDownPos.y);
-      if (dist > 5) return;
-
-      // Ignore clicks inside control panel
-      if (e.target.closest('.control-panel')) return;
-
-      const card = e.target.closest('.module-card');
-      if (card) {
-        if (activeSourceCard === card) {
-          clearDependencyHighlighting();
-        } else {
-          setDependencyHighlighting(card);
-        }
-      } else {
-        // Clicked open space -> deselect active selection if one exists
-        if (activeSourceCard) {
-          clearDependencyHighlighting();
-        }
-      }
+      handleCanvasClick(e, mouseDownPos);
     });
 
-    // Window resize event handler to recalculate paths
     window.addEventListener('resize', () => {
       if (activeSourceCard) {
         drawConnections(activeSourceCard, activeDependencyCards, activeReferenceCards);
@@ -830,4 +796,3 @@ async function init() {
 }
 
 document.addEventListener('DOMContentLoaded', init);
-

@@ -1,15 +1,5 @@
-// js/SelectComponent.js
-
+// Stateful custom dropdown select component with mutual exclusion
 export class SelectComponent {
-  /**
-   * @param {Object} options
-   * @param {string} options.id - Container element ID
-   * @param {string} [options.ariaLabel] - ARIA label for accessibility
-   * @param {Array<{value: number|string, label: string}>} [options.items] - List of option items
-   * @param {number|string} options.selectedValue - Initially selected value
-   * @param {number|string|null} [options.disabledValue] - Value that should be unselectable
-   * @param {Function} [options.onChange] - Callback fired when selection changes: (newValue) => void
-   */
   constructor({ id, ariaLabel = 'Select option', items = [], selectedValue, disabledValue = null, disabledBadgeText = 'active selection', onChange }) {
     this.id = id;
     this.ariaLabel = ariaLabel;
@@ -24,6 +14,7 @@ export class SelectComponent {
     this.container.className = 'custom-select-component';
     if (this.id) this.container.id = this.id;
 
+    // Handles document outside-clicks to close dropdown
     this.handleOutsideClick = (e) => {
       if (!this.container.contains(e.target)) {
         this.closeDropdown();
@@ -34,17 +25,20 @@ export class SelectComponent {
     this.attachEvents();
   }
 
+  // Updates disabled option (mutual exclusion with partner dropdown)
   setDisabledValue(disabledValue) {
     this.disabledValue = disabledValue;
     this.updateOptionsDOM();
   }
 
+  // Sets active selection value
   setSelectedValue(value) {
     this.selectedValue = value;
     this.updateTriggerDOM();
     this.updateOptionsDOM();
   }
 
+  // Updates items dataset
   setItems(items, selectedValue, disabledValue) {
     this.items = items;
     if (selectedValue !== undefined) this.selectedValue = selectedValue;
@@ -53,6 +47,7 @@ export class SelectComponent {
     this.attachEvents();
   }
 
+  // Renders component markup
   render() {
     const selectedItem = this.items.find(item => item.value === this.selectedValue) || this.items[0];
     const selectedText = selectedItem ? selectedItem.label : 'Select snapshot...';
@@ -70,13 +65,16 @@ export class SelectComponent {
     `;
   }
 
+  // Generates option items markup
   renderOptionsHTML() {
     return this.items.map(item => {
       const isSelected = item.value === this.selectedValue;
       const isDisabled = item.value === this.disabledValue;
-      let classes = 'custom-select-option';
-      if (isSelected) classes += ' is-selected';
-      if (isDisabled) classes += ' is-disabled';
+      const classes = [
+        'custom-select-option',
+        isSelected && 'is-selected',
+        isDisabled && 'is-disabled'
+      ].filter(Boolean).join(' ');
 
       return `
         <li class="${classes}" data-value="${item.value}" role="option" aria-selected="${isSelected}" aria-disabled="${isDisabled}">
@@ -87,6 +85,7 @@ export class SelectComponent {
     }).join('');
   }
 
+  // Updates trigger label text in DOM
   updateTriggerDOM() {
     const selectedItem = this.items.find(item => item.value === this.selectedValue);
     const labelEl = this.container.querySelector('.custom-select-label-text');
@@ -95,6 +94,7 @@ export class SelectComponent {
     }
   }
 
+  // Refreshes options list in DOM
   updateOptionsDOM() {
     const listEl = this.container.querySelector('.custom-select-options-list');
     if (listEl) {
@@ -102,9 +102,9 @@ export class SelectComponent {
     }
   }
 
+  // Binds click and selection event listeners
   attachEvents() {
     const trigger = this.container.querySelector('.custom-select-trigger');
-
     trigger.addEventListener('click', (e) => {
       e.stopPropagation();
       this.toggleDropdown();
@@ -117,66 +117,62 @@ export class SelectComponent {
 
       if (optionLi.classList.contains('is-disabled')) {
         e.stopPropagation();
-        return; // Cannot select snapshot disabled by secondary select
+        return;
       }
 
       const valAttr = optionLi.getAttribute('data-value');
       const newValue = isNaN(valAttr) ? valAttr : parseInt(valAttr, 10);
+      this.closeDropdown();
 
       if (newValue !== this.selectedValue) {
         this.selectedValue = newValue;
         this.updateTriggerDOM();
         this.updateOptionsDOM();
-        this.closeDropdown();
         if (typeof this.onChange === 'function') {
           this.onChange(newValue);
         }
-      } else {
-        this.closeDropdown();
       }
     });
 
-    // Close when clicking outside
     document.removeEventListener('click', this.handleOutsideClick);
     document.addEventListener('click', this.handleOutsideClick);
   }
 
+  // Toggles dropdown menu visibility
   toggleDropdown() {
     if (this.isOpen) {
       this.closeDropdown();
-    } else {
-      // Close all other dropdowns
-      document.querySelectorAll('.custom-select-component.is-open').forEach(el => {
-        if (el !== this.container) {
-          el.classList.remove('is-open');
-          const d = el.querySelector('.custom-select-dropdown');
-          const a = el.querySelector('.custom-select-arrow');
-          if (d) d.classList.remove('custom-select-dropdown--open');
-          if (a) a.classList.remove('custom-select-arrow--open');
-        }
-      });
-      this.isOpen = true;
-      this.container.classList.add('is-open');
-      const dropdown = this.container.querySelector('.custom-select-dropdown');
-      const arrow = this.container.querySelector('.custom-select-arrow');
-      if (dropdown) dropdown.classList.add('custom-select-dropdown--open');
-      if (arrow) arrow.classList.add('custom-select-arrow--open');
-      const trigger = this.container.querySelector('.custom-select-trigger');
-      if (trigger) trigger.setAttribute('aria-expanded', 'true');
+      return;
     }
+    this.openDropdown();
   }
 
+  // Opens dropdown menu and closes sibling selects
+  openDropdown() {
+    document.querySelectorAll('.custom-select-component.is-open').forEach(el => {
+      if (el === this.container) return;
+      el.classList.remove('is-open');
+      el.querySelector('.custom-select-dropdown')?.classList.remove('custom-select-dropdown--open');
+      el.querySelector('.custom-select-arrow')?.classList.remove('custom-select-arrow--open');
+    });
+
+    this.isOpen = true;
+    this.container.classList.add('is-open');
+    this.container.querySelector('.custom-select-dropdown')?.classList.add('custom-select-dropdown--open');
+    this.container.querySelector('.custom-select-arrow')?.classList.add('custom-select-arrow--open');
+    this.container.querySelector('.custom-select-trigger')?.setAttribute('aria-expanded', 'true');
+  }
+
+  // Closes dropdown menu
   closeDropdown() {
     this.isOpen = false;
     this.container.classList.remove('is-open');
-    const dropdown = this.container.querySelector('.custom-select-dropdown');
-    const arrow = this.container.querySelector('.custom-select-arrow');
-    if (dropdown) dropdown.classList.remove('custom-select-dropdown--open');
-    if (arrow) arrow.classList.remove('custom-select-arrow--open');
-    const trigger = this.container.querySelector('.custom-select-trigger');
-    if (trigger) trigger.setAttribute('aria-expanded', 'false');
+    this.container.querySelector('.custom-select-dropdown')?.classList.remove('custom-select-dropdown--open');
+    this.container.querySelector('.custom-select-arrow')?.classList.remove('custom-select-arrow--open');
+    this.container.querySelector('.custom-select-trigger')?.setAttribute('aria-expanded', 'false');
   }
 
+  // Returns root DOM container element
   getElement() {
     return this.container;
   }

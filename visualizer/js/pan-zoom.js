@@ -1,19 +1,27 @@
-// js/pan-zoom.js
+// Initializes infinite canvas pan and zoom with LOD semantic title scaling
 export function initPanZoom(viewportId, canvasId) {
   const viewport = document.getElementById(viewportId);
   const canvas = document.getElementById(canvasId);
 
-  // Read base properties from CSS configuration layout variables
   let zoom = 1;
   let panX = 100;
   let panY = 100;
   let isDragging = false;
   let startX, startY;
 
+  const clampZoom = (val) => Math.min(Math.max(Math.round(val * 100) / 100, 0.1), 3.0);
+
+  // Applies 2D canvas transform and updates LOD title opacity
   function applyTransform() {
     canvas.style.transform = `translate(${panX}px, ${panY}px) scale(${zoom})`;
+
+    const minZoomThreshold = 0.25;
+    const maxZoomThreshold = 0.55;
+    const opacity = Math.max(0, Math.min(1, (maxZoomThreshold - zoom) / (maxZoomThreshold - minZoomThreshold)));
+    canvas.style.setProperty('--section-title-opacity', opacity.toFixed(3));
   }
 
+  // Zoom towards cursor location on mouse wheel
   viewport.addEventListener('wheel', (e) => {
     e.preventDefault();
     const rect = viewport.getBoundingClientRect();
@@ -23,28 +31,24 @@ export function initPanZoom(viewportId, canvasId) {
     const canvasMouseX = (mouseX - panX) / zoom;
     const canvasMouseY = (mouseY - panY) / zoom;
 
-    const step = 0.1;
-    if (e.deltaY < 0) {
-      zoom = Math.min(Math.round((zoom + step) * 100) / 100, 3.0);
-    } else {
-      zoom = Math.max(Math.round((zoom - step) * 100) / 100, 0.1);
-    }
+    const step = e.deltaY < 0 ? 0.1 : -0.1;
+    zoom = clampZoom(zoom + step);
 
     panX = mouseX - canvasMouseX * zoom;
     panY = mouseY - canvasMouseY * zoom;
     applyTransform();
   }, { passive: false });
 
+  // Pan initiation on canvas mousedown
   viewport.addEventListener('mousedown', (e) => {
-    if (e.button !== 0) return;
-    // If the click is inside the control panel or other controls, ignore panning
-    if (e.target.closest('.control-panel')) return;
+    if (e.button !== 0 || e.target.closest('.control-panel')) return;
     isDragging = true;
     startX = e.clientX - panX;
     startY = e.clientY - panY;
     viewport.style.cursor = 'grabbing';
   });
 
+  // Pan update on mousemove
   window.addEventListener('mousemove', (e) => {
     if (!isDragging) return;
     panX = e.clientX - startX;
@@ -52,16 +56,15 @@ export function initPanZoom(viewportId, canvasId) {
     applyTransform();
   });
 
-  window.addEventListener('mouseup', () => {
+  // Pan termination on mouseup or mouseleave
+  const stopDragging = () => {
+    if (!isDragging) return;
     isDragging = false;
     viewport.style.cursor = 'grab';
-  });
+  };
 
-  window.addEventListener('mouseleave', () => {
-    isDragging = false;
-    viewport.style.cursor = 'grab';
-  });
+  window.addEventListener('mouseup', stopDragging);
+  window.addEventListener('mouseleave', stopDragging);
 
-  // Initialize canvas coordinates baseline display
   applyTransform();
 }
