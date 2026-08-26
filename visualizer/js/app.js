@@ -59,7 +59,8 @@ function collectModuleKeys(data) {
     const sFolder = getSectionFolder(section);
     for (const lane of section.lanes || []) {
       for (const mod of lane.modules || []) {
-        keys.add(`${sFolder}|${mod.id}`);
+        const sub = getSubfolder(mod, lane);
+        keys.add(`${sFolder}|${sub}|${mod.id}`);
       }
     }
   }
@@ -67,8 +68,9 @@ function collectModuleKeys(data) {
 }
 
 // Flattens a module's items and methods into indexed records
-function flattenModuleItems(mod, sFolder, laneBadges, sectionTitle) {
+function flattenModuleItems(mod, sFolder, laneBadges, sectionTitle, subfolder) {
   const items = [];
+  const sub = subfolder || 'ROOT';
   if (mod.itemType === 'class' && Array.isArray(mod.items)) {
     for (const cls of mod.items) {
       for (const m of cls.methods || []) {
@@ -77,10 +79,11 @@ function flattenModuleItems(mod, sFolder, laneBadges, sectionTitle) {
           sectionTitle,
           laneBadges,
           moduleId: mod.id,
+          subfolder: sub,
           itemType: mod.itemType,
           className: cls.name,
           itemName: m.name,
-          key: `${sFolder}|${mod.id}|${cls.name}|${m.name}`
+          key: `${sFolder}|${sub}|${mod.id}|${cls.name}|${m.name}`
         });
       }
     }
@@ -93,9 +96,10 @@ function flattenModuleItems(mod, sFolder, laneBadges, sectionTitle) {
       sectionTitle,
       laneBadges,
       moduleId: mod.id,
+      subfolder: sub,
       itemType: mod.itemType,
       itemName: item.name,
-      key: `${sFolder}|${mod.id}|${item.name}`
+      key: `${sFolder}|${sub}|${mod.id}|${item.name}`
     });
   }
   return items;
@@ -109,7 +113,8 @@ function collectDataItems(data) {
     const sFolder = getSectionFolder(section);
     for (const lane of section.lanes || []) {
       for (const mod of lane.modules || []) {
-        items.push(...flattenModuleItems(mod, sFolder, lane.laneBadges, section.title));
+        const sub = getSubfolder(mod, lane);
+        items.push(...flattenModuleItems(mod, sFolder, lane.laneBadges, section.title, sub));
       }
     }
   }
@@ -123,17 +128,18 @@ function markNewTargetItems(targetData, baselineItemSet) {
     const sFolder = getSectionFolder(section);
     for (const lane of section.lanes || []) {
       for (const mod of lane.modules || []) {
+        const sub = getSubfolder(mod, lane);
         if (mod.itemType === 'class' && Array.isArray(mod.items)) {
           for (const cls of mod.items) {
             for (const m of cls.methods || []) {
-              const key = `${sFolder}|${mod.id}|${cls.name}|${m.name}`;
+              const key = `${sFolder}|${sub}|${mod.id}|${cls.name}|${m.name}`;
               targetItemSet.add(key);
               if (!baselineItemSet.has(key)) m.status = 'new';
             }
           }
         } else if (Array.isArray(mod.items)) {
           for (const item of mod.items) {
-            const key = `${sFolder}|${mod.id}|${item.name}`;
+            const key = `${sFolder}|${sub}|${mod.id}|${item.name}`;
             targetItemSet.add(key);
             if (!baselineItemSet.has(key)) item.status = 'new';
           }
@@ -193,7 +199,8 @@ function injectRemovedBaselineModules(targetData, baselineData, targetModuleKeys
     const sFolder = getSectionFolder(section);
     for (const lane of section.lanes || []) {
       for (const bMod of lane.modules || []) {
-        const modKey = `${sFolder}|${bMod.id}`;
+        const sub = getSubfolder(bMod, lane);
+        const modKey = `${sFolder}|${sub}|${bMod.id}`;
         if (targetModuleKeys.has(modKey)) continue;
 
         const sectionTarget = ensureTargetSection(targetData, section, sFolder, config);
@@ -220,7 +227,7 @@ function injectRemovedBaselineItems(targetData, baselineItems, targetItemSet) {
     const lane = section.lanes.find(l => JSON.stringify(l.laneBadges) === laneKey);
     if (!lane) continue;
 
-    const mod = lane.modules.find(m => m.id === bItem.moduleId);
+    const mod = lane.modules.find(m => m.id === bItem.moduleId && getSubfolder(m, lane) === bItem.subfolder);
     if (!mod) continue;
 
     if (bItem.itemType === 'class') {
@@ -407,7 +414,8 @@ function diffSnapshots(currentData, baselineData, config) {
     const sFolder = getSectionFolder(section);
     for (const lane of section.lanes || []) {
       for (const mod of lane.modules || []) {
-        const modKey = `${sFolder}|${mod.id}`;
+        const sub = getSubfolder(mod, lane);
+        const modKey = `${sFolder}|${sub}|${mod.id}`;
         targetModuleKeys.add(modKey);
         if (baselineData && !baselineModuleKeys.has(modKey)) {
           mod.status = 'new';
