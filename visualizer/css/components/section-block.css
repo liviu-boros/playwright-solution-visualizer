@@ -14,37 +14,20 @@
   grid-row: span 4;
   align-items: flex-start;
   width: max-content;
-  position: relative;
   border: none !important;
+
+  /* Clear legacy pseudo divider elements */
+  &::after,
+  &::before {
+    display: none !important;
+  }
 }
 
-/* Clear legacy pseudo divider elements */
-.section-container::after,
-.section-container::before {
-  display: none !important;
-}
-
-/* Elevated stacking context for active card sections */
-.section-container:has(.is-active-source) {
-  z-index: 20;
-}
-
-.section-container:has(.is-active-target) {
-  z-index: 20;
-}
-
-.section-container:has(.is-active-dependency) {
-  z-index: 20;
-}
-
-.section-container:has(.is-active-reference) {
-  z-index: 20;
-}
 
 /* Big hero section title (Row 1) */
 .section-hero-title {
   align-self: start;
-  margin-bottom: var(--gap-lane-stack);
+  margin-bottom: calc(2 * var(--gap-lane-stack));
   font-size: var(--font-size-hero-title);
   line-height: var(--line-height-hero-title);
   font-weight: var(--weight-semibold);
@@ -68,7 +51,7 @@
 .section-divider-line {
   width: calc(100% + var(--gap-section-main, 128px));
   height: 4px;
-  background-color: var(--color-border-panel, #222);
+  background-color: var(--color-border-divider);
   pointer-events: none;
 }
 

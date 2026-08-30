@@ -16,7 +16,19 @@
   flex-direction: column;
   overflow: hidden;
   box-sizing: border-box;
+
+  &:hover {
+    cursor: pointer;
+    background: var(--color-bg-surface-darkest);
+    border-color: var(--color-bg-surface-darkest);
+
+    .summary-card-count {
+      color: var(--color-text-accent);
+      font-weight: var(--weight-bold);
+    }
+  }
 }
+
 
 /* Top compartment of summary card */
 .summary-card-main {
@@ -32,7 +44,7 @@
 .summary-card-count {
   font-size: var(--font-size-summary-count);
   line-height: var(--line-height-summary-count);
-  font-weight: var(--weight-bold);
+  font-weight: var(--weight-medium);
   color: var(--color-text-main);
   margin-bottom: 4px;
   font-variant-numeric: tabular-nums;
@@ -42,7 +54,7 @@
 .summary-card-label {
   font-size: var(--font-size-subtitle);
   line-height: var(--line-height-subtitle);
-  font-weight: var(--weight-semibold);
+  font-weight: var(--weight-medium);
   color: var(--color-text-muted);
   white-space: nowrap;
 }
@@ -50,13 +62,11 @@
 /* Bottom compartment footer with diff indicator */
 .summary-card-footer {
   border-top: 1px solid var(--color-border-subtle);
-  background: var(--color-bg-surface-dark);
   padding: 6px 12px;
   display: flex;
   align-items: center;
   justify-content: center;
   min-height: 28px;
-  font-family: var(--font-family-mono);
   font-size: var(--font-size-badge-text);
   line-height: var(--line-height-badge-text);
   font-weight: var(--weight-semibold);
@@ -72,8 +82,7 @@
   gap: 6px;
   font-size: var(--font-size-badge-text);
   line-height: var(--line-height-badge-text);
-  font-weight: var(--weight-semibold);
-  font-family: var(--font-family-mono);
+  font-weight: var(--weight-bold);
   font-variant-numeric: tabular-nums;
 }
 

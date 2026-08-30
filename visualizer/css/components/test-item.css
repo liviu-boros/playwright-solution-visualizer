@@ -9,24 +9,25 @@
   padding: 4px 12px 4px 4px;
   border-radius: var(--radius-items);
   white-space: nowrap;
-}
 
-/* Green tint hover on active test items */
-.test-item:hover {
-  background: color-mix(in srgb, var(--color-accent-green) 20%, transparent);
-}
+  /* Green tint hover on active test items */
+  &:hover {
+    background: color-mix(in srgb, var(--color-accent-blue) 20%, var(--color-bg-surface-dark));
+  }
 
-/* Removed test item muted state */
-.test-item--removed {
-  color: var(--color-text-muted);
-}
+  /* Removed test item muted state */
+  &.test-item--removed {
+    color: var(--color-text-muted);
 
-/* Red tint hover on removed test items */
-.test-item--removed:hover {
-  background: color-mix(in srgb, var(--color-accent-red) 20%, transparent);
+    /* Red tint hover on removed test items */
+    &:hover {
+      background: color-mix(in srgb, var(--color-accent-red) 20%, var(--color-bg-surface-dark));
+    }
+  }
 }
 
 /* Vertical optical alignment for item label */
 .item-text {
   transform: translateY(-1px);
 }
+

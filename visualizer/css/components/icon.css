@@ -1,77 +1,37 @@
-/* Base masked vector icon */
+/* Base hardware-native vector icon */
 .icon {
   display: inline-block;
   width: var(--icon-size-md);
   height: var(--icon-size-md);
   flex-shrink: 0;
-  background-color: currentColor;
-  -webkit-mask-repeat: no-repeat;
-  -webkit-mask-position: center;
-  -webkit-mask-size: contain;
-  mask-repeat: no-repeat;
-  mask-position: center;
-  mask-size: contain;
-}
+  fill: currentColor;
+  vertical-align: middle;
 
-/* Small icon variant */
-.icon--sm {
-  width: var(--icon-size-sm);
-  height: var(--icon-size-sm);
-}
+  /* Small icon variant */
+  &.icon--sm {
+    width: var(--icon-size-sm);
+    height: var(--icon-size-sm);
+  }
 
-/* Large icon for section anchor */
-.icon--lg {
-  width: var(--icon-size-lg);
-  height: var(--icon-size-lg);
-  background-color: var(--color-text-main);
-}
+  /* Large icon for section anchor */
+  &.icon--lg {
+    width: var(--icon-size-lg);
+    height: var(--icon-size-lg);
+    fill: var(--color-text-main);
+  }
 
-/* Flag status icon */
-.icon--flag {
-  width: var(--flag-icon-size);
-  height: var(--flag-icon-size);
-  background-color: var(--color-text-main);
-}
+  /* Flag status icon */
+  &.icon--flag {
+    width: var(--flag-icon-size);
+    height: var(--flag-icon-size);
+    color: var(--color-text-main);
+    fill: currentColor;
+  }
 
-/* Badge icon spacing */
-.icon--badge {
-  margin-bottom: 4px;
-}
-
-/* Class icon mask */
-.icon--class {
-  -webkit-mask-image: url('../../icons/system/class-24dp.svg');
-  mask-image: url('../../icons/system/class-24dp.svg');
-}
-
-/* Method icon mask */
-.icon--method {
-  -webkit-mask-image: url('../../icons/system/method-24dp.svg');
-  mask-image: url('../../icons/system/method-24dp.svg');
-}
-
-/* Function icon mask */
-.icon--function {
-  -webkit-mask-image: url('../../icons/system/function-24dp.svg');
-  mask-image: url('../../icons/system/function-24dp.svg');
-}
-
-/* Arrow indicator mask */
-.icon--arrow {
-  -webkit-mask-image: url('../../icons/system/arrow_right_24dp.svg');
-  mask-image: url('../../icons/system/arrow_right_24dp.svg');
-}
-
-/* Priority / new item flag mask */
-.icon--priority {
-  -webkit-mask-image: url('../../icons/system/priority_high_24dp.svg');
-  mask-image: url('../../icons/system/priority_high_24dp.svg');
-}
-
-/* Removed item flag mask */
-.icon--removed {
-  -webkit-mask-image: url('../../icons/system/removed_24dp.svg');
-  mask-image: url('../../icons/system/removed_24dp.svg');
+  /* Badge icon spacing */
+  &.icon--badge {
+    margin-bottom: 4px;
+  }
 }
 
 /* Code symbol item */
@@ -94,3 +54,4 @@
   font-size: var(--select-arrow-size);
   color: var(--select-arrow-color);
 }
+

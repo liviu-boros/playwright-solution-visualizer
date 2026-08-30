@@ -1,6 +1,9 @@
 /* Module card container shell */
 .module-card {
-  --card-bg-surface: var(--color-card-bg);
+  --card-bg-surface: var(--color-bg-surface);
+  --card-outline-color: var(--color-border-subtle);
+  --card-glow-color: var(--color-accent-blue);
+  --card-glow-alpha: 10%;
   width: max-content;
   min-width: max-content;
   padding: 24px;
@@ -8,19 +11,183 @@
   position: relative;
   z-index: 2;
   cursor: pointer;
-  background-color: var(--card-bg-surface);
-  border: 2px solid var(--pr-color-dark-950);
-  outline: 1px solid var(--card-border-color);
+  background:
+    radial-gradient(
+      circle at 90% 10%,
+      color-mix(in srgb, var(--card-glow-color) var(--card-glow-alpha), transparent),
+      transparent 60%
+    ),
+    var(--card-bg-surface);
+  border: 2px solid var(--color-border-black);
+  outline: 1px solid var(--card-outline-color);
   outline-offset: 0;
   box-sizing: border-box;
+
+  /* Highlight on hover */
+  &:not(.is-dimmed):hover {
+    /* --card-outline-color: color-mix(in srgb, var(--color-accent-blue) 80%, var(--color-border-subtle)); */
+    --card-bg-surface: var(--color-bg-surface-dark);
+    --card-glow-alpha: 5%;
+    outline-width: 1px;
+
+    .card-title {
+      color: var(--color-text-accent);
+    }
+
+    .card-subtitle {
+      color: var(--color-text-accent);
+    }
+  }
+
+  /* Clicked primary source card */
+  &.is-active-source {
+    --card-outline-color: var(--color-accent-blue);
+    --card-bg-surface: color-mix(in srgb, var(--color-accent-blue) 5%, var(--color-bg-surface-dark));
+    --card-glow-color: var(--color-accent-blue);
+    --card-glow-alpha: 12%;
+    border-radius: var(--radius-active);
+    outline-width: 2px;
+    z-index: 100;
+
+    &:hover {
+      --card-outline-color: var(--color-accent-blue);
+      --card-bg-surface: var(--color-bg-surface-dark);
+      outline-width: 2px;
+    }
+  }
+
+  /* Dependency target card highlight */
+  &.is-active-dependency {
+    --card-outline-color: var(--color-accent-blue);
+    --card-bg-surface: color-mix(in srgb, var(--color-accent-blue) 5%, var(--color-bg-surface-dark));
+    --card-glow-color: var(--color-accent-blue);
+    --card-glow-alpha: 12%;
+    border-radius: var(--radius-active);
+    outline-width: 2px;
+    z-index: 100;
+
+    &:hover {
+      --card-outline-color: var(--color-accent-blue);
+      --card-bg-surface: var(--color-bg-surface-dark);
+      outline-width: 2px;
+    }
+  }
+
+  /* Reference target card highlight */
+  &.is-active-reference {
+    --card-outline-color: var(--color-accent-blue);
+    --card-bg-surface: color-mix(in srgb, var(--color-accent-blue) 5%, var(--color-bg-surface-dark));
+    --card-glow-color: var(--color-accent-blue);
+    --card-glow-alpha: 12%;
+    border-radius: var(--radius-active);
+    outline-width: 2px;
+    z-index: 100;
+
+    &:hover {
+      --card-outline-color: var(--color-accent-blue);
+      --card-bg-surface: var(--color-bg-surface-dark);
+      outline-width: 2px;
+    }
+  }
+
+  /* Dimmed state for removed modules */
+  &.module-card--removed {
+    opacity: 0.5;
+    --card-glow-color: var(--color-accent-red);
+    --card-glow-alpha: 10%;
+
+    /* Red outline and background tint on hover for removed cards */
+    &:not(.is-dimmed):hover {
+      opacity: 1;
+      --card-bg-surface: var(--color-bg-surface-dark);
+      /* --card-outline-color: var(--color-accent-red); */
+      --card-glow-color: var(--color-accent-red);
+      --card-glow-alpha: 5%;
+
+    .card-title {
+      color: var(--color-accent-red);
+    }
+
+    .card-subtitle {
+      color: var(--color-accent-red);
+    }
+    }
+  }
+
+  /* Active selected state for removed cards */
+  &.is-active-source--removed {
+    --card-outline-color: var(--color-accent-red);
+    --card-bg-surface: var(--color-bg-surface-dark);
+    --card-glow-color: var(--color-accent-red);
+    --card-glow-alpha: 12%;
+    border-radius: var(--radius-active);
+    outline-width: 2px;
+    opacity: 1;
+    z-index: 100;
+
+    &:hover {
+      outline-width: 2px;
+    }
+  }
+
+  /* Connection port visibility rules */
+  &.has-port-left .card-port--left {
+    display: flex;
+  }
+
+  &.has-port-right .card-port--right {
+    display: flex;
+  }
+
+  /* Dimmed card state during active selection */
+  &.is-dimmed {
+    opacity: 0.25;
+    z-index: 1;
+  }
 }
 
-/* Green highlight on hover */
-.module-card:not(.is-dimmed):hover {
-  --card-border-color: var(--color-accent-green);
-  --card-bg-surface: color-mix(in srgb, var(--color-accent-green) 7%, var(--color-card-bg));
-  outline-width: 2px;
+/* Card connection port */
+.card-port {
+  width: 24px;
+  height: 36px;
+  border-radius: 8px;
+  position: absolute;
+  top: 50%;
+  transform: translateY(-50%);
+  background: var(--color-bg-surface);
+  border: none;
+  outline: 2px solid var(--card-outline-color);
+  outline-offset: 0;
+  display: none;
+  align-items: center;
+  justify-content: center;
+  z-index: 110;
+  box-sizing: border-box;
+
+  &.card-port--left {
+    left: -14.5px;
+  }
+
+  &.card-port--right {
+    right: -14.5px;
+  }
 }
+
+/* Card port icon */
+.card-port-icon {
+  width: 16px;
+  height: 16px;
+  filter: brightness(0) invert(1);
+  pointer-events: none;
+  user-select: none;
+}
+
+/* Global interaction dimming utility */
+.is-dimmed {
+  opacity: 0.25;
+  z-index: 1;
+}
+
 
 /* Card header section */
 .card-header {
@@ -59,10 +226,10 @@
 /* Class container in class-based modules */
 .class-group {
   margin-bottom: 6px;
-}
 
-.class-group:last-child {
-  margin-bottom: 0;
+  &:last-child {
+    margin-bottom: 0;
+  }
 }
 
 /* Class title row with class icon */
@@ -78,60 +245,4 @@
   font-weight: var(--weight-semibold);
 }
 
-/* Dimmed state for removed modules */
-.module-card--removed {
-  opacity: 0.5;
-}
 
-/* Clicked primary source card */
-.is-active-source {
-  --card-border-color: var(--color-accent-green);
-  --card-bg-surface: color-mix(in srgb, var(--color-accent-green) 10%, var(--color-card-bg));
-  border-radius: var(--radius-active);
-  outline-width: 2px;
-  z-index: 100;
-}
-
-/* Target card in active connection */
-.is-active-target {
-  --card-border-color: var(--color-accent-green);
-  --card-bg-surface: color-mix(in srgb, var(--color-accent-green) 10%, var(--color-card-bg));
-  border-radius: var(--radius-active);
-  outline-width: 2px;
-  z-index: 100;
-}
-
-/* Dependency target card highlight */
-.is-active-dependency {
-  --card-border-color: var(--color-accent-green);
-  --card-bg-surface: color-mix(in srgb, var(--color-accent-green) 10%, var(--color-card-bg));
-  border-radius: var(--radius-active);
-  outline-width: 2px;
-  z-index: 100;
-}
-
-/* Reference target card highlight */
-.is-active-reference {
-  --card-border-color: var(--color-accent-cyan);
-  --card-bg-surface: color-mix(in srgb, var(--color-accent-cyan) 10%, var(--color-card-bg));
-  border-radius: var(--radius-active);
-  outline-width: 2px;
-  z-index: 100;
-}
-
-/* Red outline and background tint on hover for removed cards */
-.module-card--removed:not(.is-dimmed):hover {
-  opacity: 1;
-  --card-bg-surface: color-mix(in srgb, var(--color-accent-red) 10%, var(--color-card-bg));
-  --card-border-color: var(--color-accent-red);
-}
-
-/* Active selected state for removed cards */
-.is-active-source--removed {
-  --card-border-color: var(--color-accent-red);
-  --card-bg-surface: color-mix(in srgb, var(--color-accent-red) 10%, var(--color-card-bg));
-  border-radius: var(--radius-active);
-  outline-width: 2px;
-  opacity: 1;
-  z-index: 100;
-}

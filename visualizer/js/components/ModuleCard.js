@@ -4,10 +4,10 @@ import { MethodItem } from './MethodItem.js';
 // Renders status flag for added or removed modules
 function renderCardFlag(status) {
   if (status === 'removed') {
-    return `<div class="badge-right"><span class="flag flag--removed module-flag" aria-hidden="true" title="Removed module in snapshot"><span class="icon icon--flag icon--removed"></span></span></div>`;
+    return `<div class="badge-right"><span class="flag flag--removed module-flag" aria-hidden="true" title="Removed module in snapshot"><svg class="icon icon--flag"><use href="#icon-removed" /></svg></span></div>`;
   }
   if (status === 'new') {
-    return `<div class="badge-right"><span class="flag flag--new module-flag" aria-hidden="true" title="New module in snapshot"><span class="icon icon--flag icon--priority"></span></span></div>`;
+    return `<div class="badge-right"><span class="flag flag--new module-flag" aria-hidden="true" title="New module in snapshot"><svg class="icon icon--flag"><use href="#icon-priority" /></svg></span></div>`;
   }
   return '';
 }
@@ -20,7 +20,7 @@ function renderClassItem(item) {
 
   const parentRow = `
     <div class="class-parent-row">
-      <span class="icon icon--class" aria-hidden="true"></span>
+      <svg class="icon" aria-hidden="true"><use href="#icon-class" /></svg>
       <span class="class-name">${item.name}</span>
     </div>
   `;
@@ -57,7 +57,10 @@ export function ModuleCard(mod) {
   const removedClass = mod.status === 'removed' ? ' module-card--removed' : '';
 
   return `
-    <div class="module-card ambient-spotlight${removedClass}" data-module-id="${mod.id}" data-imports='${importsJson}'>
+    <div class="module-card${removedClass}" data-module-id="${mod.id}" data-imports='${importsJson}'>
+      <div class="card-port card-port--left" aria-hidden="true">
+        <img class="card-port-icon" src="icons/system/arrow_caret_24dp.svg" alt="" />
+      </div>
       <div class="card-header">
         ${badgeRowHtml}
         <h2 class="card-title">${displayTitle}</h2>
@@ -66,6 +69,10 @@ export function ModuleCard(mod) {
       <div class="card-body">
         ${itemsHtml}
       </div>
+      <div class="card-port card-port--right" aria-hidden="true">
+        <img class="card-port-icon" src="icons/system/arrow_caret_24dp.svg" alt="" />
+      </div>
     </div>
   `;
 }
+

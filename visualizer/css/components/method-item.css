@@ -9,24 +9,25 @@
   padding: 4px 12px 4px 4px;
   border-radius: var(--radius-items);
   white-space: nowrap;
+
+  /* Green tint hover on active methods */
+  &:hover {
+    background: color-mix(in srgb, var(--color-accent-blue) 20%, var(--color-bg-surface-dark));
+  }
+
+  /* Indented layout for methods inside classes */
+  &.method-item--indented {
+    padding-left: 16px;
+  }
+
+  /* Removed method item muted state */
+  &.method-item--removed {
+    color: var(--color-text-muted);
+
+    /* Red tint hover on removed methods */
+    &:hover {
+      background: color-mix(in srgb, var(--color-accent-red) 20%, var(--color-bg-surface-dark));
+    }
+  }
 }
 
-/* Green tint hover on active methods */
-.method-item:hover {
-  background: color-mix(in srgb, var(--color-accent-green) 20%, transparent);
-}
-
-/* Indented layout for methods inside classes */
-.method-item--indented {
-  padding-left: 16px;
-}
-
-/* Removed method item muted state */
-.method-item--removed {
-  color: var(--color-text-muted);
-}
-
-/* Red tint hover on removed methods */
-.method-item--removed:hover {
-  background: color-mix(in srgb, var(--color-accent-red) 20%, transparent);
-}

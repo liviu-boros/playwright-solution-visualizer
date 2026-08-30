@@ -19,6 +19,7 @@ export function initPanZoom(viewportId, canvasId) {
     const maxZoomThreshold = 0.55;
     const opacity = Math.max(0, Math.min(1, (maxZoomThreshold - zoom) / (maxZoomThreshold - minZoomThreshold)));
     canvas.style.setProperty('--section-title-opacity', opacity.toFixed(3));
+    canvas.classList.toggle('canvas--low-lod', zoom <= 0.4);
   }
 
   // Zoom towards cursor location on mouse wheel

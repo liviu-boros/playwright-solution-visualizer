@@ -1,15 +1,15 @@
 // Resolves status flag or default item symbol
 function getTestMarker(status, itemType) {
   if (status === 'removed') {
-    return `<span class="flag flag--removed" aria-hidden="true" title="Removed test in snapshot"><span class="icon icon--flag icon--removed"></span></span>`;
+    return `<span class="flag flag--removed" aria-hidden="true" title="Removed test in snapshot"><svg class="icon icon--flag"><use href="#icon-removed" /></svg></span>`;
   }
   if (status === 'new') {
-    return `<span class="flag flag--new" aria-hidden="true" title="New item in snapshot"><span class="icon icon--flag icon--priority"></span></span>`;
+    return `<span class="flag flag--new" aria-hidden="true" title="New item in snapshot"><svg class="icon icon--flag"><use href="#icon-priority" /></svg></span>`;
   }
   if (itemType === 'functions' || itemType === 'class') {
     return `<span class="icon-code">{}</span>`;
   }
-  return `<span class="icon icon--arrow" aria-hidden="true"></span>`;
+  return `<svg class="icon icon--arrow" aria-hidden="true"><use href="#icon-arrow" /></svg>`;
 }
 
 // Renders a test item row with arrow/status indicator and test name

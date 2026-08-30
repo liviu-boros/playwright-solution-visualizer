@@ -7,28 +7,34 @@
   justify-content: center;
   border-radius: var(--radius-flag);
   flex-shrink: 0;
+  color: var(--pr-color-white);
   animation: pulse-beacon 2s ease-out infinite;
+
+  /* Green indicator for added items */
+  &.flag--new {
+    background-color: var(--color-accent-green);
+    --pulse-beacon-color: var(--color-accent-green);
+  }
+
+  /* Red indicator for removed items */
+  &.flag--removed {
+    background-color: var(--color-accent-red);
+    --pulse-beacon-color: var(--color-accent-red);
+  }
+
+  /* Low-LOD optimization for zoom <= 0.4x: uses fast brightness pulse without Gaussian drop-shadow */
+  .canvas--low-lod & {
+    animation-name: pulse-beacon-low-lod;
+  }
 }
 
-/* Green indicator for added items */
-.flag--new {
-  background-color: var(--color-accent-green);
-  --pulse-beacon-color: var(--color-accent-green);
-}
-
-/* Red indicator for removed items */
-.flag--removed {
-  background-color: var(--color-accent-red);
-  --pulse-beacon-color: var(--color-accent-red);
-}
-
-/* Pulse animation for flag beacons */
+/* Full fidelity pulse animation for flag beacons */
 @keyframes pulse-beacon {
   0% {
     filter: brightness(1) drop-shadow(0 0 0px var(--pulse-beacon-color));
   }
   15% {
-    filter: brightness(2) drop-shadow(0 0 6px var(--pulse-beacon-color));
+    filter: brightness(1.5) drop-shadow(0 0 6px var(--pulse-beacon-color));
   }
   60% {
     filter: brightness(1) drop-shadow(0 0 0px var(--pulse-beacon-color));
@@ -37,3 +43,20 @@
     filter: brightness(1) drop-shadow(0 0 0px var(--pulse-beacon-color));
   }
 }
+
+/* Simplified low-LOD pulse animation for zoom <= 0.4x without Gaussian drop-shadow */
+@keyframes pulse-beacon-low-lod {
+  0% {
+    filter: brightness(1);
+  }
+  15% {
+    filter: brightness(2);
+  }
+  60% {
+    filter: brightness(1);
+  }
+  100% {
+    filter: brightness(1);
+  }
+}
+

@@ -1,7 +1,6 @@
 @import url('variables.css');
 
 /* Global primitives, utilities & atoms */
-@import url('decorations/decorations.css');
 @import url('components/badge.css');
 @import url('components/flag.css');
 @import url('components/icon.css');
@@ -31,7 +30,7 @@ body, html {
   width: 100%;
   height: 100%;
   overflow: hidden;
-  background-color: var(--color-canvas-bg);
+  background-color: var(--color-bg-canvas);
   font-family: var(--font-family-system);
   color: var(--color-text-main);
   user-select: none;
@@ -44,13 +43,14 @@ body, html {
   position: relative;
   overflow: hidden;
   cursor: grab;
-  background-image: radial-gradient(circle, var(--pr-color-dark-800) 1px, transparent 1px);
+  /* background-image: radial-gradient(circle, var(--pr-color-dark-900) 1px, transparent 1px); */
   background-size: 24px 24px;
+
+  &:active {
+    cursor: grabbing;
+  }
 }
 
-#viewport:active {
-  cursor: grabbing;
-}
 
 /* Multi-section canvas layout grid */
 #canvas {

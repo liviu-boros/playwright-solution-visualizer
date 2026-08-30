@@ -81,6 +81,8 @@ export function SectionAnchor(section, config) {
   const displayDescription = cfg?.description !== undefined ? cfg.description : (section.description || '');
   const iconUrl = cfg?.icon || section.icon || 'icons/tests.svg';
   const isTestSection = (displayTitle || '').toLowerCase().includes('test') || (cfg?.type === 'test');
+  const sectionIconBase = iconUrl.split('/').pop().replace(/\.svg$/, '').toLowerCase();
+  const sectionSymbolId = `icon-section-${sectionIconBase}`;
 
   const summaryCards = buildSummaryCards(section, isTestSection);
   const breakdownCards = buildBreakdownCards(section, isTestSection);
@@ -99,7 +101,7 @@ export function SectionAnchor(section, config) {
   return `
     <div class="section-anchor">
       <div class="anchor-meta-col">
-        <span class="icon icon--lg" style="mask: url('${iconUrl}') no-repeat center / contain; -webkit-mask: url('${iconUrl}') no-repeat center / contain; background-color: var(--pr-color-white);" aria-hidden="true"></span>
+        <svg class="icon icon--lg" style="fill: var(--pr-color-white);" aria-hidden="true"><use href="#${sectionSymbolId}" /></svg>
         <div class="anchor-title-group">
           <h2 class="anchor-title">${displayTitle}</h2>
           <span class="anchor-folder">${displayFolder}</span>

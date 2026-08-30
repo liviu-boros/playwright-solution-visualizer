@@ -13,39 +13,49 @@
   padding: 16px 20px;
   width: max-content;
   box-sizing: border-box;
-}
 
-/* Flat breakdown card variant without nested folder trees */
-.breakdown-card--flat {
-  display: flex;
-  flex-direction: column;
-}
+  &:hover {
+    cursor: pointer;
+    background: var(--color-bg-surface-darkest);
+    border-color: var(--color-bg-surface-darkest);
 
-/* Nested breakdown card variant with subfolder trees */
-.breakdown-card--nested {
-  display: flex;
-  flex-direction: column;
-  gap: 12px;
+    .breakdown-card-title {
+      color: var(--color-text-accent);
+    }
+  }
+
+  /* Flat breakdown card variant without nested folder trees */
+  &.breakdown-card--flat {
+    display: flex;
+    flex-direction: column;
+  }
+
+  /* Nested breakdown card variant with subfolder trees */
+  &.breakdown-card--nested {
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+  }
 }
 
 /* Breakdown card content body */
 .breakdown-card-content {
   display: flex;
   flex-direction: column;
-}
 
-/* Flat content body with uniform vertical gap */
-.breakdown-card-content--flat {
-  display: flex;
-  flex-direction: column;
-  gap: 8px;
-}
+  /* Flat content body with uniform vertical gap */
+  &.breakdown-card-content--flat {
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+  }
 
-/* Nested content body container */
-.breakdown-card-content--nested {
-  display: flex;
-  flex-direction: column;
-  gap: 12px;
+  /* Nested content body container */
+  &.breakdown-card-content--nested {
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+  }
 }
 
 /* Breakdown card header title */
@@ -56,16 +66,19 @@
   color: var(--color-text-muted);
 }
 
-.breakdown-group:last-child {
-  margin-bottom: 0;
+.breakdown-group {
+  &:last-child {
+    margin-bottom: 0;
+  }
 }
 
 /* Indented subfolder item list with vertical tree guide line */
 .breakdown-group-items {
   display: flex;
   flex-direction: column;
-  gap: 4px;
+  gap: 6px;
   margin-top: 8px;
   padding-left: 8px;
   border-left: 1px solid var(--color-border-divider);
 }
+

@@ -6,24 +6,25 @@
   width: 100%;
   height: 100%;
   pointer-events: none;
-  z-index: 10;
+  z-index: 50;
   overflow: visible;
 }
 
 /* Base Bezier connection path */
 .connection-path {
   fill: none;
-  stroke: var(--color-accent-green);
+  stroke: var(--color-accent-blue);
   stroke-width: 2.5px;
   stroke-linecap: round;
+
+  /* Dependency curve stroke */
+  &.dependency-path {
+    stroke: var(--color-accent-blue);
+  }
+
+  /* Reference curve stroke */
+  &.reference-path {
+    stroke: var(--color-accent-blue);
+  }
 }
 
-/* Dependency curve stroke */
-.dependency-path {
-  stroke: var(--color-accent-green);
-}
-
-/* Reference curve stroke */
-.reference-path {
-  stroke: var(--color-accent-cyan);
-}

@@ -5,10 +5,10 @@
   align-items: center;
   gap: 6px;
   margin-bottom: 10px;
-}
 
-.badge-row:empty {
-  display: none;
+  &:empty {
+    display: none;
+  }
 }
 
 /* Tag badge list container */
@@ -38,14 +38,14 @@
   font-weight: var(--weight-bold);
   letter-spacing: 1px;
   color: var(--color-text-main);
-  background: var(--color-accent-dark);
+  background: var(--color-bg-surface-dark);
   border: 1px solid var(--color-border-subtle);
-}
 
-/* Muted badge variant */
-.badge--muted {
-  letter-spacing: 0.5px;
-  color: var(--color-text-muted);
+  /* Muted badge variant */
+  &.badge--muted {
+    letter-spacing: 0.5px;
+    color: var(--color-text-muted);
+  }
 }
 
 /* Dropdown item option badge */
@@ -55,7 +55,8 @@
   text-transform: uppercase;
   letter-spacing: 0.5px;
   padding: 2px 6px;
-  background: var(--select-badge-bg);
+  background: var(--color-bg-badge);
   color: var(--select-badge-color);
   border: 1px solid var(--select-badge-bg);
 }
+

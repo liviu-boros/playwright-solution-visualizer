@@ -4,7 +4,7 @@
   left: 50%;
   transform: translateX(-50%);
   z-index: 1000;
-  background: color-mix(in srgb, var(--color-panel-bg) 30%, transparent);
+  background: color-mix(in srgb, var(--color-bg-surface) 60%, transparent);
   backdrop-filter: blur(8px) saturate(180%);
   -webkit-backdrop-filter: blur(8px) saturate(180%);
   border: 1px solid var(--color-border-panel);
@@ -39,8 +39,8 @@
   font-weight: var(--weight-black);
   text-transform: uppercase;
   letter-spacing: 1px;
-  color: var(--compare-badge-color);
-  background: var(--compare-badge-bg);
+  color: var(--color-text-accent);
+  background: color-mix(in srgb, var(--color-accent-blue) 30%, var(--color-bg-surface-dark));
   border-radius: var(--radius-badge);
   padding: 4px 8px;
   user-select: none;

@@ -5,31 +5,31 @@
   justify-content: space-between;
   gap: 32px;
   white-space: nowrap;
-}
 
-/* Standard flat metric line row */
-.metric-line--standard {
-  font-size: var(--font-size-subtitle);
-  line-height: var(--line-height-subtitle);
-  font-weight: var(--weight-regular);
-  color: var(--color-text-body);
-}
+  /* Standard flat metric line row */
+  &.metric-line--standard {
+    font-size: var(--font-size-subtitle);
+    line-height: var(--line-height-subtitle);
+    font-weight: var(--weight-regular);
+    color: var(--color-text-body);
+  }
 
-/* Subfolder category header line */
-.metric-line--folder {
-  font-size: var(--font-size-metric-folder);
-  line-height: var(--line-height-metric-folder);
-  font-weight: var(--weight-bold);
-  color: var(--color-text-main);
-}
+  /* Subfolder category header line */
+  &.metric-line--folder {
+    font-size: var(--font-size-metric-folder);
+    line-height: var(--line-height-metric-folder);
+    font-weight: var(--weight-bold);
+    color: var(--color-text-main);
+  }
 
-/* Nested indented file item line */
-.metric-line--indented {
-  font-size: var(--font-size-metric-indented);
-  line-height: var(--line-height-metric-indented);
-  padding-left: 0;
-  font-weight: var(--weight-regular);
-  color: var(--color-text-muted);
+  /* Nested indented file item line */
+  &.metric-line--indented {
+    font-size: var(--font-size-metric-indented);
+    line-height: var(--line-height-metric-indented);
+    padding-left: 0;
+    font-weight: var(--weight-regular);
+    color: var(--color-text-muted);
+  }
 }
 
 /* Right-aligned metric data container */
@@ -44,8 +44,7 @@
 .metric-diff-group {
   font-size: var(--font-size-badge-text);
   line-height: var(--line-height-badge-text);
-  font-weight: var(--weight-semibold);
-  font-family: var(--font-family-mono);
+  font-weight: var(--weight-bold);
   font-variant-numeric: tabular-nums;
   display: inline-flex;
   gap: 6px;
@@ -56,30 +55,30 @@
   min-width: 20px;
   text-align: right;
   font-variant-numeric: tabular-nums;
-}
 
-/* Standard count text */
-.metric-line-count--standard {
-  font-size: var(--font-size-subtitle);
-  line-height: var(--line-height-subtitle);
-  font-weight: var(--weight-regular);
-  color: var(--color-text-main);
-}
+  /* Standard count text */
+  &.metric-line-count--standard {
+    font-size: var(--font-size-subtitle);
+    line-height: var(--line-height-subtitle);
+    font-weight: var(--weight-regular);
+    color: var(--color-text-main);
+  }
 
-/* Folder header count text */
-.metric-line-count--folder {
-  font-size: var(--font-size-metric-folder);
-  line-height: var(--line-height-metric-folder);
-  font-weight: var(--weight-semibold);
-  color: var(--color-text-main);
-}
+  /* Folder header count text */
+  &.metric-line-count--folder {
+    font-size: var(--font-size-metric-folder);
+    line-height: var(--line-height-metric-folder);
+    font-weight: var(--weight-semibold);
+    color: var(--color-text-main);
+  }
 
-/* Indented item count text */
-.metric-line-count--indented {
-  font-size: var(--font-size-metric-indented);
-  line-height: var(--line-height-metric-indented);
-  font-weight: var(--weight-regular);
-  color: var(--color-text-muted);
+  /* Indented item count text */
+  &.metric-line-count--indented {
+    font-size: var(--font-size-metric-indented);
+    line-height: var(--line-height-metric-indented);
+    font-weight: var(--weight-regular);
+    color: var(--color-text-muted);
+  }
 }
 
 /* Added count text color */
@@ -93,3 +92,4 @@
   color: var(--color-accent-red);
   font-variant-numeric: tabular-nums;
 }
+

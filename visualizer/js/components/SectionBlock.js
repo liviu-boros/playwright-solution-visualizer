@@ -44,10 +44,10 @@ function getTagIcon(tagIdentifier, config) {
 // Renders an individual side rail badge
 function renderLaneBadge(badge, config) {
   if (badge.type === 'tag') {
-    const iconPath = getTagIcon(badge.value, config);
+    const symbolId = `icon-tag-${(badge.value || '').toLowerCase()}`;
     return `
       <div class="side-badge" title="Project: ${badge.value}">
-        <span class="icon icon--badge" style="mask: url('${iconPath}') no-repeat center / contain; -webkit-mask: url('${iconPath}') no-repeat center / contain;" aria-hidden="true"></span>
+        <svg class="icon icon--badge" aria-hidden="true"><use href="#${symbolId}" /></svg>
         <span class="badge-text">${badge.value}</span>
       </div>
     `;

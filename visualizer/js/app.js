@@ -1,6 +1,7 @@
 import { SectionBlock, getSectionType } from './components/SectionBlock.js';
 import { initPanZoom } from './pan-zoom.js';
 import { SelectComponent } from './components/SelectComponent.js';
+import { initIconManager } from './icon-manager.js';
 
 let leftSelectComponent = null;
 let rightSelectComponent = null;
@@ -349,8 +350,8 @@ function computeTestMetrics(section) {
 
       for (const mod of lane.modules || []) {
         const sub = getSubfolder(mod, lane);
-        let f = metric.files.find(file => 
-          (file.subfolder || getSubfolder(file, lane)) === sub && 
+        let f = metric.files.find(file =>
+          (file.subfolder || getSubfolder(file, lane)) === sub &&
           (file.id === mod.id || file.fileName === mod.fileName)
         );
         if (!f) {
@@ -479,9 +480,9 @@ function clearDependencyHighlighting() {
   const canvas = document.getElementById('canvas');
   if (!canvas) return;
 
-  const dimmedElements = canvas.querySelectorAll('.is-dimmed, .is-active-source, .is-active-target, .is-active-dependency, .is-active-reference, .is-active-source--removed');
-  dimmedElements.forEach(el => {
-    el.classList.remove('is-active-source', 'is-active-target', 'is-active-dependency', 'is-active-reference', 'is-dimmed', 'is-active-source--removed');
+  const highlightedElements = canvas.querySelectorAll('.is-dimmed, .is-active-source, .is-active-dependency, .is-active-reference, .is-active-source--removed, .has-port-left, .has-port-right');
+  highlightedElements.forEach(el => {
+    el.classList.remove('is-active-source', 'is-active-dependency', 'is-active-reference', 'is-dimmed', 'is-active-source--removed', 'has-port-left', 'has-port-right');
   });
 
   const connectionsLayer = document.getElementById('connectionsLayer');
@@ -518,9 +519,12 @@ function createBezierPath(sourceCoords, sourceCenter, targetCoords, isDependency
     y2 = targetCenter.y;
     cp2 = { x: isDependency ? x2 + cDistX : x2 - cDistX, y: y2 };
   } else {
-    x2 = targetCenter.x;
-    y2 = deltaY > 0 ? targetCoords.top : targetCoords.bottom;
-    cp2 = { x: x2, y: deltaY > 0 ? y2 - cDistY : y2 + cDistY };
+    // x2 = targetCenter.x;
+    // y2 = deltaY > 0 ? targetCoords.top : targetCoords.bottom;
+    // cp2 = { x: x2, y: deltaY > 0 ? y2 - cDistY : y2 + cDistY };
+    x2 = isDependency ? targetCoords.right : targetCoords.left;
+    y2 = targetCenter.y;
+    cp2 = { x: isDependency ? x2 + cDistX : x2 - cDistX, y: y2 };
   }
 
   const d = `M ${x1} ${y1} C ${cp1.x} ${cp1.y}, ${cp2.x} ${cp2.y}, ${x2} ${y2}`;
@@ -611,7 +615,7 @@ function setDependencyHighlighting(sourceCard) {
     const isRef = cardImports.some(id => isModuleMatch(id, sourceModuleId, sourceCleanId));
 
     if (isDep) {
-      card.classList.add('is-active-dependency', 'is-active-target');
+      card.classList.add('is-active-dependency');
       dependencyCards.push(card);
     }
     if (isRef) {
@@ -622,6 +626,15 @@ function setDependencyHighlighting(sourceCard) {
 
   activeDependencyCards = dependencyCards;
   activeReferenceCards = referenceCards;
+
+  // Manage connection port visibility on target dependency and reference cards
+  for (const card of dependencyCards) {
+    card.classList.add('has-port-right');
+  }
+
+  for (const card of referenceCards) {
+    card.classList.add('has-port-left');
+  }
 
   // Dim unrelated elements
   const activeSet = new Set([sourceCard, ...dependencyCards, ...referenceCards]);
@@ -699,6 +712,7 @@ function handleCanvasClick(e, mouseDownPos) {
 async function init() {
   try {
     const config = await fetchJSON('visualizer-config.json');
+    await initIconManager(config);
     const ledger = await fetchJSON('data/index.json');
 
     if (!ledger || ledger.length === 0) {
