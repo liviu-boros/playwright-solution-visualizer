@@ -1,6 +1,6 @@
 import { test } from '@playwright/test';
-import { OrdersApi } from '@api/tagb-orders-api';
-import { processCheckoutPayment } from '@workflows';
+import { PaymentGatewayApi } from '@api/tagb-payment-gateway';
+import { processPaymentTransaction } from '@workflows';
 
 test('API > Gateway > Authorize Credit Card Charge', async ({ page }) => {});
 test('API > Gateway > Capture Pre-Authorized Transaction Amount', async ({ page }) => {});

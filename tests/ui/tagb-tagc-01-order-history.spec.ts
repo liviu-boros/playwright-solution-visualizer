@@ -1,5 +1,5 @@
 import { test } from '@playwright/test';
-import { OrdersApi } from '@api/tagb-orders-api';
+import { PaymentGatewayApi } from '@api/tagb-payment-gateway';
 import { EndpointsApi } from '@api/tagc-endpoints';
 import { CheckoutPage } from '@pages/tagb-checkout';
 import { SettingsPage } from '@pages/tagc-settings';

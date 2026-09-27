@@ -1,7 +1,7 @@
 import { test } from '@playwright/test';
-import { OrdersApi } from '@api/tagb-orders-api';
+import { PaymentGatewayApi } from '@api/tagb-payment-gateway';
 import { CheckoutPage } from '@pages/tagb-checkout';
-import { processCheckoutPayment } from '@workflows';
+import { processPaymentTransaction } from '@workflows';
 
 test('UI > Inventory > Display Stock Table Rows', async ({ page }) => {});
 test('UI > Inventory > Sort Products by SKU Number', async ({ page }) => {});

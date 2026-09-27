@@ -1,6 +1,6 @@
 import { test } from '@playwright/test';
-import { OrdersApi } from '@api/tagb-orders-api';
-import { processCheckoutPayment } from '@workflows';
+import { SubscriptionApi } from '@api/tagb-subscription-api';
+import { processBillingCycle } from '@workflows';
 
 test('Service > Invoice > Generate Monthly Subscription Invoices', async ({ page }) => {});
 test('Service > Invoice > Render HTML Template to PDF Buffer', async ({ page }) => {});

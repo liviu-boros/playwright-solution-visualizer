@@ -1,0 +1,3586 @@
+[
+  {
+    "title": "Api Models",
+    "folder": "./api",
+    "description": "HTTP request specs and route validations",
+    "icon": "icons/api.svg",
+    "lanes": [
+      {
+        "laneBadges": [
+          {
+            "type": "tag",
+            "value": "TagA"
+          }
+        ],
+        "modules": [
+          {
+            "id": "taga-metrics-api",
+            "fileName": "taga-metrics-api.ts",
+            "title": "Metrics Api",
+            "tags": [
+              "TagA"
+            ],
+            "imports": [],
+            "items": [
+              {
+                "name": "MetricsApi",
+                "methods": [
+                  {
+                    "name": "async getSystemMetrics()"
+                  },
+                  {
+                    "name": "async pushTelemetryEvent()"
+                  }
+                ]
+              }
+            ],
+            "itemType": "class"
+          },
+          {
+            "id": "taga-telemetry-api",
+            "fileName": "taga-telemetry-api.ts",
+            "title": "Telemetry Api",
+            "tags": [
+              "TagA"
+            ],
+            "imports": [],
+            "items": [
+              {
+                "name": "TelemetryApi",
+                "methods": [
+                  {
+                    "name": "async sendTelemetryPayload()"
+                  },
+                  {
+                    "name": "async fetchLiveAlerts()"
+                  }
+                ]
+              }
+            ],
+            "itemType": "class"
+          },
+          {
+            "id": "taga-v1-deprecated-api",
+            "fileName": "taga-v1-deprecated-api.ts",
+            "title": "V1 Deprecated Api",
+            "tags": [
+              "TagA"
+            ],
+            "imports": [],
+            "items": [
+              {
+                "name": "V1DeprecatedApi",
+                "methods": [
+                  {
+                    "name": "async fetchV1Data()"
+                  }
+                ]
+              }
+            ],
+            "itemType": "class"
+          }
+        ]
+      },
+      {
+        "laneBadges": [
+          {
+            "type": "tag",
+            "value": "TagA"
+          },
+          {
+            "type": "tag",
+            "value": "TagB"
+          }
+        ],
+        "modules": [
+          {
+            "id": "taga-tagb-gateway-router",
+            "fileName": "taga-tagb-gateway-router.ts",
+            "title": "Gateway Router",
+            "tags": [
+              "TagA",
+              "TagB"
+            ],
+            "imports": [],
+            "items": [
+              {
+                "name": "GatewayRouterApi",
+                "methods": [
+                  {
+                    "name": "async routeIncomingRequest()"
+                  },
+                  {
+                    "name": "async getActiveRoutes()"
+                  }
+                ]
+              }
+            ],
+            "itemType": "class"
+          }
+        ]
+      },
+      {
+        "laneBadges": [
+          {
+            "type": "tag",
+            "value": "TagB"
+          }
+        ],
+        "modules": [
+          {
+            "id": "tagb-legacy-payments-api",
+            "fileName": "tagb-legacy-payments-api.ts",
+            "title": "Legacy Payments Api",
+            "tags": [
+              "TagB"
+            ],
+            "imports": [],
+            "items": [
+              {
+                "name": "LegacyPaymentsApi",
+                "methods": [
+                  {
+                    "name": "async chargeV1Card()"
+                  }
+                ]
+              }
+            ],
+            "itemType": "class"
+          },
+          {
+            "id": "tagb-payment-gateway",
+            "fileName": "tagb-payment-gateway.ts",
+            "title": "Payment Gateway",
+            "tags": [
+              "TagB"
+            ],
+            "imports": [],
+            "items": [
+              {
+                "name": "PaymentGatewayApi",
+                "methods": [
+                  {
+                    "name": "async verifyTransaction()"
+                  },
+                  {
+                    "name": "async cancelSubscription()"
+                  }
+                ]
+              }
+            ],
+            "itemType": "class"
+          },
+          {
+            "id": "tagb-subscription-api",
+            "fileName": "tagb-subscription-api.ts",
+            "title": "Subscription Api",
+            "tags": [
+              "TagB"
+            ],
+            "imports": [],
+            "items": [
+              {
+                "name": "SubscriptionApi",
+                "methods": [
+                  {
+                    "name": "async fetchSubscriptionTiers()"
+                  },
+                  {
+                    "name": "async updatePlanSubscription()"
+                  }
+                ]
+              }
+            ],
+            "itemType": "class"
+          }
+        ]
+      },
+      {
+        "laneBadges": [
+          {
+            "type": "tag",
+            "value": "TagC"
+          }
+        ],
+        "modules": [
+          {
+            "id": "tagc-endpoints",
+            "fileName": "tagc-endpoints.ts",
+            "title": "Endpoints",
+            "tags": [
+              "TagC"
+            ],
+            "imports": [],
+            "items": [
+              {
+                "name": "AuthEndpoints",
+                "methods": [
+                  {
+                    "name": "async refreshToken()"
+                  }
+                ]
+              }
+            ],
+            "itemType": "class"
+          },
+          {
+            "id": "tagc-settings-api",
+            "fileName": "tagc-settings-api.ts",
+            "title": "Settings Api",
+            "tags": [
+              "TagC"
+            ],
+            "imports": [],
+            "items": [
+              {
+                "name": "SettingsApi",
+                "methods": [
+                  {
+                    "name": "async getAccountPreferences()"
+                  },
+                  {
+                    "name": "async updatePreference()"
+                  }
+                ]
+              }
+            ],
+            "itemType": "class"
+          }
+        ]
+      }
+    ],
+    "metrics": []
+  },
+  {
+    "title": "Workflows",
+    "folder": "./workflows",
+    "description": "Multi-step API orchestration controllers",
+    "icon": "icons/workflows.svg",
+    "lanes": [
+      {
+        "laneBadges": [
+          {
+            "type": "tag",
+            "value": "TagA"
+          }
+        ],
+        "modules": [
+          {
+            "id": "taga-data-export",
+            "fileName": "taga-data-export.ts",
+            "title": "Data Export",
+            "tags": [
+              "TagA"
+            ],
+            "imports": [
+              "taga-metrics-api"
+            ],
+            "items": [
+              {
+                "name": "triggerDataExport"
+              },
+              {
+                "name": "fetchExportProgress"
+              },
+              {
+                "name": "cancelExportJob"
+              }
+            ],
+            "itemType": "functions"
+          },
+          {
+            "id": "taga-metrics-collector",
+            "fileName": "taga-metrics-collector.ts",
+            "title": "Metrics Collector",
+            "tags": [
+              "TagA"
+            ],
+            "imports": [],
+            "items": [
+              {
+                "name": "collectSystemMetrics"
+              },
+              {
+                "name": "aggregateTelemetryData"
+              }
+            ],
+            "itemType": "functions"
+          },
+          {
+            "id": "taga-notification-flow",
+            "fileName": "taga-notification-flow.ts",
+            "title": "Notification Flow",
+            "tags": [
+              "TagA"
+            ],
+            "imports": [
+              "taga-tagb-gateway-router"
+            ],
+            "items": [
+              {
+                "name": "dispatchEmailAlert"
+              },
+              {
+                "name": "queueSMSNotification"
+              }
+            ],
+            "itemType": "functions"
+          }
+        ]
+      },
+      {
+        "laneBadges": [
+          {
+            "type": "tag",
+            "value": "TagA"
+          },
+          {
+            "type": "tag",
+            "value": "TagC"
+          }
+        ],
+        "modules": [
+          {
+            "id": "taga-tagc-sync-job",
+            "fileName": "taga-tagc-sync-job.ts",
+            "title": "Sync Job",
+            "tags": [
+              "TagA",
+              "TagC"
+            ],
+            "imports": [
+              "tagc-settings-api"
+            ],
+            "items": [
+              {
+                "name": "runFullSyncProcess"
+              },
+              {
+                "name": "validateSyncChecksum"
+              }
+            ],
+            "itemType": "functions"
+          }
+        ]
+      },
+      {
+        "laneBadges": [
+          {
+            "type": "tag",
+            "value": "TagB"
+          }
+        ],
+        "modules": [
+          {
+            "id": "tagb-billing-cycle",
+            "fileName": "tagb-billing-cycle.ts",
+            "title": "Billing Cycle",
+            "tags": [
+              "TagB"
+            ],
+            "imports": [
+              "tagb-payment-gateway"
+            ],
+            "items": [
+              {
+                "name": "processBillingCycle"
+              },
+              {
+                "name": "sendBillingNotifications"
+              }
+            ],
+            "itemType": "functions"
+          },
+          {
+            "id": "tagb-payment-checkout",
+            "fileName": "tagb-payment-checkout.ts",
+            "title": "Payment Checkout",
+            "tags": [
+              "TagB"
+            ],
+            "imports": [],
+            "items": [
+              {
+                "name": "processPaymentTransaction"
+              },
+              {
+                "name": "verifyPaymentAuth"
+              }
+            ],
+            "itemType": "functions"
+          }
+        ]
+      },
+      {
+        "laneBadges": [
+          {
+            "type": "tag",
+            "value": "TagC"
+          }
+        ],
+        "modules": [
+          {
+            "id": "tagc-optimization",
+            "fileName": "tagc-optimization.ts",
+            "title": "Optimization",
+            "tags": [
+              "TagC"
+            ],
+            "imports": [
+              "tagc-endpoints"
+            ],
+            "items": [
+              {
+                "name": "triggerOptimizationJob"
+              },
+              {
+                "name": "cancelOptimizationJob"
+              }
+            ],
+            "itemType": "functions"
+          },
+          {
+            "id": "tagc-user-cleanup",
+            "fileName": "tagc-user-cleanup.ts",
+            "title": "User Cleanup",
+            "tags": [
+              "TagC"
+            ],
+            "imports": [],
+            "items": [
+              {
+                "name": "purgeInactiveSessions"
+              },
+              {
+                "name": "auditUserPermissions"
+              }
+            ],
+            "itemType": "functions"
+          }
+        ]
+      }
+    ],
+    "metrics": []
+  },
+  {
+    "title": "Components",
+    "folder": "./components",
+    "description": "Shared global atomic locator abstractions",
+    "icon": "icons/components.svg",
+    "lanes": [
+      {
+        "laneBadges": [],
+        "modules": [
+          {
+            "id": "Dropdown",
+            "fileName": "Dropdown.ts",
+            "title": "Dropdown",
+            "tags": [],
+            "imports": [
+              "Hint"
+            ],
+            "items": [
+              {
+                "name": "DropdownComponent",
+                "methods": [
+                  {
+                    "name": "async SelectOption()"
+                  },
+                  {
+                    "name": "async GetSelectedValue()"
+                  }
+                ]
+              }
+            ],
+            "itemType": "class"
+          },
+          {
+            "id": "GridTable",
+            "fileName": "GridTable.ts",
+            "title": "Grid Table",
+            "tags": [],
+            "imports": [],
+            "items": [
+              {
+                "name": "GridIcon",
+                "methods": [
+                  {
+                    "name": "async Hover()"
+                  },
+                  {
+                    "name": "async Click()"
+                  },
+                  {
+                    "name": "async Tooltip()"
+                  }
+                ]
+              },
+              {
+                "name": "GridRow",
+                "methods": [
+                  {
+                    "name": "async Action()"
+                  }
+                ]
+              },
+              {
+                "name": "GridCell",
+                "methods": [
+                  {
+                    "name": "async Click()"
+                  },
+                  {
+                    "name": "async DblClick()"
+                  },
+                  {
+                    "name": "async Fill()"
+                  },
+                  {
+                    "name": "async Option()"
+                  },
+                  {
+                    "name": "Icon()"
+                  },
+                  {
+                    "name": "async Action()"
+                  },
+                  {
+                    "name": "async PasteExcelData()"
+                  }
+                ]
+              },
+              {
+                "name": "GridHeader",
+                "methods": [
+                  {
+                    "name": "Icon()"
+                  }
+                ]
+              },
+              {
+                "name": "GridTable",
+                "methods": [
+                  {
+                    "name": "Cell()"
+                  },
+                  {
+                    "name": "Row()"
+                  },
+                  {
+                    "name": "Header()"
+                  },
+                  {
+                    "name": "async InitHeaders()"
+                  },
+                  {
+                    "name": "async FindRowIndexByValue()"
+                  },
+                  {
+                    "name": "async scrollColumnIntoView()"
+                  },
+                  {
+                    "name": "getColumnIndex()"
+                  },
+                  {
+                    "name": "tryGetCachedColumnIndex()"
+                  },
+                  {
+                    "name": "async pasteRowData()"
+                  }
+                ]
+              }
+            ],
+            "itemType": "class"
+          },
+          {
+            "id": "Hint",
+            "fileName": "Hint.ts",
+            "title": "Hint",
+            "tags": [],
+            "imports": [],
+            "items": [
+              {
+                "name": "Hint",
+                "methods": []
+              }
+            ],
+            "itemType": "class"
+          },
+          {
+            "id": "Modal",
+            "fileName": "Modal.ts",
+            "title": "Modal",
+            "tags": [],
+            "imports": [],
+            "items": [
+              {
+                "name": "ModalComponent",
+                "methods": [
+                  {
+                    "name": "async OpenModal()"
+                  },
+                  {
+                    "name": "async CloseModal()"
+                  },
+                  {
+                    "name": "async ConfirmAction()"
+                  },
+                  {
+                    "name": "async DismissModal()"
+                  }
+                ]
+              }
+            ],
+            "itemType": "class"
+          },
+          {
+            "id": "Textbox",
+            "fileName": "Textbox.ts",
+            "title": "Textbox",
+            "tags": [],
+            "imports": [
+              "Hint"
+            ],
+            "items": [
+              {
+                "name": "TextboxComponent",
+                "methods": [
+                  {
+                    "name": "async FillText()"
+                  },
+                  {
+                    "name": "async AppendValue()"
+                  },
+                  {
+                    "name": "async GetValue()"
+                  }
+                ]
+              }
+            ],
+            "itemType": "class"
+          }
+        ]
+      }
+    ],
+    "metrics": []
+  },
+  {
+    "title": "UI Models",
+    "folder": "./pages",
+    "description": "Application interface maps and browser actions",
+    "icon": "icons/pages.svg",
+    "lanes": [
+      {
+        "laneBadges": [
+          {
+            "type": "tag",
+            "value": "TagA"
+          }
+        ],
+        "modules": [
+          {
+            "id": "taga-analytics",
+            "fileName": "taga-analytics.ts",
+            "title": "Analytics",
+            "tags": [
+              "TagA"
+            ],
+            "imports": [
+              "GridTable",
+              "Hint"
+            ],
+            "items": [
+              {
+                "name": "AnalyticsPage",
+                "methods": [
+                  {
+                    "name": "async viewSystemMetrics()"
+                  }
+                ]
+              }
+            ],
+            "itemType": "class"
+          },
+          {
+            "id": "taga-boards",
+            "fileName": "taga-boards.ts",
+            "title": "Boards",
+            "tags": [
+              "TagA"
+            ],
+            "imports": [
+              "Modal",
+              "Dropdown"
+            ],
+            "items": [
+              {
+                "name": "BoardsPage",
+                "methods": [
+                  {
+                    "name": "async createNewBoard()"
+                  },
+                  {
+                    "name": "async deleteActiveBoard()"
+                  }
+                ]
+              }
+            ],
+            "itemType": "class"
+          },
+          {
+            "id": "taga-dashboard",
+            "fileName": "taga-dashboard.ts",
+            "title": "Dashboard",
+            "tags": [
+              "TagA"
+            ],
+            "imports": [
+              "GridTable",
+              "Modal"
+            ],
+            "items": [
+              {
+                "name": "DashboardPage",
+                "methods": [
+                  {
+                    "name": "async renderDashboardGrid()"
+                  }
+                ]
+              }
+            ],
+            "itemType": "class"
+          },
+          {
+            "id": "taga-legacy-portal",
+            "fileName": "taga-legacy-portal.ts",
+            "title": "Legacy Portal",
+            "tags": [
+              "TagA"
+            ],
+            "imports": [],
+            "items": [
+              {
+                "name": "LegacyPortalPage",
+                "methods": [
+                  {
+                    "name": "async renderOldDashboard()"
+                  }
+                ]
+              }
+            ],
+            "itemType": "class"
+          },
+          {
+            "id": "taga-notifications-center",
+            "fileName": "taga-notifications-center.ts",
+            "title": "Notifications Center",
+            "tags": [
+              "TagA"
+            ],
+            "imports": [
+              "Modal",
+              "Hint"
+            ],
+            "items": [
+              {
+                "name": "NotificationsCenterPage",
+                "methods": [
+                  {
+                    "name": "async viewNotificationAlerts()"
+                  }
+                ]
+              }
+            ],
+            "itemType": "class"
+          },
+          {
+            "id": "taga-reports",
+            "fileName": "taga-reports.ts",
+            "title": "Reports",
+            "tags": [
+              "TagA"
+            ],
+            "imports": [
+              "GridTable",
+              "Dropdown"
+            ],
+            "items": [
+              {
+                "name": "ReportsPage",
+                "methods": [
+                  {
+                    "name": "async generateSummaryReport()"
+                  }
+                ]
+              }
+            ],
+            "itemType": "class"
+          },
+          {
+            "id": "taga-telemetry-panel",
+            "fileName": "taga-telemetry-panel.ts",
+            "title": "Telemetry Panel",
+            "tags": [
+              "TagA"
+            ],
+            "imports": [
+              "GridTable",
+              "Hint"
+            ],
+            "items": [
+              {
+                "name": "TelemetryPanelPage",
+                "methods": [
+                  {
+                    "name": "async viewTelemetryStream()"
+                  }
+                ]
+              }
+            ],
+            "itemType": "class"
+          },
+          {
+            "id": "taga-widgets-view",
+            "fileName": "taga-widgets-view.ts",
+            "title": "Widgets View",
+            "tags": [
+              "TagA"
+            ],
+            "imports": [
+              "Textbox",
+              "Hint"
+            ],
+            "items": [
+              {
+                "name": "WidgetsViewPage",
+                "methods": [
+                  {
+                    "name": "async configureWidgets()"
+                  }
+                ]
+              }
+            ],
+            "itemType": "class"
+          }
+        ]
+      },
+      {
+        "laneBadges": [
+          {
+            "type": "tag",
+            "value": "TagA"
+          },
+          {
+            "type": "tag",
+            "value": "TagB"
+          }
+        ],
+        "modules": [
+          {
+            "id": "taga-tagb-gateway-portal",
+            "fileName": "taga-tagb-gateway-portal.ts",
+            "title": "Gateway Portal",
+            "tags": [
+              "TagA",
+              "TagB"
+            ],
+            "imports": [
+              "Modal",
+              "Textbox"
+            ],
+            "items": [
+              {
+                "name": "GatewayPortalPage",
+                "methods": [
+                  {
+                    "name": "async viewGatewayStatus()"
+                  }
+                ]
+              }
+            ],
+            "itemType": "class"
+          }
+        ]
+      },
+      {
+        "laneBadges": [
+          {
+            "type": "tag",
+            "value": "TagA"
+          },
+          {
+            "type": "tag",
+            "value": "TagC"
+          }
+        ],
+        "modules": [
+          {
+            "id": "taga-tagc-master-dashboard",
+            "fileName": "taga-tagc-master-dashboard.ts",
+            "title": "Master Dashboard",
+            "tags": [
+              "TagA",
+              "TagC"
+            ],
+            "imports": [
+              "GridTable",
+              "Modal",
+              "Dropdown"
+            ],
+            "items": [
+              {
+                "name": "MasterDashboardPage",
+                "methods": [
+                  {
+                    "name": "async renderDashboard()"
+                  }
+                ]
+              }
+            ],
+            "itemType": "class"
+          }
+        ]
+      },
+      {
+        "laneBadges": [
+          {
+            "type": "tag",
+            "value": "TagB"
+          }
+        ],
+        "modules": [
+          {
+            "id": "tagb-billing-history",
+            "fileName": "tagb-billing-history.ts",
+            "title": "Billing History",
+            "tags": [
+              "TagB"
+            ],
+            "imports": [
+              "GridTable",
+              "Textbox"
+            ],
+            "items": [
+              {
+                "name": "BillingHistoryPage",
+                "methods": [
+                  {
+                    "name": "async viewBillingHistory()"
+                  }
+                ]
+              }
+            ],
+            "itemType": "class"
+          },
+          {
+            "id": "tagb-cart-summary",
+            "fileName": "tagb-cart-summary.ts",
+            "title": "Cart Summary",
+            "tags": [
+              "TagB"
+            ],
+            "imports": [
+              "GridTable",
+              "Modal"
+            ],
+            "items": [
+              {
+                "name": "CartSummaryPage",
+                "methods": [
+                  {
+                    "name": "async viewCartItems()"
+                  }
+                ]
+              }
+            ],
+            "itemType": "class"
+          },
+          {
+            "id": "tagb-checkout",
+            "fileName": "tagb-checkout.ts",
+            "title": "Checkout",
+            "tags": [
+              "TagB"
+            ],
+            "imports": [
+              "Modal",
+              "Textbox",
+              "Dropdown"
+            ],
+            "items": [
+              {
+                "name": "CheckoutPage",
+                "methods": [
+                  {
+                    "name": "async proceedToCheckout()"
+                  }
+                ]
+              }
+            ],
+            "itemType": "class"
+          },
+          {
+            "id": "tagb-invoice-details",
+            "fileName": "tagb-invoice-details.ts",
+            "title": "Invoice Details",
+            "tags": [
+              "TagB"
+            ],
+            "imports": [
+              "GridTable",
+              "Hint"
+            ],
+            "items": [
+              {
+                "name": "InvoiceDetailsPage",
+                "methods": [
+                  {
+                    "name": "async viewInvoiceBreakdown()"
+                  }
+                ]
+              }
+            ],
+            "itemType": "class"
+          },
+          {
+            "id": "tagb-login",
+            "fileName": "tagb-login.ts",
+            "title": "Login",
+            "tags": [
+              "TagB"
+            ],
+            "imports": [
+              "Textbox",
+              "Hint"
+            ],
+            "items": [
+              {
+                "name": "LoginPage",
+                "methods": [
+                  {
+                    "name": "async loginUser()"
+                  }
+                ]
+              }
+            ],
+            "itemType": "class"
+          },
+          {
+            "id": "tagb-old-checkout",
+            "fileName": "tagb-old-checkout.ts",
+            "title": "Old Checkout",
+            "tags": [
+              "TagB"
+            ],
+            "imports": [],
+            "items": [
+              {
+                "name": "OldCheckoutPage",
+                "methods": [
+                  {
+                    "name": "async submitOldForm()"
+                  }
+                ]
+              }
+            ],
+            "itemType": "class"
+          },
+          {
+            "id": "tagb-payment-methods",
+            "fileName": "tagb-payment-methods.ts",
+            "title": "Payment Methods",
+            "tags": [
+              "TagB"
+            ],
+            "imports": [
+              "Dropdown",
+              "Textbox"
+            ],
+            "items": [
+              {
+                "name": "PaymentMethodsPage",
+                "methods": [
+                  {
+                    "name": "async selectPaymentMethod()"
+                  }
+                ]
+              }
+            ],
+            "itemType": "class"
+          },
+          {
+            "id": "tagb-subscription-plans",
+            "fileName": "tagb-subscription-plans.ts",
+            "title": "Subscription Plans",
+            "tags": [
+              "TagB"
+            ],
+            "imports": [
+              "GridTable",
+              "Dropdown"
+            ],
+            "items": [
+              {
+                "name": "SubscriptionPlansPage",
+                "methods": [
+                  {
+                    "name": "async viewSubscriptionOptions()"
+                  }
+                ]
+              }
+            ],
+            "itemType": "class"
+          }
+        ]
+      },
+      {
+        "laneBadges": [
+          {
+            "type": "tag",
+            "value": "TagC"
+          }
+        ],
+        "modules": [
+          {
+            "id": "tagc-permissions-grid",
+            "fileName": "tagc-permissions-grid.ts",
+            "title": "Permissions Grid",
+            "tags": [
+              "TagC"
+            ],
+            "imports": [
+              "GridTable",
+              "Dropdown"
+            ],
+            "items": [
+              {
+                "name": "PermissionsGridPage",
+                "methods": [
+                  {
+                    "name": "async modifyRolePermissions()"
+                  }
+                ]
+              }
+            ],
+            "itemType": "class"
+          },
+          {
+            "id": "tagc-security-audit",
+            "fileName": "tagc-security-audit.ts",
+            "title": "Security Audit",
+            "tags": [
+              "TagC"
+            ],
+            "imports": [
+              "GridTable",
+              "Hint"
+            ],
+            "items": [
+              {
+                "name": "SecurityAuditPage",
+                "methods": [
+                  {
+                    "name": "async viewAuditLogs()"
+                  }
+                ]
+              }
+            ],
+            "itemType": "class"
+          },
+          {
+            "id": "tagc-session-manager",
+            "fileName": "tagc-session-manager.ts",
+            "title": "Session Manager",
+            "tags": [
+              "TagC"
+            ],
+            "imports": [
+              "Modal",
+              "Hint"
+            ],
+            "items": [
+              {
+                "name": "SessionManagerPage",
+                "methods": [
+                  {
+                    "name": "async revokeActiveSession()"
+                  }
+                ]
+              }
+            ],
+            "itemType": "class"
+          },
+          {
+            "id": "tagc-settings-dialog",
+            "fileName": "tagc-settings-dialog.ts",
+            "title": "Settings Dialog",
+            "tags": [
+              "TagC"
+            ],
+            "imports": [],
+            "items": [
+              {
+                "name": "SettingsDialog",
+                "methods": [
+                  {
+                    "name": "async openSettings()"
+                  },
+                  {
+                    "name": "async saveSettings()"
+                  }
+                ]
+              }
+            ],
+            "itemType": "class"
+          },
+          {
+            "id": "tagc-settings",
+            "fileName": "tagc-settings.ts",
+            "title": "Settings",
+            "tags": [
+              "TagC"
+            ],
+            "imports": [
+              "Textbox",
+              "Dropdown"
+            ],
+            "items": [
+              {
+                "name": "SettingsPage",
+                "methods": [
+                  {
+                    "name": "async updateSettings()"
+                  }
+                ]
+              }
+            ],
+            "itemType": "class"
+          },
+          {
+            "id": "tagc-system-logs",
+            "fileName": "tagc-system-logs.ts",
+            "title": "System Logs",
+            "tags": [
+              "TagC"
+            ],
+            "imports": [
+              "GridTable",
+              "Hint"
+            ],
+            "items": [
+              {
+                "name": "SystemLogsPage",
+                "methods": [
+                  {
+                    "name": "async viewRawSystemLogs()"
+                  }
+                ]
+              }
+            ],
+            "itemType": "class"
+          },
+          {
+            "id": "tagc-user-activity",
+            "fileName": "tagc-user-activity.ts",
+            "title": "User Activity",
+            "tags": [
+              "TagC"
+            ],
+            "imports": [
+              "GridTable",
+              "Textbox"
+            ],
+            "items": [
+              {
+                "name": "UserActivityPage",
+                "methods": [
+                  {
+                    "name": "async viewUserActivityStream()"
+                  }
+                ]
+              }
+            ],
+            "itemType": "class"
+          },
+          {
+            "id": "tagc-user-profile",
+            "fileName": "tagc-user-profile.ts",
+            "title": "User Profile",
+            "tags": [
+              "TagC"
+            ],
+            "imports": [
+              "Textbox",
+              "Modal"
+            ],
+            "items": [
+              {
+                "name": "UserProfilePage",
+                "methods": [
+                  {
+                    "name": "async viewProfile()"
+                  }
+                ]
+              }
+            ],
+            "itemType": "class"
+          }
+        ]
+      }
+    ],
+    "metrics": []
+  },
+  {
+    "title": "Tests",
+    "folder": "./tests",
+    "description": "End-to-end regression automation suites",
+    "icon": "icons/tests.svg",
+    "lanes": [
+      {
+        "laneBadges": [
+          {
+            "type": "tag",
+            "value": "TagA"
+          },
+          {
+            "type": "subfolder",
+            "value": "UI"
+          }
+        ],
+        "modules": [
+          {
+            "id": "taga-02-widgets.spec",
+            "fileName": "taga-02-widgets.spec.ts",
+            "title": "02 Widgets",
+            "tags": [
+              "TagA"
+            ],
+            "imports": [
+              "taga-metrics-api",
+              "taga-analytics",
+              "taga-boards",
+              "taga-dashboard",
+              "taga-widgets-view"
+            ],
+            "items": [
+              {
+                "name": "UI > Widgets > Render Chart Widget"
+              },
+              {
+                "name": "UI > Widgets > Drag and Drop Cards"
+              },
+              {
+                "name": "UI > Widgets > Filter Widget Data Stream"
+              },
+              {
+                "name": "UI > Widgets > Export Widget Snapshot as PDF"
+              },
+              {
+                "name": "UI > Widgets > Refresh Realtime Analytics Grid"
+              }
+            ],
+            "itemType": "test"
+          },
+          {
+            "id": "taga-03-navigation.spec",
+            "fileName": "taga-03-navigation.spec.ts",
+            "title": "03 Navigation",
+            "tags": [
+              "TagA"
+            ],
+            "imports": [
+              "taga-metrics-api",
+              "taga-telemetry-api",
+              "taga-notification-flow",
+              "taga-metrics-collector",
+              "workflows",
+              "taga-reports",
+              "taga-telemetry-panel",
+              "taga-notifications-center"
+            ],
+            "items": [
+              {
+                "name": "UI > Navigation > Verify Top Bar Navigation"
+              },
+              {
+                "name": "UI > Navigation > Collapse Left Sidebar"
+              },
+              {
+                "name": "UI > Navigation > Switch Theme Mode Dark Light"
+              },
+              {
+                "name": "UI > Navigation > Breadcrumb Hierarchy Trail"
+              }
+            ],
+            "itemType": "test"
+          },
+          {
+            "id": "taga-04-charts-reporting.spec",
+            "fileName": "taga-04-charts-reporting.spec.ts",
+            "title": "04 Charts Reporting",
+            "tags": [
+              "TagA"
+            ],
+            "imports": [
+              "taga-metrics-api",
+              "taga-telemetry-api",
+              "taga-analytics",
+              "taga-boards",
+              "taga-data-export",
+              "workflows"
+            ],
+            "items": [
+              {
+                "name": "UI > Charts > Render Line Chart Visualizations"
+              },
+              {
+                "name": "UI > Charts > Zoom In Multi-Series Area Chart"
+              },
+              {
+                "name": "UI > Charts > Export Chart SVG Vector Asset"
+              },
+              {
+                "name": "UI > Charts > Toggle Realtime Polling Switcher"
+              },
+              {
+                "name": "UI > Charts > Apply Custom Date Range Filter"
+              },
+              {
+                "name": "UI > Charts > Verify Hover Tooltip Coordinate Values"
+              },
+              {
+                "name": "UI > Charts > Filter Data by Host Cluster Tag"
+              },
+              {
+                "name": "UI > Charts > Render High-Density Heatmap Cells"
+              },
+              {
+                "name": "UI > Charts > Save Custom Dashboard View Preset"
+              },
+              {
+                "name": "UI > Charts > Compare Historical Metric Intervals"
+              },
+              {
+                "name": "UI > Charts > Drag and Reorder Widget Grid Items"
+              },
+              {
+                "name": "UI > Charts > Toggle Dark Mode Chart Palettes"
+              },
+              {
+                "name": "UI > Charts > Validate Empty State Graph Placeholder"
+              },
+              {
+                "name": "UI > Charts > Benchmark 60FPS WebGL Canvas Rendering"
+              },
+              {
+                "name": "UI > Charts > Handle WebSocket Disconnect Error State"
+              },
+              {
+                "name": "UI > Charts > Download Aggregated CSV Spreadsheet"
+              },
+              {
+                "name": "UI > Charts > Verify Drill-Down Modal Breadcrumb Trail"
+              },
+              {
+                "name": "UI > Charts > Render 99th Percentile Latency Histogram"
+              },
+              {
+                "name": "UI > Charts > Pin Favorite Metric Cards to Top"
+              },
+              {
+                "name": "UI > Charts > Print Friendly PDF Dashboard Snapshot"
+              }
+            ],
+            "itemType": "test"
+          }
+        ]
+      },
+      {
+        "laneBadges": [
+          {
+            "type": "tag",
+            "value": "TagA"
+          },
+          {
+            "type": "tag",
+            "value": "TagB"
+          },
+          {
+            "type": "subfolder",
+            "value": "UI"
+          }
+        ],
+        "modules": [
+          {
+            "id": "taga-tagb-01-dashboard.spec",
+            "fileName": "taga-tagb-01-dashboard.spec.ts",
+            "title": "01 Dashboard",
+            "tags": [
+              "TagA",
+              "TagB"
+            ],
+            "imports": [
+              "taga-metrics-api",
+              "taga-tagb-gateway-router",
+              "taga-boards",
+              "taga-analytics",
+              "tagb-billing-history",
+              "tagb-checkout",
+              "taga-tagb-gateway-portal"
+            ],
+            "items": [
+              {
+                "name": "E2E > Dashboard > Load Metrics Overview"
+              },
+              {
+                "name": "E2E > Dashboard > Export Charts to PNG"
+              },
+              {
+                "name": "E2E > Dashboard > Filter Revenue Stream by Region"
+              },
+              {
+                "name": "E2E > Dashboard > Realtime Gateway Latency Monitor"
+              },
+              {
+                "name": "E2E > Dashboard > Toggle Multi-Tenant Billing View"
+              },
+              {
+                "name": "E2E > Dashboard > Synchronize Analytics Cache"
+              },
+              {
+                "name": "E2E > Dashboard > Custom Date Range Filter"
+              },
+              {
+                "name": "E2E > Dashboard > Export Executive Summary PDF"
+              },
+              {
+                "name": "E2E > Dashboard > Drilldown into User Cohorts"
+              },
+              {
+                "name": "E2E > Dashboard > Configure KPI Target Alerts"
+              },
+              {
+                "name": "E2E > Dashboard > Auto Refresh Interval Settings"
+              },
+              {
+                "name": "E2E > Dashboard > Compare Period Over Period Performance"
+              },
+              {
+                "name": "E2E > Dashboard > Download Raw Data Matrix CSV"
+              },
+              {
+                "name": "E2E > Dashboard > Pin Custom Cards to Top"
+              },
+              {
+                "name": "E2E > Dashboard > Share Dashboard Snapshot URL"
+              },
+              {
+                "name": "E2E > Dashboard > Save Custom Layout Template"
+              },
+              {
+                "name": "E2E > Dashboard > Reset Workspace Grid Defaults"
+              }
+            ],
+            "itemType": "test"
+          }
+        ]
+      },
+      {
+        "laneBadges": [
+          {
+            "type": "tag",
+            "value": "TagA"
+          },
+          {
+            "type": "tag",
+            "value": "TagC"
+          },
+          {
+            "type": "subfolder",
+            "value": "UI"
+          }
+        ],
+        "modules": [
+          {
+            "id": "taga-tagc-01-security-dashboard.spec",
+            "fileName": "taga-tagc-01-security-dashboard.spec.ts",
+            "title": "01 Security Dashboard",
+            "tags": [
+              "TagA",
+              "TagC"
+            ],
+            "imports": [
+              "taga-metrics-api",
+              "tagc-endpoints",
+              "taga-boards",
+              "tagc-settings"
+            ],
+            "items": [
+              {
+                "name": "UI > Security > Display Threat Intelligence Feed"
+              },
+              {
+                "name": "UI > Security > Trigger Automated Firewall Rule Ban"
+              },
+              {
+                "name": "UI > Security > Inspect Suspicious Token Anomalies"
+              },
+              {
+                "name": "UI > Security > Render Global Attack Map WebGL Vector"
+              },
+              {
+                "name": "UI > Security > Export SOC2 Compliance Audit Log"
+              },
+              {
+                "name": "UI > Security > Review Active Quarantine Isolations"
+              },
+              {
+                "name": "UI > Security > Configure Zero-Trust Gateway Policies"
+              },
+              {
+                "name": "UI > Security > Test Honeypot Route Trap Triggers"
+              },
+              {
+                "name": "UI > Security > Verify WAF DDoS Rate Limit Responses"
+              },
+              {
+                "name": "UI > Security > Display Certificate Expiration Alerts"
+              },
+              {
+                "name": "UI > Security > Generate Incident Post-Mortem Report"
+              },
+              {
+                "name": "UI > Security > Escalate Critical CVE Alert to PagerDuty"
+              },
+              {
+                "name": "UI > Security > Acknowledge Security Triage Queue Alert"
+              },
+              {
+                "name": "UI > Security > Scan Docker Container Image Vulnerabilities"
+              },
+              {
+                "name": "UI > Security > Audit IAM Key Rotation Timestamps"
+              },
+              {
+                "name": "UI > Security > Enforce Strict CSP Header Rules"
+              },
+              {
+                "name": "UI > Security > Test Cross-Origin Resource Isolation"
+              },
+              {
+                "name": "UI > Security > Download Encrypted Vault Backup File"
+              },
+              {
+                "name": "UI > Security > View Penetration Test Remediation Status"
+              },
+              {
+                "name": "UI > Security > Verify SOC SIEM Splunk Pipeline Health"
+              }
+            ],
+            "itemType": "test"
+          }
+        ]
+      },
+      {
+        "laneBadges": [
+          {
+            "type": "tag",
+            "value": "TagB"
+          },
+          {
+            "type": "subfolder",
+            "value": "UI"
+          }
+        ],
+        "modules": [
+          {
+            "id": "tagb-02-checkout-flow.spec",
+            "fileName": "tagb-02-checkout-flow.spec.ts",
+            "title": "02 Checkout Flow",
+            "tags": [
+              "TagB"
+            ],
+            "imports": [
+              "tagb-payment-gateway",
+              "tagb-subscription-api",
+              "tagb-checkout",
+              "tagb-billing-history",
+              "tagb-cart-summary",
+              "tagb-payment-methods"
+            ],
+            "items": [
+              {
+                "name": "E2E > Checkout > Validate Express Checkout Options"
+              },
+              {
+                "name": "E2E > Checkout > Apply Coupon Promo Code"
+              },
+              {
+                "name": "E2E > Checkout > Validate Saved Credit Card CVV"
+              },
+              {
+                "name": "E2E > Checkout > Toggle Tax Exemption Certificate"
+              },
+              {
+                "name": "E2E > Checkout > Verify Order Confirmation Summary"
+              }
+            ],
+            "itemType": "test"
+          },
+          {
+            "id": "tagb-03-cart.spec",
+            "fileName": "tagb-03-cart.spec.ts",
+            "title": "03 Cart",
+            "tags": [
+              "TagB"
+            ],
+            "imports": [
+              "tagb-payment-gateway",
+              "tagb-payment-checkout",
+              "workflows",
+              "tagb-cart-summary",
+              "tagb-login",
+              "tagb-invoice-details"
+            ],
+            "items": [
+              {
+                "name": "UI > Cart > Add Items to Cart"
+              },
+              {
+                "name": "UI > Cart > Remove Items from Cart"
+              },
+              {
+                "name": "UI > Cart > Update Quantity Selector"
+              },
+              {
+                "name": "UI > Cart > Save Cart Items for Later"
+              }
+            ],
+            "itemType": "test"
+          },
+          {
+            "id": "tagb-04-inventory-management.spec",
+            "fileName": "tagb-04-inventory-management.spec.ts",
+            "title": "04 Inventory Management",
+            "tags": [
+              "TagB"
+            ],
+            "imports": [
+              "tagb-payment-gateway",
+              "tagb-checkout",
+              "tagb-payment-checkout",
+              "workflows"
+            ],
+            "items": [
+              {
+                "name": "UI > Inventory > Display Stock Table Rows"
+              },
+              {
+                "name": "UI > Inventory > Sort Products by SKU Number"
+              },
+              {
+                "name": "UI > Inventory > Search Items by Category Filter"
+              },
+              {
+                "name": "UI > Inventory > Bulk Update Product Price Values"
+              },
+              {
+                "name": "UI > Inventory > Mark Low Stock Alert Threshold"
+              },
+              {
+                "name": "UI > Inventory > Add New Physical Warehouse Location"
+              },
+              {
+                "name": "UI > Inventory > Transfer Stock Between Fulfillment Hubs"
+              },
+              {
+                "name": "UI > Inventory > Scan Barcode Camera Interface"
+              },
+              {
+                "name": "UI > Inventory > Export Stock Level Inventory Report"
+              },
+              {
+                "name": "UI > Inventory > Archive Discontinued Product Variant"
+              },
+              {
+                "name": "UI > Inventory > Upload Batch CSV Import File"
+              },
+              {
+                "name": "UI > Inventory > Validate SKU Uniqueness Constraint"
+              },
+              {
+                "name": "UI > Inventory > Print Shipping Package Barcode Labels"
+              },
+              {
+                "name": "UI > Inventory > Track Supplier Restock Order Status"
+              },
+              {
+                "name": "UI > Inventory > Configure Automated Reorder Rules"
+              },
+              {
+                "name": "UI > Inventory > Display Backorder Customer Notification"
+              },
+              {
+                "name": "UI > Inventory > Toggle Reserve Stock For Promo Event"
+              },
+              {
+                "name": "UI > Inventory > Calculate Total Warehouse Asset Value"
+              },
+              {
+                "name": "UI > Inventory > Audit Physical Count Discrepancies"
+              },
+              {
+                "name": "UI > Inventory > Sync Channel Feeds with Amazon Store"
+              }
+            ],
+            "itemType": "test"
+          }
+        ]
+      },
+      {
+        "laneBadges": [
+          {
+            "type": "tag",
+            "value": "TagB"
+          },
+          {
+            "type": "tag",
+            "value": "TagC"
+          },
+          {
+            "type": "subfolder",
+            "value": "UI"
+          }
+        ],
+        "modules": [
+          {
+            "id": "tagb-tagc-01-order-history.spec",
+            "fileName": "tagb-tagc-01-order-history.spec.ts",
+            "title": "01 Order History",
+            "tags": [
+              "TagB",
+              "TagC"
+            ],
+            "imports": [
+              "tagb-payment-gateway",
+              "tagc-endpoints",
+              "tagb-checkout",
+              "tagc-settings"
+            ],
+            "items": [
+              {
+                "name": "UI > OrderHistory > Render Paginated Order List"
+              },
+              {
+                "name": "UI > OrderHistory > Filter Orders by Processing Status"
+              },
+              {
+                "name": "UI > OrderHistory > Expand Line Items Accordion Detail"
+              },
+              {
+                "name": "UI > OrderHistory > Request Full Order Refund Flow"
+              },
+              {
+                "name": "UI > OrderHistory > Download Tax Invoice PDF Receipt"
+              },
+              {
+                "name": "UI > OrderHistory > Track Realtime FedEx Shipment Delivery"
+              },
+              {
+                "name": "UI > OrderHistory > Reorder Past Transaction Items"
+              },
+              {
+                "name": "UI > OrderHistory > Dispute Unauthorized Credit Charge"
+              },
+              {
+                "name": "UI > OrderHistory > Print Printable Packing Slip"
+              },
+              {
+                "name": "UI > OrderHistory > Update Destination Shipping Address"
+              },
+              {
+                "name": "UI > OrderHistory > Apply Retroactive Promo Coupon Code"
+              },
+              {
+                "name": "UI > OrderHistory > View Item Exchange Eligibility Window"
+              },
+              {
+                "name": "UI > OrderHistory > Search Orders by Customer Email Query"
+              },
+              {
+                "name": "UI > OrderHistory > Export 12-Month Spending Summary CSV"
+              },
+              {
+                "name": "UI > OrderHistory > Display Gift Card Balance Applied"
+              },
+              {
+                "name": "UI > OrderHistory > Send Tracking SMS Notification Update"
+              },
+              {
+                "name": "UI > OrderHistory > Cancel Unshipped Order Line Item"
+              },
+              {
+                "name": "UI > OrderHistory > Verify Multi-Currency Exchange Rates"
+              },
+              {
+                "name": "UI > OrderHistory > Rate Purchased Item Product Review"
+              },
+              {
+                "name": "UI > OrderHistory > Archive Historic Closed Invoices"
+              }
+            ],
+            "itemType": "test"
+          }
+        ]
+      },
+      {
+        "laneBadges": [
+          {
+            "type": "tag",
+            "value": "TagC"
+          },
+          {
+            "type": "subfolder",
+            "value": "UI"
+          }
+        ],
+        "modules": [
+          {
+            "id": "tagc-01-profile-management.spec",
+            "fileName": "tagc-01-profile-management.spec.ts",
+            "title": "01 Profile Management",
+            "tags": [
+              "TagC"
+            ],
+            "imports": [
+              "tagc-endpoints",
+              "tagc-settings-api",
+              "tagc-user-profile",
+              "tagc-settings",
+              "tagc-security-audit",
+              "tagc-permissions-grid"
+            ],
+            "items": [
+              {
+                "name": "UI > Profile > Edit User Bio"
+              },
+              {
+                "name": "UI > Profile > Upload Avatar Image"
+              },
+              {
+                "name": "UI > Profile > Update Contact Preferences"
+              },
+              {
+                "name": "UI > Profile > Change Timezone and Locale"
+              }
+            ],
+            "itemType": "test"
+          },
+          {
+            "id": "tagc-02-settings-panel.spec",
+            "fileName": "tagc-02-settings-panel.spec.ts",
+            "title": "02 Settings Panel",
+            "tags": [
+              "TagC"
+            ],
+            "imports": [
+              "tagc-settings-api",
+              "tagc-user-cleanup",
+              "tagc-optimization",
+              "workflows",
+              "tagc-settings",
+              "tagc-user-activity",
+              "tagc-session-manager"
+            ],
+            "items": [
+              {
+                "name": "UI > Settings > Update Theme Preference"
+              },
+              {
+                "name": "UI > Settings > Toggle Desktop Notifications"
+              },
+              {
+                "name": "UI > Settings > Configure API Rate Limit Warnings"
+              }
+            ],
+            "itemType": "test"
+          },
+          {
+            "id": "tagc-03-notifications-ui.spec",
+            "fileName": "tagc-03-notifications-ui.spec.ts",
+            "title": "03 Notifications Ui",
+            "tags": [
+              "TagC"
+            ],
+            "imports": [
+              "tagc-endpoints",
+              "tagc-optimization",
+              "workflows",
+              "tagc-system-logs",
+              "tagc-user-profile",
+              "tagc-permissions-grid"
+            ],
+            "items": [
+              {
+                "name": "UI > Notifications > Clear System Toast Alerts"
+              },
+              {
+                "name": "UI > Notifications > Mark All Unread Notifications"
+              },
+              {
+                "name": "UI > Notifications > Filter Alerts by Severity Warning"
+              },
+              {
+                "name": "UI > Notifications > Mute Channel Push Notifications"
+              }
+            ],
+            "itemType": "test"
+          },
+          {
+            "id": "tagc-04-user-roles.spec",
+            "fileName": "tagc-04-user-roles.spec.ts",
+            "title": "04 User Roles",
+            "tags": [
+              "TagC"
+            ],
+            "imports": [
+              "tagc-endpoints",
+              "tagc-settings",
+              "tagc-optimization",
+              "workflows"
+            ],
+            "items": [
+              {
+                "name": "UI > Roles > List Available Organization Roles"
+              },
+              {
+                "name": "UI > Roles > Create Custom Security Role Definition"
+              },
+              {
+                "name": "UI > Roles > Assign Granular RBAC Permissions"
+              },
+              {
+                "name": "UI > Roles > Revoke Admin Privileges from Member"
+              },
+              {
+                "name": "UI > Roles > Display Effective Permission Matrix"
+              },
+              {
+                "name": "UI > Roles > Duplicate Existing Role Template"
+              },
+              {
+                "name": "UI > Roles > Restrict API Access by IP Whitelist"
+              },
+              {
+                "name": "UI > Roles > Enforce Mandatory MFA on Superusers"
+              },
+              {
+                "name": "UI > Roles > Assign User to Department Team Group"
+              },
+              {
+                "name": "UI > Roles > View Role Assignment Change Log"
+              },
+              {
+                "name": "UI > Roles > Set Temporary Access Expiration Date"
+              },
+              {
+                "name": "UI > Roles > Prevent Deletion of Default System Role"
+              },
+              {
+                "name": "UI > Roles > Export Security Audit Compliance CSV"
+              },
+              {
+                "name": "UI > Roles > Simulate Role Permissions in Sandbox"
+              },
+              {
+                "name": "UI > Roles > Bulk Reassign Roles on Team Transfer"
+              },
+              {
+                "name": "UI > Roles > Validate Least Privilege Warning Modal"
+              },
+              {
+                "name": "UI > Roles > Configure SAML SSO Role Mapping"
+              },
+              {
+                "name": "UI > Roles > Require Dual Approval for Root Actions"
+              },
+              {
+                "name": "UI > Roles > Filter Members by Active Privilege Tier"
+              },
+              {
+                "name": "UI > Roles > Lock Inactive Member Accounts Post 90 Days"
+              }
+            ],
+            "itemType": "test"
+          }
+        ]
+      },
+      {
+        "laneBadges": [
+          {
+            "type": "tag",
+            "value": "TagA"
+          },
+          {
+            "type": "subfolder",
+            "value": "API"
+          }
+        ],
+        "modules": [
+          {
+            "id": "taga-01-metrics.spec",
+            "fileName": "taga-01-metrics.spec.ts",
+            "title": "01 Metrics",
+            "tags": [
+              "TagA"
+            ],
+            "imports": [
+              "taga-metrics-api",
+              "taga-telemetry-api",
+              "taga-metrics-collector",
+              "taga-data-export",
+              "workflows",
+              "taga-analytics",
+              "taga-reports",
+              "taga-dashboard"
+            ],
+            "items": [
+              {
+                "name": "API > Metrics > Fetch System Health Metrics"
+              },
+              {
+                "name": "API > Metrics > Query CPU Utilization Timeseries"
+              },
+              {
+                "name": "API > Metrics > Query Memory Consumption Peak"
+              },
+              {
+                "name": "API > Metrics > Query Disk Read Write Throughput"
+              },
+              {
+                "name": "API > Metrics > Query Network Interface Dropped Packets"
+              },
+              {
+                "name": "API > Metrics > Aggregate Database Query Latencies"
+              },
+              {
+                "name": "API > Metrics > Fetch Active Worker Node Status"
+              },
+              {
+                "name": "API > Metrics > Stream Realtime Metrics SSE Payload"
+              },
+              {
+                "name": "API > Metrics > Post Custom Influx Metric Point"
+              },
+              {
+                "name": "API > Metrics > Validate PromQL Histogram Quantile"
+              },
+              {
+                "name": "API > Metrics > Get System Uptime Summary"
+              },
+              {
+                "name": "API > Metrics > Purge Historical Metrics Log"
+              },
+              {
+                "name": "API > Metrics > Export Prometheus Scraping Endpoint"
+              },
+              {
+                "name": "API > Metrics > Verify Grafana Datasource Auth"
+              },
+              {
+                "name": "API > Metrics > Calculate 99th Percentile SLA SLA"
+              },
+              {
+                "name": "API > Metrics > Check Cluster Node Heartbeat Timeout"
+              }
+            ],
+            "itemType": "test"
+          },
+          {
+            "id": "taga-02-endpoints.spec",
+            "fileName": "taga-02-endpoints.spec.ts",
+            "title": "02 Endpoints",
+            "tags": [
+              "TagA"
+            ],
+            "imports": [
+              "taga-metrics-api",
+              "taga-metrics-collector",
+              "workflows",
+              "taga-widgets-view",
+              "taga-telemetry-panel",
+              "taga-boards"
+            ],
+            "items": [
+              {
+                "name": "API > Endpoints > Validate REST API Route"
+              },
+              {
+                "name": "API > Endpoints > Validate OpenAPI v3 Schema Spec"
+              },
+              {
+                "name": "API > Endpoints > Verify CORS Options Preflight Response"
+              },
+              {
+                "name": "API > Endpoints > Check Gzip Compression Header"
+              }
+            ],
+            "itemType": "test"
+          },
+          {
+            "id": "taga-03-telemetry.spec",
+            "fileName": "taga-03-telemetry.spec.ts",
+            "title": "03 Telemetry",
+            "tags": [
+              "TagA"
+            ],
+            "imports": [
+              "taga-telemetry-api",
+              "taga-metrics-api",
+              "taga-metrics-collector",
+              "taga-notification-flow",
+              "workflows",
+              "taga-telemetry-panel",
+              "taga-notifications-center",
+              "taga-analytics"
+            ],
+            "items": [
+              {
+                "name": "API > Telemetry > Stream Log Payloads"
+              },
+              {
+                "name": "API > Telemetry > OpenTelemetry Trace ID Propagation"
+              },
+              {
+                "name": "API > Telemetry > Batch Send Span Batches to Collector"
+              },
+              {
+                "name": "API > Telemetry > Verify Jaeger Tracing Metadata"
+              },
+              {
+                "name": "API > Telemetry > Flush Buffer on Process Terminate"
+              }
+            ],
+            "itemType": "test"
+          },
+          {
+            "id": "taga-04-stream-processor.spec",
+            "fileName": "taga-04-stream-processor.spec.ts",
+            "title": "04 Stream Processor",
+            "tags": [
+              "TagA"
+            ],
+            "imports": [
+              "taga-metrics-api",
+              "taga-telemetry-api",
+              "taga-metrics-collector",
+              "workflows"
+            ],
+            "items": [
+              {
+                "name": "API > Stream > Ingest High-Throughput Kafka Messages"
+              },
+              {
+                "name": "API > Stream > Validate Avro Schema Serialization"
+              },
+              {
+                "name": "API > Stream > Process Tumbling Window Aggregation"
+              },
+              {
+                "name": "API > Stream > Emit Dead Letter Queue Message on Error"
+              },
+              {
+                "name": "API > Stream > Verify Partition Key Hash Distribution"
+              },
+              {
+                "name": "API > Stream > Handle Consumer Group Rebalance Event"
+              },
+              {
+                "name": "API > Stream > Scale Consumer Thread Pool Concurrency"
+              },
+              {
+                "name": "API > Stream > Measure End-to-End Pipeline Latency SLA"
+              },
+              {
+                "name": "API > Stream > Deduplicate Idempotent Message Payload"
+              },
+              {
+                "name": "API > Stream > Flush Memory Buffer to Persistent RocksDB"
+              },
+              {
+                "name": "API > Stream > Enrich Stream Event with Redis Cache Hit"
+              },
+              {
+                "name": "API > Stream > Filter Out Malformed JSON Ingestion Packets"
+              },
+              {
+                "name": "API > Stream > Check Spark Structured Streaming Heartbeat"
+              },
+              {
+                "name": "API > Stream > Replay Historical Offset from S3 Checkpoint"
+              },
+              {
+                "name": "API > Stream > Broadcast Realtime Metric Updates via SSE"
+              },
+              {
+                "name": "API > Stream > Backpressure Throttling Under 100k EPS Load"
+              },
+              {
+                "name": "API > Stream > Validate Exactly-Once Processing Semantics"
+              },
+              {
+                "name": "API > Stream > Compress Wire Payloads with Zstandard"
+              },
+              {
+                "name": "API > Stream > Verify TLS 1.3 Broker Connection Security"
+              },
+              {
+                "name": "API > Stream > Gracefully Drain Stream on SIGTERM Signal"
+              }
+            ],
+            "itemType": "test"
+          }
+        ]
+      },
+      {
+        "laneBadges": [
+          {
+            "type": "tag",
+            "value": "TagA"
+          },
+          {
+            "type": "tag",
+            "value": "TagC"
+          },
+          {
+            "type": "subfolder",
+            "value": "API"
+          }
+        ],
+        "modules": [
+          {
+            "id": "taga-tagc-03-integration.spec",
+            "fileName": "taga-tagc-03-integration.spec.ts",
+            "title": "03 Integration",
+            "tags": [
+              "TagA",
+              "TagC"
+            ],
+            "imports": [
+              "taga-metrics-api",
+              "tagc-endpoints",
+              "taga-analytics",
+              "tagc-settings",
+              "tagc-security-audit",
+              "taga-tagc-master-dashboard"
+            ],
+            "items": [
+              {
+                "name": "API > Integration > Run Full Cross Tag Sync"
+              },
+              {
+                "name": "API > Integration > Validate Cross-Domain Auth Handshake"
+              },
+              {
+                "name": "API > Integration > Sync Audit Event Stream to TagA Telemetry"
+              },
+              {
+                "name": "API > Integration > Verify Mutual TLS Socket Encryption"
+              },
+              {
+                "name": "API > Integration > Validate Distributed Transaction Rollback"
+              },
+              {
+                "name": "API > Integration > Check Multi-Region Data Replication Status"
+              }
+            ],
+            "itemType": "test"
+          }
+        ]
+      },
+      {
+        "laneBadges": [
+          {
+            "type": "tag",
+            "value": "TagB"
+          },
+          {
+            "type": "subfolder",
+            "value": "API"
+          }
+        ],
+        "modules": [
+          {
+            "id": "tagb-02-checkout-flow.spec",
+            "fileName": "tagb-02-checkout-flow.spec.ts",
+            "title": "02 Checkout Flow",
+            "tags": [
+              "TagB"
+            ],
+            "imports": [
+              "tagb-payment-gateway",
+              "tagb-billing-cycle",
+              "tagb-payment-checkout",
+              "workflows"
+            ],
+            "items": [
+              {
+                "name": "E2E > Checkout > Validate Checkout Flow"
+              },
+              {
+                "name": "E2E > Checkout > Compose Checkout Data"
+              },
+              {
+                "name": "E2E > Checkout > Abort Checkout"
+              }
+            ],
+            "itemType": "test"
+          },
+          {
+            "id": "tagb-04-payment-gateway.spec",
+            "fileName": "tagb-04-payment-gateway.spec.ts",
+            "title": "04 Payment Gateway",
+            "tags": [
+              "TagB"
+            ],
+            "imports": [
+              "tagb-payment-gateway",
+              "tagb-payment-checkout",
+              "workflows"
+            ],
+            "items": [
+              {
+                "name": "API > Gateway > Authorize Credit Card Charge"
+              },
+              {
+                "name": "API > Gateway > Capture Pre-Authorized Transaction Amount"
+              },
+              {
+                "name": "API > Gateway > Void Uncaptured Authorization Hold"
+              },
+              {
+                "name": "API > Gateway > Process Partial Refund Transaction"
+              },
+              {
+                "name": "API > Gateway > Verify 3D Secure 2.0 Challenge Webhook"
+              },
+              {
+                "name": "API > Gateway > Handle Stripe Idempotency Key Replay"
+              },
+              {
+                "name": "API > Gateway > Validate Apple Pay PKPaymentToken Cryptogram"
+              },
+              {
+                "name": "API > Gateway > Tokenize Customer Payment Method for Vault"
+              },
+              {
+                "name": "API > Gateway > Detect Fraud Risk Score with Radar Rules"
+              },
+              {
+                "name": "API > Gateway > Handle Card Issuer Declined Insufficient Funds"
+              },
+              {
+                "name": "API > Gateway > Retry Failed Network Timeout with Jitter"
+              },
+              {
+                "name": "API > Gateway > Parse ISO 8583 Banking Response Codes"
+              },
+              {
+                "name": "API > Gateway > Settle Daily Merchant Batch Settlement"
+              },
+              {
+                "name": "API > Gateway > Execute SEPA Direct Debit Mandate Flow"
+              },
+              {
+                "name": "API > Gateway > Verify PayPal Express Checkout Order Token"
+              },
+              {
+                "name": "API > Gateway > Test Webhook HMAC SHA256 Signature Header"
+              },
+              {
+                "name": "API > Gateway > Enforce PCI DSS Level 1 Card Data Masking"
+              },
+              {
+                "name": "API > Gateway > Split Marketplace Merchant Platform Payouts"
+              },
+              {
+                "name": "API > Gateway > Audit Interchange Plus Fee Calculations"
+              },
+              {
+                "name": "API > Gateway > Reconcile Automated Bank Statement Balances"
+              }
+            ],
+            "itemType": "test"
+          }
+        ]
+      },
+      {
+        "laneBadges": [
+          {
+            "type": "tag",
+            "value": "TagC"
+          },
+          {
+            "type": "subfolder",
+            "value": "API"
+          }
+        ],
+        "modules": [
+          {
+            "id": "tagc-01-session.spec",
+            "fileName": "tagc-01-session.spec.ts",
+            "title": "01 Session",
+            "tags": [
+              "TagC"
+            ],
+            "imports": [
+              "tagc-settings-api",
+              "tagc-user-cleanup",
+              "workflows",
+              "tagc-session-manager",
+              "tagc-user-profile",
+              "tagc-security-audit"
+            ],
+            "items": [
+              {
+                "name": "API > Session > Validate Auth Token Lifecycle"
+              },
+              {
+                "name": "API > Session > Refresh OAuth2 Access Token"
+              },
+              {
+                "name": "API > Session > Revoke Active JWT Bearer Token"
+              },
+              {
+                "name": "API > Session > Validate Concurrent Session Limits"
+              }
+            ],
+            "itemType": "test"
+          },
+          {
+            "id": "tagc-02-auth.spec",
+            "fileName": "tagc-02-auth.spec.ts",
+            "title": "02 Auth",
+            "tags": [
+              "TagC"
+            ],
+            "imports": [
+              "tagc-endpoints",
+              "tagc-settings-api",
+              "tagc-user-cleanup",
+              "tagc-optimization",
+              "workflows",
+              "tagc-permissions-grid",
+              "tagc-user-activity",
+              "tagc-settings"
+            ],
+            "items": [
+              {
+                "name": "API > Auth > Check User Token Roles"
+              },
+              {
+                "name": "API > Auth > Enforce Multi-Factor Authentication Challenge"
+              },
+              {
+                "name": "API > Auth > Validate SAML 2.0 Identity Provider Response"
+              },
+              {
+                "name": "API > Auth > Verify Password Reset Token Hash Expiry"
+              }
+            ],
+            "itemType": "test"
+          },
+          {
+            "id": "tagc-03-permissions.spec",
+            "fileName": "tagc-03-permissions.spec.ts",
+            "title": "03 Permissions",
+            "tags": [
+              "TagC"
+            ],
+            "imports": [
+              "tagc-settings-api",
+              "tagc-user-cleanup",
+              "workflows",
+              "tagc-permissions-grid",
+              "tagc-system-logs",
+              "tagc-session-manager"
+            ],
+            "items": [
+              {
+                "name": "API > Permissions > Enforce Admin Privileges"
+              },
+              {
+                "name": "API > Permissions > Verify Read-Only Role Endpoint Restrictions"
+              },
+              {
+                "name": "API > Permissions > Check RBAC Matrix Scope Hierarchy"
+              },
+              {
+                "name": "API > Permissions > Validate Tenant Isolation Guardrails"
+              },
+              {
+                "name": "API > Permissions > Audit Organization Level Permission Overrides"
+              }
+            ],
+            "itemType": "test"
+          },
+          {
+            "id": "tagc-04-identity-provider.spec",
+            "fileName": "tagc-04-identity-provider.spec.ts",
+            "title": "04 Identity Provider",
+            "tags": [
+              "TagC"
+            ],
+            "imports": [
+              "tagc-endpoints",
+              "tagc-optimization",
+              "workflows"
+            ],
+            "items": [
+              {
+                "name": "API > IdP > Exchange OAuth2 Authorization Code for JWT"
+              },
+              {
+                "name": "API > IdP > Refresh Expired Access Token via Refresh Token"
+              },
+              {
+                "name": "API > IdP > Validate OpenID Connect Discovery Endpoint"
+              },
+              {
+                "name": "API > IdP > Verify JWKS Public Key Signature Rotation"
+              },
+              {
+                "name": "API > IdP > Introspect Inactive Access Token Response"
+              },
+              {
+                "name": "API > IdP > Revoke User Session Tokens on Global Logout"
+              },
+              {
+                "name": "API > IdP > Parse SAML 2.0 Identity Assertion XML"
+              },
+              {
+                "name": "API > IdP > Enforce PKCE Code Challenge Verification"
+              },
+              {
+                "name": "API > IdP > Rate Limit Brute Force Login Attempts"
+              },
+              {
+                "name": "API > IdP > Validate WebAuthn FIDO2 Biometric Credential"
+              },
+              {
+                "name": "API > IdP > Generate TOTP Authenticator QR Code Seed"
+              },
+              {
+                "name": "API > IdP > Send Password Reset Email Verification Magic Link"
+              },
+              {
+                "name": "API > IdP > Verify SCIM 2.0 User Provisioning Endpoint"
+              },
+              {
+                "name": "API > IdP > Update User Profile Attributes via PATCH"
+              },
+              {
+                "name": "API > IdP > Lock Account After 5 Consecutive Failed Attempts"
+              },
+              {
+                "name": "API > IdP > Audit Geo-IP Anomaly Impossible Travel Event"
+              },
+              {
+                "name": "API > IdP > Verify Custom JWT Claim Claims Hierarchy"
+              },
+              {
+                "name": "API > IdP > Blacklist Compromised JWT in Redis Cluster"
+              },
+              {
+                "name": "API > IdP > Enforce Step-Up Authentication on Sensitive Route"
+              },
+              {
+                "name": "API > IdP > Validate Cross-Client Audience Scope Tokens"
+              }
+            ],
+            "itemType": "test"
+          }
+        ]
+      },
+      {
+        "laneBadges": [
+          {
+            "type": "tag",
+            "value": "TagA"
+          },
+          {
+            "type": "subfolder",
+            "value": "SERVICE"
+          }
+        ],
+        "modules": [
+          {
+            "id": "taga-02-notifications.spec",
+            "fileName": "taga-02-notifications.spec.ts",
+            "title": "02 Notifications",
+            "tags": [
+              "TagA"
+            ],
+            "imports": [
+              "taga-telemetry-api",
+              "taga-notification-flow",
+              "workflows",
+              "taga-notifications-center",
+              "taga-reports",
+              "taga-boards"
+            ],
+            "items": [
+              {
+                "name": "Service > Notifications > Process Outbound Queue"
+              },
+              {
+                "name": "Service > Notifications > Retry Failed Webhook Delivery"
+              },
+              {
+                "name": "Service > Notifications > Validate APNS Apple Push Token"
+              },
+              {
+                "name": "Service > Notifications > Rate Limit Outbound Email Digest"
+              }
+            ],
+            "itemType": "test"
+          },
+          {
+            "id": "taga-03-telemetry.spec",
+            "fileName": "taga-03-telemetry.spec.ts",
+            "title": "03 Telemetry",
+            "tags": [
+              "TagA"
+            ],
+            "imports": [
+              "taga-telemetry-api",
+              "taga-metrics-api",
+              "taga-metrics-collector",
+              "taga-notification-flow",
+              "workflows",
+              "taga-telemetry-panel",
+              "taga-notifications-center",
+              "taga-analytics"
+            ],
+            "items": [
+              {
+                "name": "API > Telemetry > Stream Log Payloads"
+              },
+              {
+                "name": "API > Telemetry > OpenTelemetry Trace ID Propagation"
+              },
+              {
+                "name": "API > Telemetry > Batch Send Span Batches to Collector"
+              },
+              {
+                "name": "API > Telemetry > Verify Jaeger Tracing Metadata"
+              },
+              {
+                "name": "API > Telemetry > Flush Buffer on Process Terminate"
+              }
+            ],
+            "itemType": "test"
+          },
+          {
+            "id": "taga-03-webhooks.spec",
+            "fileName": "taga-03-webhooks.spec.ts",
+            "title": "03 Webhooks",
+            "tags": [
+              "TagA"
+            ],
+            "imports": [
+              "taga-metrics-api",
+              "taga-data-export",
+              "taga-metrics-collector",
+              "workflows",
+              "taga-telemetry-panel",
+              "taga-widgets-view",
+              "taga-analytics"
+            ],
+            "items": [
+              {
+                "name": "Service > Webhooks > Validate Webhook Signature"
+              },
+              {
+                "name": "Service > Webhooks > HMAC SHA256 Signature Verification"
+              },
+              {
+                "name": "Service > Webhooks > Exponential Backoff Retry Policy"
+              }
+            ],
+            "itemType": "test"
+          },
+          {
+            "id": "taga-04-analytics-aggregation.spec",
+            "fileName": "taga-04-analytics-aggregation.spec.ts",
+            "title": "04 Analytics Aggregation",
+            "tags": [
+              "TagA"
+            ],
+            "imports": [
+              "taga-metrics-api",
+              "taga-telemetry-api",
+              "taga-metrics-collector",
+              "workflows"
+            ],
+            "items": [
+              {
+                "name": "Service > Analytics > Calculate Daily Active User Metrics"
+              },
+              {
+                "name": "Service > Analytics > Aggregate Cohort Retention Curves"
+              },
+              {
+                "name": "Service > Analytics > Run Funnel Conversion Step Analysis"
+              },
+              {
+                "name": "Service > Analytics > Compute Average Session Duration Time"
+              },
+              {
+                "name": "Service > Analytics > Ingest Mobile Telemetry App Crashes"
+              },
+              {
+                "name": "Service > Analytics > Cluster Users by Behavioral Feature Vector"
+              },
+              {
+                "name": "Service > Analytics > Generate Hourly Revenue Summary Rollups"
+              },
+              {
+                "name": "Service > Analytics > Push Precomputed Cubes to ClickHouse DB"
+              },
+              {
+                "name": "Service > Analytics > Monitor Realtime Concurrent Users Counter"
+              },
+              {
+                "name": "Service > Analytics > Evaluate A/B Experiment Statistical Power"
+              },
+              {
+                "name": "Service > Analytics > Detect Churn Risk Probability via ML Model"
+              },
+              {
+                "name": "Service > Analytics > Export Marketing Attribution Model Data"
+              },
+              {
+                "name": "Service > Analytics > Sanitize PII Data from Analytics Payloads"
+              },
+              {
+                "name": "Service > Analytics > Broadcast Daily KPI Digest to Slack Webhook"
+              },
+              {
+                "name": "Service > Analytics > Check Data Lake Parquet Partition Health"
+              },
+              {
+                "name": "Service > Analytics > Backfill Missing Time-Series Data Points"
+              },
+              {
+                "name": "Service > Analytics > Reconcile Google Analytics 4 Event Streams"
+              },
+              {
+                "name": "Service > Analytics > Compute Net Promoter Score Aggregates"
+              },
+              {
+                "name": "Service > Analytics > Archive Cold Analytical Snapshots to Glacier"
+              },
+              {
+                "name": "Service > Analytics > Execute SQL Analytics Query Benchmark"
+              }
+            ],
+            "itemType": "test"
+          }
+        ]
+      },
+      {
+        "laneBadges": [
+          {
+            "type": "tag",
+            "value": "TagB"
+          },
+          {
+            "type": "subfolder",
+            "value": "SERVICE"
+          }
+        ],
+        "modules": [
+          {
+            "id": "tagb-01-billing.spec",
+            "fileName": "tagb-01-billing.spec.ts",
+            "title": "01 Billing",
+            "tags": [
+              "TagB"
+            ],
+            "imports": [
+              "tagb-payment-gateway",
+              "tagb-subscription-api",
+              "tagb-billing-cycle",
+              "workflows",
+              "tagb-billing-history",
+              "tagb-subscription-plans",
+              "tagb-invoice-details",
+              "tagb-checkout"
+            ],
+            "items": [
+              {
+                "name": "Service > Billing > Process Recurring Invoices"
+              },
+              {
+                "name": "Service > Billing > Calculate Prorated Upgrade Charges"
+              },
+              {
+                "name": "Service > Billing > Retry Failed Dunning Payment Attempts"
+              },
+              {
+                "name": "Service > Billing > Issue Automatic Refund Credit Memo"
+              },
+              {
+                "name": "Service > Billing > Generate Annual Tax Invoice Summary PDF"
+              }
+            ],
+            "itemType": "test"
+          },
+          {
+            "id": "tagb-02-subscriptions.spec",
+            "fileName": "tagb-02-subscriptions.spec.ts",
+            "title": "02 Subscriptions",
+            "tags": [
+              "TagB"
+            ],
+            "imports": [
+              "tagb-subscription-api",
+              "tagb-billing-cycle",
+              "workflows",
+              "tagb-subscription-plans",
+              "tagb-payment-methods",
+              "tagb-login"
+            ],
+            "items": [
+              {
+                "name": "Service > Subscriptions > Upgrade Account Tier"
+              },
+              {
+                "name": "Service > Subscriptions > Downgrade Account Tier to Starter"
+              },
+              {
+                "name": "Service > Subscriptions > Pause Subscription for 30 Days"
+              },
+              {
+                "name": "Service > Subscriptions > Resume Paused Subscription"
+              }
+            ],
+            "itemType": "test"
+          },
+          {
+            "id": "tagb-03-payments.spec",
+            "fileName": "tagb-03-payments.spec.ts",
+            "title": "03 Payments",
+            "tags": [
+              "TagB"
+            ],
+            "imports": [
+              "tagb-payment-gateway",
+              "tagb-payment-checkout",
+              "workflows",
+              "tagb-payment-methods",
+              "tagb-cart-summary",
+              "tagb-billing-history"
+            ],
+            "items": [
+              {
+                "name": "Service > Payments > Refund Payment Request"
+              },
+              {
+                "name": "Service > Payments > Authorize Credit Card Hold"
+              },
+              {
+                "name": "Service > Payments > Capture Authorized Pre-Auth Hold"
+              },
+              {
+                "name": "Service > Payments > Void Authorization Transaction"
+              },
+              {
+                "name": "Service > Payments > Verify 3D Secure v2 OTP Verification"
+              },
+              {
+                "name": "Service > Payments > Handle Chargeback Fraud Alert Payload"
+              }
+            ],
+            "itemType": "test"
+          },
+          {
+            "id": "tagb-04-invoice-generator.spec",
+            "fileName": "tagb-04-invoice-generator.spec.ts",
+            "title": "04 Invoice Generator",
+            "tags": [
+              "TagB"
+            ],
+            "imports": [
+              "tagb-subscription-api",
+              "tagb-billing-cycle",
+              "workflows"
+            ],
+            "items": [
+              {
+                "name": "Service > Invoice > Generate Monthly Subscription Invoices"
+              },
+              {
+                "name": "Service > Invoice > Render HTML Template to PDF Buffer"
+              },
+              {
+                "name": "Service > Invoice > Calculate Pro-Rata Tier Upgrade Charges"
+              },
+              {
+                "name": "Service > Invoice > Apply Regional VAT Tax Percentage Rules"
+              },
+              {
+                "name": "Service > Invoice > Send Invoice PDF Attachment via SendGrid"
+              },
+              {
+                "name": "Service > Invoice > Process Automatic Dunning Retry Schedule"
+              },
+              {
+                "name": "Service > Invoice > Issue Credit Note for Canceled Service"
+              },
+              {
+                "name": "Service > Invoice > Generate Peppol XML Electronic Invoices"
+              },
+              {
+                "name": "Service > Invoice > Sync Accounts Receivable with QuickBooks"
+              },
+              {
+                "name": "Service > Invoice > Handle Zero-Dollar Trial Period Invoices"
+              },
+              {
+                "name": "Service > Invoice > Audit Past Due Overdue Account Notices"
+              },
+              {
+                "name": "Service > Invoice > Enforce Sequential Invoice Numbering Sequence"
+              },
+              {
+                "name": "Service > Invoice > Apply Corporate Discount Contract Terms"
+              },
+              {
+                "name": "Service > Invoice > Validate Multi-Entity Billing Company Info"
+              },
+              {
+                "name": "Service > Invoice > Store Signed PDF Invoices in S3 Storage"
+              },
+              {
+                "name": "Service > Invoice > Export Monthly Revenue Recognition Ledger"
+              },
+              {
+                "name": "Service > Invoice > Reconcile Unapplied Customer Account Credits"
+              },
+              {
+                "name": "Service > Invoice > Generate Consolidated Multi-Account Statement"
+              },
+              {
+                "name": "Service > Invoice > Verify Cryptographic Digital Timestamp Stamp"
+              },
+              {
+                "name": "Service > Invoice > Process Usage-Based Metered Billing Units"
+              }
+            ],
+            "itemType": "test"
+          }
+        ]
+      },
+      {
+        "laneBadges": [
+          {
+            "type": "tag",
+            "value": "TagC"
+          },
+          {
+            "type": "subfolder",
+            "value": "SERVICE"
+          }
+        ],
+        "modules": [
+          {
+            "id": "tagc-01-audit.spec",
+            "fileName": "tagc-01-audit.spec.ts",
+            "title": "01 Audit",
+            "tags": [
+              "TagC"
+            ],
+            "imports": [
+              "tagc-settings-api",
+              "tagc-user-cleanup",
+              "workflows",
+              "tagc-security-audit",
+              "tagc-system-logs",
+              "tagc-user-activity"
+            ],
+            "items": [
+              {
+                "name": "Service > Audit > Generate Security Compliance Log"
+              },
+              {
+                "name": "Service > Audit > Stream HIPAA Compliance Event Log"
+              },
+              {
+                "name": "Service > Audit > Validate SOC2 Type II Evidence Vault"
+              },
+              {
+                "name": "Service > Audit > Audit Data Encryption Key Rotation"
+              },
+              {
+                "name": "Service > Audit > Verify Write-Once Read-Many Storage WORM"
+              },
+              {
+                "name": "Service > Audit > Track Privileged Escalation Events"
+              },
+              {
+                "name": "Service > Audit > Export Cryptographic Audit Trail Signature"
+              },
+              {
+                "name": "Service > Audit > Detect Suspicious IP Geo-Location Anomalies"
+              },
+              {
+                "name": "Service > Audit > Capture Database Schema DDL Alterations"
+              },
+              {
+                "name": "Service > Audit > Monitor Admin API Key Generation"
+              },
+              {
+                "name": "Service > Audit > Check GDPR Data Erasure Request Log"
+              },
+              {
+                "name": "Service > Audit > Validate PCI-DSS Vault Compliance Rules"
+              },
+              {
+                "name": "Service > Audit > Flag Bulk Data Export Threshold Violations"
+              },
+              {
+                "name": "Service > Audit > Audit Service Account Token Issuance"
+              },
+              {
+                "name": "Service > Audit > Verify Immutable Blockchain Hash Log Chain"
+              },
+              {
+                "name": "Service > Audit > Check Multi-Factor Auth Bypass Attempt Log"
+              },
+              {
+                "name": "Service > Audit > Archive Quarterly Security Assessment Data"
+              },
+              {
+                "name": "Service > Audit > Verify Log Integrity Signature HMAC"
+              }
+            ],
+            "itemType": "test"
+          },
+          {
+            "id": "tagc-02-logs.spec",
+            "fileName": "tagc-02-logs.spec.ts",
+            "title": "02 Logs",
+            "tags": [
+              "TagC"
+            ],
+            "imports": [
+              "tagc-endpoints",
+              "tagc-optimization",
+              "workflows",
+              "tagc-system-logs",
+              "tagc-session-manager",
+              "tagc-settings"
+            ],
+            "items": [
+              {
+                "name": "Service > Logs > Rotate Server Event Logs"
+              },
+              {
+                "name": "Service > Logs > Compress Archive Logs to AWS S3 Bucket"
+              },
+              {
+                "name": "Service > Logs > Stream Realtime Tail Logs over WebSocket"
+              },
+              {
+                "name": "Service > Logs > Parse Syslog Severity Filter Levels"
+              }
+            ],
+            "itemType": "test"
+          },
+          {
+            "id": "tagc-04-compliance-checker.spec",
+            "fileName": "tagc-04-compliance-checker.spec.ts",
+            "title": "04 Compliance Checker",
+            "tags": [
+              "TagC"
+            ],
+            "imports": [
+              "tagc-endpoints",
+              "tagc-optimization",
+              "workflows"
+            ],
+            "items": [
+              {
+                "name": "Service > Compliance > Verify GDPR Data Subject Access Requests"
+              },
+              {
+                "name": "Service > Compliance > Execute Right to be Forgotten Data Erasure"
+              },
+              {
+                "name": "Service > Compliance > Scan Database for Unencrypted PII Fields"
+              },
+              {
+                "name": "Service > Compliance > Audit CloudTrail Infrastructure Access Logs"
+              },
+              {
+                "name": "Service > Compliance > Enforce 7-Year Financial Data Retention Policy"
+              },
+              {
+                "name": "Service > Compliance > Generate HIPAA Healthcare Security Audit Trail"
+              },
+              {
+                "name": "Service > Compliance > Validate ISO 27001 Information Security Controls"
+              },
+              {
+                "name": "Service > Compliance > Check Automated Database Backup Encryption Keys"
+              },
+              {
+                "name": "Service > Compliance > Monitor S3 Bucket Public Access Block Settings"
+              },
+              {
+                "name": "Service > Compliance > Verify TLS Version Deprecation Compliance"
+              },
+              {
+                "name": "Service > Compliance > Audit Vendor Third-Party Security Risk Scores"
+              },
+              {
+                "name": "Service > Compliance > Validate Data Residency Geographic Boundaries"
+              },
+              {
+                "name": "Service > Compliance > Track Employee Security Awareness Training Status"
+              },
+              {
+                "name": "Service > Compliance > Enforce Privileged Root Account Access Controls"
+              },
+              {
+                "name": "Service > Compliance > Verify Automated Vulnerability Patching Windows"
+              },
+              {
+                "name": "Service > Compliance > Monitor Data Loss Prevention DLP Alert Stream"
+              },
+              {
+                "name": "Service > Compliance > Check Secret Manager Key Rotation Schedules"
+              },
+              {
+                "name": "Service > Compliance > Audit Endpoint Antivirus Definition Updates"
+              },
+              {
+                "name": "Service > Compliance > Export Annual SOC2 Type II Audit Evidence Pack"
+              },
+              {
+                "name": "Service > Compliance > Validate Disaster Recovery Failover RTO and RPO"
+              }
+            ],
+            "itemType": "test"
+          }
+        ]
+      }
+    ],
+    "metrics": [
+      {
+        "label": "TagA",
+        "tags": [
+          "TagA"
+        ],
+        "count": 106,
+        "files": [
+          {
+            "id": "taga-02-widgets.spec",
+            "fileName": "taga-02-widgets.spec.ts",
+            "title": "02 Widgets",
+            "subfolder": "UI",
+            "count": 5
+          },
+          {
+            "id": "taga-03-navigation.spec",
+            "fileName": "taga-03-navigation.spec.ts",
+            "title": "03 Navigation",
+            "subfolder": "UI",
+            "count": 4
+          },
+          {
+            "id": "taga-04-charts-reporting.spec",
+            "fileName": "taga-04-charts-reporting.spec.ts",
+            "title": "04 Charts Reporting",
+            "subfolder": "UI",
+            "count": 20
+          },
+          {
+            "id": "taga-01-metrics.spec",
+            "fileName": "taga-01-metrics.spec.ts",
+            "title": "01 Metrics",
+            "subfolder": "API",
+            "count": 16
+          },
+          {
+            "id": "taga-02-endpoints.spec",
+            "fileName": "taga-02-endpoints.spec.ts",
+            "title": "02 Endpoints",
+            "subfolder": "API",
+            "count": 4
+          },
+          {
+            "id": "taga-03-telemetry.spec",
+            "fileName": "taga-03-telemetry.spec.ts",
+            "title": "03 Telemetry",
+            "subfolder": "API",
+            "count": 5
+          },
+          {
+            "id": "taga-04-stream-processor.spec",
+            "fileName": "taga-04-stream-processor.spec.ts",
+            "title": "04 Stream Processor",
+            "subfolder": "API",
+            "count": 20
+          },
+          {
+            "id": "taga-02-notifications.spec",
+            "fileName": "taga-02-notifications.spec.ts",
+            "title": "02 Notifications",
+            "subfolder": "SERVICE",
+            "count": 4
+          },
+          {
+            "id": "taga-03-telemetry.spec",
+            "fileName": "taga-03-telemetry.spec.ts",
+            "title": "03 Telemetry",
+            "subfolder": "SERVICE",
+            "count": 5
+          },
+          {
+            "id": "taga-03-webhooks.spec",
+            "fileName": "taga-03-webhooks.spec.ts",
+            "title": "03 Webhooks",
+            "subfolder": "SERVICE",
+            "count": 3
+          },
+          {
+            "id": "taga-04-analytics-aggregation.spec",
+            "fileName": "taga-04-analytics-aggregation.spec.ts",
+            "title": "04 Analytics Aggregation",
+            "subfolder": "SERVICE",
+            "count": 20
+          }
+        ]
+      },
+      {
+        "label": "TagA TagB",
+        "tags": [
+          "TagA",
+          "TagB"
+        ],
+        "count": 17,
+        "files": [
+          {
+            "id": "taga-tagb-01-dashboard.spec",
+            "fileName": "taga-tagb-01-dashboard.spec.ts",
+            "title": "01 Dashboard",
+            "subfolder": "UI",
+            "count": 17
+          }
+        ]
+      },
+      {
+        "label": "TagA TagC",
+        "tags": [
+          "TagA",
+          "TagC"
+        ],
+        "count": 26,
+        "files": [
+          {
+            "id": "taga-tagc-01-security-dashboard.spec",
+            "fileName": "taga-tagc-01-security-dashboard.spec.ts",
+            "title": "01 Security Dashboard",
+            "subfolder": "UI",
+            "count": 20
+          },
+          {
+            "id": "taga-tagc-03-integration.spec",
+            "fileName": "taga-tagc-03-integration.spec.ts",
+            "title": "03 Integration",
+            "subfolder": "API",
+            "count": 6
+          }
+        ]
+      },
+      {
+        "label": "TagB",
+        "tags": [
+          "TagB"
+        ],
+        "count": 87,
+        "files": [
+          {
+            "id": "tagb-02-checkout-flow.spec",
+            "fileName": "tagb-02-checkout-flow.spec.ts",
+            "title": "02 Checkout Flow",
+            "subfolder": "UI",
+            "count": 5
+          },
+          {
+            "id": "tagb-03-cart.spec",
+            "fileName": "tagb-03-cart.spec.ts",
+            "title": "03 Cart",
+            "subfolder": "UI",
+            "count": 4
+          },
+          {
+            "id": "tagb-04-inventory-management.spec",
+            "fileName": "tagb-04-inventory-management.spec.ts",
+            "title": "04 Inventory Management",
+            "subfolder": "UI",
+            "count": 20
+          },
+          {
+            "id": "tagb-02-checkout-flow.spec",
+            "fileName": "tagb-02-checkout-flow.spec.ts",
+            "title": "02 Checkout Flow",
+            "subfolder": "API",
+            "count": 3
+          },
+          {
+            "id": "tagb-04-payment-gateway.spec",
+            "fileName": "tagb-04-payment-gateway.spec.ts",
+            "title": "04 Payment Gateway",
+            "subfolder": "API",
+            "count": 20
+          },
+          {
+            "id": "tagb-01-billing.spec",
+            "fileName": "tagb-01-billing.spec.ts",
+            "title": "01 Billing",
+            "subfolder": "SERVICE",
+            "count": 5
+          },
+          {
+            "id": "tagb-02-subscriptions.spec",
+            "fileName": "tagb-02-subscriptions.spec.ts",
+            "title": "02 Subscriptions",
+            "subfolder": "SERVICE",
+            "count": 4
+          },
+          {
+            "id": "tagb-03-payments.spec",
+            "fileName": "tagb-03-payments.spec.ts",
+            "title": "03 Payments",
+            "subfolder": "SERVICE",
+            "count": 6
+          },
+          {
+            "id": "tagb-04-invoice-generator.spec",
+            "fileName": "tagb-04-invoice-generator.spec.ts",
+            "title": "04 Invoice Generator",
+            "subfolder": "SERVICE",
+            "count": 20
+          }
+        ]
+      },
+      {
+        "label": "TagB TagC",
+        "tags": [
+          "TagB",
+          "TagC"
+        ],
+        "count": 20,
+        "files": [
+          {
+            "id": "tagb-tagc-01-order-history.spec",
+            "fileName": "tagb-tagc-01-order-history.spec.ts",
+            "title": "01 Order History",
+            "subfolder": "UI",
+            "count": 20
+          }
+        ]
+      },
+      {
+        "label": "TagC",
+        "tags": [
+          "TagC"
+        ],
+        "count": 106,
+        "files": [
+          {
+            "id": "tagc-01-profile-management.spec",
+            "fileName": "tagc-01-profile-management.spec.ts",
+            "title": "01 Profile Management",
+            "subfolder": "UI",
+            "count": 4
+          },
+          {
+            "id": "tagc-02-settings-panel.spec",
+            "fileName": "tagc-02-settings-panel.spec.ts",
+            "title": "02 Settings Panel",
+            "subfolder": "UI",
+            "count": 3
+          },
+          {
+            "id": "tagc-03-notifications-ui.spec",
+            "fileName": "tagc-03-notifications-ui.spec.ts",
+            "title": "03 Notifications Ui",
+            "subfolder": "UI",
+            "count": 4
+          },
+          {
+            "id": "tagc-04-user-roles.spec",
+            "fileName": "tagc-04-user-roles.spec.ts",
+            "title": "04 User Roles",
+            "subfolder": "UI",
+            "count": 20
+          },
+          {
+            "id": "tagc-01-session.spec",
+            "fileName": "tagc-01-session.spec.ts",
+            "title": "01 Session",
+            "subfolder": "API",
+            "count": 4
+          },
+          {
+            "id": "tagc-02-auth.spec",
+            "fileName": "tagc-02-auth.spec.ts",
+            "title": "02 Auth",
+            "subfolder": "API",
+            "count": 4
+          },
+          {
+            "id": "tagc-03-permissions.spec",
+            "fileName": "tagc-03-permissions.spec.ts",
+            "title": "03 Permissions",
+            "subfolder": "API",
+            "count": 5
+          },
+          {
+            "id": "tagc-04-identity-provider.spec",
+            "fileName": "tagc-04-identity-provider.spec.ts",
+            "title": "04 Identity Provider",
+            "subfolder": "API",
+            "count": 20
+          },
+          {
+            "id": "tagc-01-audit.spec",
+            "fileName": "tagc-01-audit.spec.ts",
+            "title": "01 Audit",
+            "subfolder": "SERVICE",
+            "count": 18
+          },
+          {
+            "id": "tagc-02-logs.spec",
+            "fileName": "tagc-02-logs.spec.ts",
+            "title": "02 Logs",
+            "subfolder": "SERVICE",
+            "count": 4
+          },
+          {
+            "id": "tagc-04-compliance-checker.spec",
+            "fileName": "tagc-04-compliance-checker.spec.ts",
+            "title": "04 Compliance Checker",
+            "subfolder": "SERVICE",
+            "count": 20
+          }
+        ]
+      }
+    ]
+  }
+]
