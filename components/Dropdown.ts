@@ -3,7 +3,7 @@ import { Hint } from "./Hint";
 
 export class DropdownComponent {
   constructor(locator: Locator) {
-    return Object.assign(locator, {
+    return Object.assign(locator || {}, {
       SelectOption: this.SelectOption,
       GetSelectedValue: this.GetSelectedValue,
       Hiny: new Hint(locator),

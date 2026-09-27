@@ -85,7 +85,7 @@ export class GridHeader {
 
 export class GridTable {
   constructor(locator: Locator) {
-    return Object.assign(locator, {
+    return Object.assign(locator || {}, {
       _headerCache: null,
       InitHeaders: this.InitHeaders,
       Cell: this.Cell,

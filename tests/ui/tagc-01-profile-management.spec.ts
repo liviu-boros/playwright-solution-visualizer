@@ -1,21 +1,12 @@
-import { test } from '@playwright/test';
-import { EndpointsApi } from '@api/tagc-endpoints';
-import { SettingsApi } from '@api/tagc-settings-api';
-import { triggerOptimizationJob, auditUserPermissions } from '@workflows';
-import { UserProfilePage } from '@pages/tagc-user-profile';
-import { SettingsPage } from '@pages/tagc-settings';
-import { SecurityAuditPage } from '@pages/tagc-security-audit';
-import { PermissionsGridPage } from '@pages/tagc-permissions-grid';
+import { test, expect } from '../fixtures/tagc.fixture';
 
-test('UI > Profile > Edit User Bio', async ({ page }) => {
-  const profile = new UserProfilePage(page);
-  const settings = new SettingsPage(page);
-  const audit = new SecurityAuditPage(page);
-  const perms = new PermissionsGridPage(page);
-  const endpoints = new EndpointsApi(page);
-  const settingsApi = new SettingsApi(page);
-  await triggerOptimizationJob();
-  await auditUserPermissions();
+test('UI > Profile > Edit User Bio', async ({ tagcPages, tagcApi }) => {
+  await tagcApi.endpoints.refreshToken();
+  await tagcApi.settings.getAccountPreferences();
+  await tagcPages.userProfile.viewProfile();
+  await tagcPages.settings.updateSettings();
+  await tagcPages.securityAudit.viewAuditLogs();
+  await tagcPages.permissionsGrid.modifyRolePermissions();
 });
 
 test('UI > Profile > Upload Avatar Image', async ({ page }) => {});

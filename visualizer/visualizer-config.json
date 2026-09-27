@@ -60,7 +60,8 @@
       "icon": "icons/tests.svg",
       "type": "test",
       "allowUntagged": false,
-      "subfolders": ["ui", "api", "service"]
+      "subfolders": ["ui", "api", "service"],
+      "fixturesDir": "./tests/fixtures"
     }
   ]
 }

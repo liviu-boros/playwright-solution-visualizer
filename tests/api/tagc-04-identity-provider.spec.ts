@@ -1,0 +1,24 @@
+import { test } from '@playwright/test';
+import { EndpointsApi } from '@api/tagc-endpoints';
+import { triggerOptimizationJob } from '@workflows';
+
+test('API > IdP > Exchange OAuth2 Authorization Code for JWT', async ({ page }) => {});
+test('API > IdP > Refresh Expired Access Token via Refresh Token', async ({ page }) => {});
+test('API > IdP > Validate OpenID Connect Discovery Endpoint', async ({ page }) => {});
+test('API > IdP > Verify JWKS Public Key Signature Rotation', async ({ page }) => {});
+test('API > IdP > Introspect Inactive Access Token Response', async ({ page }) => {});
+test('API > IdP > Revoke User Session Tokens on Global Logout', async ({ page }) => {});
+test('API > IdP > Parse SAML 2.0 Identity Assertion XML', async ({ page }) => {});
+test('API > IdP > Enforce PKCE Code Challenge Verification', async ({ page }) => {});
+test('API > IdP > Rate Limit Brute Force Login Attempts', async ({ page }) => {});
+test('API > IdP > Validate WebAuthn FIDO2 Biometric Credential', async ({ page }) => {});
+test('API > IdP > Generate TOTP Authenticator QR Code Seed', async ({ page }) => {});
+test('API > IdP > Send Password Reset Email Verification Magic Link', async ({ page }) => {});
+test('API > IdP > Verify SCIM 2.0 User Provisioning Endpoint', async ({ page }) => {});
+test('API > IdP > Update User Profile Attributes via PATCH', async ({ page }) => {});
+test('API > IdP > Lock Account After 5 Consecutive Failed Attempts', async ({ page }) => {});
+test('API > IdP > Audit Geo-IP Anomaly Impossible Travel Event', async ({ page }) => {});
+test('API > IdP > Verify Custom JWT Claim Claims Hierarchy', async ({ page }) => {});
+test('API > IdP > Blacklist Compromised JWT in Redis Cluster', async ({ page }) => {});
+test('API > IdP > Enforce Step-Up Authentication on Sensitive Route', async ({ page }) => {});
+test('API > IdP > Validate Cross-Client Audience Scope Tokens', async ({ page }) => {});

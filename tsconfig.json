@@ -8,6 +8,7 @@
       "@components/*": ["./components/*"],
       "@pages/*": ["./pages/*"],
       "@tests/*": ["./tests/*"],
+      "@fixtures/*": ["./tests/fixtures/*"],
       "@workflows": ["./workflows/index.ts"]
     },
     "strict": true,

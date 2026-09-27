@@ -25,7 +25,7 @@
 
   /* Highlight on hover */
   &:not(.is-dimmed):hover {
-    /* --card-outline-color: color-mix(in srgb, var(--color-accent-blue) 80%, var(--color-border-subtle)); */
+    --card-outline-color: color-mix(in srgb, var(--color-accent-blue) 80%, var(--color-border-subtle));
     --card-bg-surface: var(--color-bg-surface-dark);
     --card-glow-alpha: 5%;
     outline-width: 1px;

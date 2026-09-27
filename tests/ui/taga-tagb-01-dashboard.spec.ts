@@ -1,23 +1,13 @@
-import { test } from '@playwright/test';
-import { MetricsApi } from '@api/taga-metrics-api';
-import { GatewayRouterApi } from '@api/taga-tagb-gateway-router';
-import { triggerDataExport, processBillingCycle } from '@workflows';
-import { BoardsPage } from '@pages/taga-boards';
-import { AnalyticsPage } from '@pages/taga-analytics';
-import { BillingHistoryPage } from '@pages/tagb-billing-history';
-import { CheckoutPage } from '@pages/tagb-checkout';
-import { GatewayPortalPage } from '@pages/taga-tagb-gateway-portal';
+import { test, expect } from '../fixtures/app.fixture';
 
-test('E2E > Dashboard > Load Metrics Overview', async ({ page }) => {
-  const metrics = new MetricsApi(page);
-  const router = new GatewayRouterApi(page);
-  const boards = new BoardsPage(page);
-  const analytics = new AnalyticsPage(page);
-  const billing = new BillingHistoryPage(page);
-  const checkout = new CheckoutPage(page);
-  const gateway = new GatewayPortalPage(page);
-  await triggerDataExport();
-  await processBillingCycle();
+test('E2E > Dashboard > Load Metrics Overview', async ({ app }) => {
+  await app.tagaApi.metrics.getSystemMetrics();
+  await app.tagaApi.gatewayRouter.routeIncomingRequest();
+  await app.taga.boards.createNewBoard();
+  await app.taga.analytics.viewSystemMetrics();
+  await app.tagb.billingHistory.viewBillingHistory();
+  await app.tagb.checkout.proceedToCheckout();
+  await app.cross.gatewayPortal.viewGatewayStatus();
 });
 
 test('E2E > Dashboard > Export Charts to PNG', async ({ page }) => {});

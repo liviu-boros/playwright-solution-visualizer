@@ -1,21 +1,12 @@
-import { test } from '@playwright/test';
-import { MetricsApi } from '@api/taga-metrics-api';
-import { EndpointsApi } from '@api/tagc-endpoints';
-import { runFullSyncProcess, validateSyncChecksum } from '@workflows';
-import { MasterDashboardPage } from '@pages/taga-tagc-master-dashboard';
-import { AnalyticsPage } from '@pages/taga-analytics';
-import { SettingsPage } from '@pages/tagc-settings';
-import { SecurityAuditPage } from '@pages/tagc-security-audit';
+import { test, expect } from '../fixtures/app.fixture';
 
-test('API > Integration > Run Full Cross Tag Sync', async ({ page }) => {
-  const metrics = new MetricsApi(page);
-  const endpoints = new EndpointsApi(page);
-  const master = new MasterDashboardPage(page);
-  const analytics = new AnalyticsPage(page);
-  const settings = new SettingsPage(page);
-  const audit = new SecurityAuditPage(page);
-  await runFullSyncProcess();
-  await validateSyncChecksum();
+test('API > Integration > Run Full Cross Tag Sync', async ({ app }) => {
+  await app.tagaApi.metrics.getSystemMetrics();
+  await app.tagcApi.endpoints.refreshToken();
+  await app.taga.analytics.viewSystemMetrics();
+  await app.tagc.settings.updateSettings();
+  await app.tagc.securityAudit.viewAuditLogs();
+  await app.cross.masterDashboard.renderDashboard();
 });
 
 test('API > Integration > Validate Cross-Domain Auth Handshake', async ({ page }) => {});

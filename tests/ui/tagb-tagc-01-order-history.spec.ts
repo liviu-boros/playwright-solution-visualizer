@@ -1,0 +1,26 @@
+import { test } from '@playwright/test';
+import { OrdersApi } from '@api/tagb-orders-api';
+import { EndpointsApi } from '@api/tagc-endpoints';
+import { CheckoutPage } from '@pages/tagb-checkout';
+import { SettingsPage } from '@pages/tagc-settings';
+
+test('UI > OrderHistory > Render Paginated Order List', async ({ page }) => {});
+test('UI > OrderHistory > Filter Orders by Processing Status', async ({ page }) => {});
+test('UI > OrderHistory > Expand Line Items Accordion Detail', async ({ page }) => {});
+test('UI > OrderHistory > Request Full Order Refund Flow', async ({ page }) => {});
+test('UI > OrderHistory > Download Tax Invoice PDF Receipt', async ({ page }) => {});
+test('UI > OrderHistory > Track Realtime FedEx Shipment Delivery', async ({ page }) => {});
+test('UI > OrderHistory > Reorder Past Transaction Items', async ({ page }) => {});
+test('UI > OrderHistory > Dispute Unauthorized Credit Charge', async ({ page }) => {});
+test('UI > OrderHistory > Print Printable Packing Slip', async ({ page }) => {});
+test('UI > OrderHistory > Update Destination Shipping Address', async ({ page }) => {});
+test('UI > OrderHistory > Apply Retroactive Promo Coupon Code', async ({ page }) => {});
+test('UI > OrderHistory > View Item Exchange Eligibility Window', async ({ page }) => {});
+test('UI > OrderHistory > Search Orders by Customer Email Query', async ({ page }) => {});
+test('UI > OrderHistory > Export 12-Month Spending Summary CSV', async ({ page }) => {});
+test('UI > OrderHistory > Display Gift Card Balance Applied', async ({ page }) => {});
+test('UI > OrderHistory > Send Tracking SMS Notification Update', async ({ page }) => {});
+test('UI > OrderHistory > Cancel Unshipped Order Line Item', async ({ page }) => {});
+test('UI > OrderHistory > Verify Multi-Currency Exchange Rates', async ({ page }) => {});
+test('UI > OrderHistory > Rate Purchased Item Product Review', async ({ page }) => {});
+test('UI > OrderHistory > Archive Historic Closed Invoices', async ({ page }) => {});

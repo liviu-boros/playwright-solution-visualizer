@@ -1,0 +1,24 @@
+import { test } from '@playwright/test';
+import { OrdersApi } from '@api/tagb-orders-api';
+import { processCheckoutPayment } from '@workflows';
+
+test('API > Gateway > Authorize Credit Card Charge', async ({ page }) => {});
+test('API > Gateway > Capture Pre-Authorized Transaction Amount', async ({ page }) => {});
+test('API > Gateway > Void Uncaptured Authorization Hold', async ({ page }) => {});
+test('API > Gateway > Process Partial Refund Transaction', async ({ page }) => {});
+test('API > Gateway > Verify 3D Secure 2.0 Challenge Webhook', async ({ page }) => {});
+test('API > Gateway > Handle Stripe Idempotency Key Replay', async ({ page }) => {});
+test('API > Gateway > Validate Apple Pay PKPaymentToken Cryptogram', async ({ page }) => {});
+test('API > Gateway > Tokenize Customer Payment Method for Vault', async ({ page }) => {});
+test('API > Gateway > Detect Fraud Risk Score with Radar Rules', async ({ page }) => {});
+test('API > Gateway > Handle Card Issuer Declined Insufficient Funds', async ({ page }) => {});
+test('API > Gateway > Retry Failed Network Timeout with Jitter', async ({ page }) => {});
+test('API > Gateway > Parse ISO 8583 Banking Response Codes', async ({ page }) => {});
+test('API > Gateway > Settle Daily Merchant Batch Settlement', async ({ page }) => {});
+test('API > Gateway > Execute SEPA Direct Debit Mandate Flow', async ({ page }) => {});
+test('API > Gateway > Verify PayPal Express Checkout Order Token', async ({ page }) => {});
+test('API > Gateway > Test Webhook HMAC SHA256 Signature Header', async ({ page }) => {});
+test('API > Gateway > Enforce PCI DSS Level 1 Card Data Masking', async ({ page }) => {});
+test('API > Gateway > Split Marketplace Merchant Platform Payouts', async ({ page }) => {});
+test('API > Gateway > Audit Interchange Plus Fee Calculations', async ({ page }) => {});
+test('API > Gateway > Reconcile Automated Bank Statement Balances', async ({ page }) => {});

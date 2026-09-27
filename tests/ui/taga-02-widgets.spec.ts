@@ -1,19 +1,11 @@
-import { test } from '@playwright/test';
-import { MetricsApi } from '@api/taga-metrics-api';
-import { triggerDataExport, collectSystemMetrics } from '@workflows';
-import { AnalyticsPage } from '@pages/taga-analytics';
-import { BoardsPage } from '@pages/taga-boards';
-import { DashboardPage } from '@pages/taga-dashboard';
-import { WidgetsViewPage } from '@pages/taga-widgets-view';
+import { test, expect } from '../fixtures/taga.fixture';
 
-test('UI > Widgets > Render Chart Widget', async ({ page }) => {
-  const api = new MetricsApi(page);
-  const analytics = new AnalyticsPage(page);
-  const boards = new BoardsPage(page);
-  const dashboard = new DashboardPage(page);
-  const widgets = new WidgetsViewPage(page);
-  await triggerDataExport();
-  await collectSystemMetrics();
+test('UI > Widgets > Render Chart Widget', async ({ tagaPages, tagaApi }) => {
+  await tagaApi.metrics.getSystemMetrics();
+  await tagaPages.analytics.viewSystemMetrics();
+  await tagaPages.boards.createNewBoard();
+  await tagaPages.dashboard.renderDashboardGrid();
+  await tagaPages.widgetsView.configureWidgets();
 });
 
 test('UI > Widgets > Drag and Drop Cards', async ({ page }) => {});
