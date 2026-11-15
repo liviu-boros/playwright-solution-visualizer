@@ -9,6 +9,9 @@
       "@pages/*": ["./pages/*"],
       "@tests/*": ["./tests/*"],
       "@fixtures/*": ["./tests/fixtures/*"],
+      "@parsers/*": ["./parsers/*"],
+      "@utils/*": ["./utils/*"],
+      "@workflows/*": ["./workflows/*"],
       "@workflows": ["./workflows/index.ts"]
     },
     "strict": true,
@@ -19,6 +22,8 @@
     "api/**/*",
     "components/**/*",
     "pages/**/*",
+    "parsers/**/*",
+    "utils/**/*",
     "workflows/**/*",
     "tests/**/*"
   ]
