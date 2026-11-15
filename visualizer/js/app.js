@@ -2,6 +2,7 @@ import { SectionBlock, getSectionType } from './components/SectionBlock.js';
 import { initPanZoom } from './pan-zoom.js';
 import { SelectComponent } from './components/SelectComponent.js';
 import { initIconManager } from './icon-manager.js';
+import { attachPresentationNotes } from './presentation-notes.js';
 
 let leftSelectComponent = null;
 let rightSelectComponent = null;
@@ -52,6 +53,18 @@ function getSectionFolder(section) {
   return (section.title || section.name || '').toLowerCase();
 }
 
+// Normalizes a module ID to workspace-relative form for backward-compatible diffing and matching
+function normalizeModuleDiffId(modId, sFolder, sub) {
+  if (!modId) return '';
+  if (modId.includes('/')) return modId;
+  const cleanSub = (sub || '').trim();
+  const folder = normalizeFolder(sFolder);
+  if (cleanSub && cleanSub.toUpperCase() !== 'ROOT') {
+    return folder ? `${folder}/${cleanSub.toLowerCase()}/${modId}` : `${cleanSub.toLowerCase()}/${modId}`;
+  }
+  return folder ? `${folder}/${modId}` : modId;
+}
+
 // Collects unique module identifiers from snapshot data
 function collectModuleKeys(data) {
   const keys = new Set();
@@ -61,7 +74,8 @@ function collectModuleKeys(data) {
     for (const lane of section.lanes || []) {
       for (const mod of lane.modules || []) {
         const sub = getSubfolder(mod, lane);
-        keys.add(`${sFolder}|${sub}|${mod.id}`);
+        const normId = normalizeModuleDiffId(mod.id, sFolder, sub);
+        keys.add(`${sFolder}|${sub}|${normId}`);
       }
     }
   }
@@ -72,6 +86,7 @@ function collectModuleKeys(data) {
 function flattenModuleItems(mod, sFolder, laneBadges, sectionTitle, subfolder) {
   const items = [];
   const sub = subfolder || 'ROOT';
+  const normId = normalizeModuleDiffId(mod.id, sFolder, sub);
   if (mod.itemType === 'class' && Array.isArray(mod.items)) {
     for (const cls of mod.items) {
       for (const m of cls.methods || []) {
@@ -80,11 +95,12 @@ function flattenModuleItems(mod, sFolder, laneBadges, sectionTitle, subfolder) {
           sectionTitle,
           laneBadges,
           moduleId: mod.id,
+          normalizedModuleId: normId,
           subfolder: sub,
           itemType: mod.itemType,
           className: cls.name,
           itemName: m.name,
-          key: `${sFolder}|${sub}|${mod.id}|${cls.name}|${m.name}`
+          key: `${sFolder}|${sub}|${normId}|${cls.name}|${m.name}`
         });
       }
     }
@@ -97,10 +113,11 @@ function flattenModuleItems(mod, sFolder, laneBadges, sectionTitle, subfolder) {
       sectionTitle,
       laneBadges,
       moduleId: mod.id,
+      normalizedModuleId: normId,
       subfolder: sub,
       itemType: mod.itemType,
       itemName: item.name,
-      key: `${sFolder}|${sub}|${mod.id}|${item.name}`
+      key: `${sFolder}|${sub}|${normId}|${item.name}`
     });
   }
   return items;
@@ -130,17 +147,18 @@ function markNewTargetItems(targetData, baselineItemSet) {
     for (const lane of section.lanes || []) {
       for (const mod of lane.modules || []) {
         const sub = getSubfolder(mod, lane);
+        const normId = normalizeModuleDiffId(mod.id, sFolder, sub);
         if (mod.itemType === 'class' && Array.isArray(mod.items)) {
           for (const cls of mod.items) {
             for (const m of cls.methods || []) {
-              const key = `${sFolder}|${sub}|${mod.id}|${cls.name}|${m.name}`;
+              const key = `${sFolder}|${sub}|${normId}|${cls.name}|${m.name}`;
               targetItemSet.add(key);
               if (!baselineItemSet.has(key)) m.status = 'new';
             }
           }
         } else if (Array.isArray(mod.items)) {
           for (const item of mod.items) {
-            const key = `${sFolder}|${sub}|${mod.id}|${item.name}`;
+            const key = `${sFolder}|${sub}|${normId}|${item.name}`;
             targetItemSet.add(key);
             if (!baselineItemSet.has(key)) item.status = 'new';
           }
@@ -201,13 +219,14 @@ function injectRemovedBaselineModules(targetData, baselineData, targetModuleKeys
     for (const lane of section.lanes || []) {
       for (const bMod of lane.modules || []) {
         const sub = getSubfolder(bMod, lane);
-        const modKey = `${sFolder}|${sub}|${bMod.id}`;
+        const normId = normalizeModuleDiffId(bMod.id, sFolder, sub);
+        const modKey = `${sFolder}|${sub}|${normId}`;
         if (targetModuleKeys.has(modKey)) continue;
 
         const sectionTarget = ensureTargetSection(targetData, section, sFolder, config);
         const laneTarget = ensureTargetLane(sectionTarget, lane.laneBadges);
 
-        if (!laneTarget.modules.some(m => m.id === bMod.id)) {
+        if (!laneTarget.modules.some(m => normalizeModuleDiffId(m.id, sFolder, getSubfolder(m, laneTarget)) === normId)) {
           laneTarget.modules.push(createRemovedModuleCopy(bMod));
           targetModuleKeys.add(modKey);
         }
@@ -228,7 +247,10 @@ function injectRemovedBaselineItems(targetData, baselineItems, targetItemSet) {
     const lane = section.lanes.find(l => JSON.stringify(l.laneBadges) === laneKey);
     if (!lane) continue;
 
-    const mod = lane.modules.find(m => m.id === bItem.moduleId && getSubfolder(m, lane) === bItem.subfolder);
+    const mod = lane.modules.find(m =>
+      normalizeModuleDiffId(m.id, bItem.sectionFolder, getSubfolder(m, lane)) === bItem.normalizedModuleId &&
+      getSubfolder(m, lane) === bItem.subfolder
+    );
     if (!mod) continue;
 
     if (bItem.itemType === 'class') {
@@ -319,11 +341,14 @@ function countModuleItemDiffs(mod) {
 function computeTestMetrics(section) {
   section.totalLabel = `Total ${section.title}`;
   if (!Array.isArray(section.metrics)) section.metrics = [];
+  const sFolder = getSectionFolder(section);
 
   const moduleMap = new Map();
   for (const lane of section.lanes || []) {
     for (const mod of lane.modules || []) {
       const sub = getSubfolder(mod, lane);
+      const normId = normalizeModuleDiffId(mod.id, sFolder, sub);
+      if (normId) moduleMap.set(`${sub}|${normId}`, mod);
       if (mod.id) moduleMap.set(`${sub}|${mod.id}`, mod);
       if (mod.fileName) moduleMap.set(`${sub}|${mod.fileName}`, mod);
     }
@@ -350,10 +375,12 @@ function computeTestMetrics(section) {
 
       for (const mod of lane.modules || []) {
         const sub = getSubfolder(mod, lane);
-        let f = metric.files.find(file =>
-          (file.subfolder || getSubfolder(file, lane)) === sub &&
-          (file.id === mod.id || file.fileName === mod.fileName)
-        );
+        const normModId = normalizeModuleDiffId(mod.id, sFolder, sub);
+        let f = metric.files.find(file => {
+          const fSub = file.subfolder || getSubfolder(file, lane);
+          const normFileId = normalizeModuleDiffId(file.id, sFolder, fSub);
+          return fSub === sub && (normFileId === normModId || file.fileName === mod.fileName);
+        });
         if (!f) {
           f = {
             id: mod.id,
@@ -374,7 +401,8 @@ function computeTestMetrics(section) {
     let catCount = 0, catAdded = 0, catRemoved = 0;
     for (const f of metric.files) {
       const subKey = f.subfolder || 'ROOT';
-      const mod = moduleMap.get(`${subKey}|${f.id}`) || moduleMap.get(`${subKey}|${f.fileName}`);
+      const normFileId = normalizeModuleDiffId(f.id, sFolder, subKey);
+      const mod = moduleMap.get(`${subKey}|${normFileId}`) || moduleMap.get(`${subKey}|${f.id}`) || moduleMap.get(`${subKey}|${f.fileName}`);
       if (mod) {
         if (mod.subfolder) f.subfolder = mod.subfolder;
         if (mod.title) f.title = mod.title;
@@ -416,7 +444,8 @@ function diffSnapshots(currentData, baselineData, config) {
     for (const lane of section.lanes || []) {
       for (const mod of lane.modules || []) {
         const sub = getSubfolder(mod, lane);
-        const modKey = `${sFolder}|${sub}|${mod.id}`;
+        const normId = normalizeModuleDiffId(mod.id, sFolder, sub);
+        const modKey = `${sFolder}|${sub}|${normId}`;
         targetModuleKeys.add(modKey);
         if (baselineData && !baselineModuleKeys.has(modKey)) {
           mod.status = 'new';
@@ -575,14 +604,44 @@ function parseCardImports(card) {
   }
 }
 
-// Helper matcher for module IDs and path aliases
-function isModuleMatch(importId, targetModId, targetCleanId) {
-  if (!importId) return false;
-  if (importId === targetModId || importId === targetCleanId) return true;
-  if (importId.replace(/\.spec$/, '') === targetCleanId) return true;
-  if (importId.endsWith(`/${targetModId}`) || importId.endsWith(`/${targetCleanId}`)) return true;
-  const baseName = targetModId.split('/').pop();
-  return importId.endsWith(`/${baseName}`) || importId === baseName;
+// Extracts section folder and subfolder metadata for a card element
+function getCardContext(card) {
+  const sectionEl = card?.closest?.('.section-container');
+  const laneEl = card?.closest?.('.lane-row');
+  return {
+    sectionFolder: sectionEl?.dataset?.sectionFolder || '',
+    subfolder: laneEl?.dataset?.subfolder || 'ROOT'
+  };
+}
+
+// Helper matcher for workspace-relative IDs with backward-compatible legacy basename fallback
+function isModuleMatch(importId, targetModId, targetCleanId, targetContext = null) {
+  if (!importId || !targetModId) return false;
+
+  const cleanImport = importId.replace(/\.spec$/, '');
+  const cleanTarget = (targetCleanId || targetModId).replace(/\.spec$/, '');
+
+  if (importId === targetModId || importId === cleanTarget || cleanImport === cleanTarget) {
+    return true;
+  }
+
+  let effectiveTarget = targetModId;
+  if (!targetModId.includes('/') && targetContext && targetContext.sectionFolder) {
+    effectiveTarget = normalizeModuleDiffId(targetModId, targetContext.sectionFolder, targetContext.subfolder);
+  }
+  const cleanEffectiveTarget = effectiveTarget.replace(/\.spec$/, '');
+
+  if (importId.includes('/') && effectiveTarget.includes('/')) {
+    return importId === effectiveTarget || cleanImport === cleanEffectiveTarget;
+  }
+
+  if (!importId.includes('/')) {
+    const targetBase = effectiveTarget.split('/').pop();
+    const cleanTargetBase = targetBase.replace(/\.spec$/, '');
+    return importId === targetBase || cleanImport === cleanTargetBase;
+  }
+
+  return importId.endsWith(`/${effectiveTarget}`) || cleanImport.endsWith(`/${cleanEffectiveTarget}`);
 }
 
 // Activates single card selection, highlights relations, and dims unrelated cards
@@ -599,6 +658,7 @@ function setDependencyHighlighting(sourceCard) {
   const sourceImports = parseCardImports(sourceCard);
   const sourceModuleId = sourceCard.dataset.moduleId || '';
   const sourceCleanId = sourceModuleId.replace(/\.spec$/, '');
+  const sourceContext = getCardContext(sourceCard);
 
   const allCards = Array.from(canvas.querySelectorAll('.module-card'));
   const dependencyCards = [];
@@ -609,10 +669,11 @@ function setDependencyHighlighting(sourceCard) {
 
     const cardModuleId = card.dataset.moduleId || '';
     const cardCleanId = cardModuleId.replace(/\.spec$/, '');
+    const cardContext = getCardContext(card);
     const cardImports = parseCardImports(card);
 
-    const isDep = sourceImports.some(id => isModuleMatch(id, cardModuleId, cardCleanId));
-    const isRef = cardImports.some(id => isModuleMatch(id, sourceModuleId, sourceCleanId));
+    const isDep = sourceImports.some(id => isModuleMatch(id, cardModuleId, cardCleanId, cardContext));
+    const isRef = cardImports.some(id => isModuleMatch(id, sourceModuleId, sourceCleanId, sourceContext));
 
     if (isDep) {
       card.classList.add('is-active-dependency');
@@ -650,7 +711,7 @@ function setDependencyHighlighting(sourceCard) {
 }
 
 // Injects section blocks into the DOM canvas
-function renderCanvas(data, config) {
+async function renderCanvas(data, config) {
   const canvas = document.getElementById('canvas');
   canvas.innerHTML = '';
 
@@ -672,7 +733,11 @@ function renderCanvas(data, config) {
         <p>Ensure mock folders are populated and sync-visualizer.js has run.</p>
       </div>
     `;
+    return;
   }
+
+  // Attach presentation notes column if available
+  await attachPresentationNotes(canvas);
 }
 
 // Formats ledger snapshot timestamp into a display label
@@ -749,7 +814,7 @@ async function init() {
       }
 
       const diffedData = diffSnapshots(targetData, baselineData, config);
-      renderCanvas(diffedData, config);
+      await renderCanvas(diffedData, config);
     };
 
     leftSelectComponent = new SelectComponent({
@@ -817,4 +882,8 @@ async function init() {
   }
 }
 
-document.addEventListener('DOMContentLoaded', init);
+if (typeof document !== 'undefined') {
+  document.addEventListener('DOMContentLoaded', init);
+}
+
+export { isModuleMatch, normalizeModuleDiffId, diffSnapshots };

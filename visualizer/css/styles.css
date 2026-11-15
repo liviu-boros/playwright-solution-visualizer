@@ -22,6 +22,7 @@
 @import url('components/module-card.css');
 @import url('components/test-item.css');
 @import url('components/method-item.css');
+@import url('components/presentation-card.css');
 
 /* Base page environment reset */
 body, html {

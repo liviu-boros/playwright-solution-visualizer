@@ -69,10 +69,18 @@ function renderLaneBadges(laneBadges, config) {
   `;
 }
 
+// Resolves the subfolder label for a lane from its subfolder field or lane badges
+function getLaneSubfolder(lane) {
+  if (lane?.subfolder) return lane.subfolder;
+  const subBadge = (lane?.laneBadges || []).find(b => b.type === 'subfolder' || b.type === 'folder');
+  return subBadge?.value || 'ROOT';
+}
+
 // Renders a lane row with its side badges and module cards
 function renderLane(lane, config) {
+  const laneSubfolder = getLaneSubfolder(lane);
   return `
-    <div class="lane-row">
+    <div class="lane-row" data-subfolder="${laneSubfolder}">
       ${renderLaneBadges(lane.laneBadges, config)}
       <div class="lane-content">
         ${lane.modules.map(ModuleCard).join('')}
@@ -85,10 +93,11 @@ function renderLane(lane, config) {
 export function SectionBlock(section, config) {
   const cfg = findConfigSection(section, config);
   const displayTitle = cfg?.name || section.title;
+  const sectionFolder = normalizeFolder(section.folder || cfg?.dir || section.title);
   const lanesHtml = (section.lanes || []).map(lane => renderLane(lane, config)).join('');
 
   return `
-    <div class="section-container" data-section="${displayTitle}">
+    <div class="section-container" data-section="${displayTitle}" data-section-folder="${sectionFolder}">
       <div class="section-hero-title">${displayTitle}</div>
       ${SectionAnchor(section, config)}
       <div class="section-divider-line"></div>

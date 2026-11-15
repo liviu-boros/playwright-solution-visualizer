@@ -1,0 +1,210 @@
+/* Presentation Notes component tokens */
+:root {
+  --presentation-card-min-width: 480px;
+  --presentation-card-bg: var(--color-bg-surface);
+  --presentation-card-border: var(--color-border-black);
+  --presentation-card-outline: var(--color-border-subtle);
+  --presentation-card-glow: var(--color-accent-blue);
+  --presentation-card-glow-alpha: 8%;
+  --presentation-quote-bg: color-mix(in srgb, var(--color-accent-blue) 8%, var(--color-bg-surface-dark));
+  --presentation-quote-border: var(--color-accent-blue);
+  --presentation-code-bg: var(--color-bg-surface-darkest);
+}
+
+/* Presentation column container */
+.presentation-column {
+  grid-row: 1 / -1;
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  width: max-content;
+  min-width: max-content;
+}
+
+/* Hero title for Presentation column at low LOD zoom */
+.presentation-hero-title {
+  align-self: start;
+  margin-bottom: calc(2 * var(--gap-lane-stack));
+  font-size: var(--font-size-hero-title);
+  line-height: var(--line-height-hero-title);
+  font-weight: var(--weight-semibold);
+  letter-spacing: 4px;
+  color: var(--color-text-main);
+  white-space: nowrap;
+  pointer-events: none;
+  user-select: none;
+  opacity: var(--section-title-opacity, 0);
+  transition: opacity;
+}
+
+/* Standalone presentation card element with content-based sizing */
+.presentation-card {
+  width: max-content;
+  min-width: var(--presentation-card-min-width, 480px);
+  padding: 32px;
+  border-radius: var(--radius-card);
+  position: relative;
+  z-index: 2;
+  box-sizing: border-box;
+  font-family: var(--font-family-system);
+  color: var(--color-text-body);
+  background:
+    radial-gradient(
+      circle at 90% 10%,
+      color-mix(in srgb, var(--presentation-card-glow) var(--presentation-card-glow-alpha), transparent),
+      transparent 60%
+    ),
+    var(--presentation-card-bg);
+  border: 2px solid var(--presentation-card-border);
+  outline: 1px solid var(--presentation-card-outline);
+  outline-offset: 0;
+}
+
+/* Headings (#, ##, ###) */
+.presentation-heading {
+  margin: 0;
+  font-family: var(--font-family-system);
+  color: var(--color-text-main);
+  letter-spacing: 0.5px;
+}
+
+.presentation-heading--1 {
+  font-size: var(--font-size-anchor-title);
+  line-height: var(--line-height-anchor-title);
+  font-weight: var(--weight-bold);
+  padding-bottom: 16px;
+  margin-bottom: 20px;
+  border-bottom: 1px solid var(--color-border-divider);
+  color: var(--color-text-main);
+}
+
+.presentation-heading--2 {
+  font-size: var(--font-size-card-title);
+  line-height: var(--line-height-card-title);
+  font-weight: var(--weight-semibold);
+  margin-top: 28px;
+  margin-bottom: 12px;
+  color: var(--color-text-accent);
+}
+
+.presentation-heading--3 {
+  font-size: var(--font-size-body);
+  line-height: var(--line-height-body);
+  font-weight: var(--weight-semibold);
+  margin-top: 20px;
+  margin-bottom: 8px;
+  color: var(--color-text-main);
+}
+
+/* Paragraphs */
+.presentation-paragraph {
+  margin: 0 0 16px 0;
+  font-size: var(--font-size-body);
+  line-height: var(--line-height-body);
+  color: var(--color-text-body);
+}
+
+/* Lists (*) */
+.presentation-list {
+  margin: 0 0 20px 0;
+  padding-left: 20px;
+  list-style-type: square;
+}
+
+.presentation-list-item {
+  margin-bottom: 8px;
+  font-size: var(--font-size-body);
+  line-height: var(--line-height-body);
+  color: var(--color-text-body);
+}
+
+.presentation-list-item:last-child {
+  margin-bottom: 0;
+}
+
+/* Blockquotes (>) */
+.presentation-quote {
+  margin: 16px 0 20px 0;
+  padding: 14px 18px;
+  background-color: var(--presentation-quote-bg);
+  border-left: 3px solid var(--presentation-quote-border);
+  border-radius: 0 var(--radius-items) var(--radius-items) 0;
+  box-sizing: border-box;
+}
+
+.presentation-quote-text {
+  margin: 0;
+  font-size: var(--font-size-body);
+  line-height: var(--line-height-body);
+  color: var(--color-text-body);
+}
+
+/* Inline code and code blocks (`) */
+.presentation-code {
+  font-family: var(--font-family-mono);
+  font-size: 0.8125rem;
+  padding: 2px 6px;
+  background-color: var(--presentation-code-bg);
+  border: 1px solid var(--color-border-subtle);
+  border-radius: var(--radius-badge);
+  color: var(--color-text-accent);
+}
+
+.presentation-pre {
+  margin: 16px 0;
+  padding: 16px;
+  background-color: var(--presentation-code-bg);
+  border: 1px solid var(--color-border-subtle);
+  border-radius: var(--radius-items);
+  overflow-x: auto;
+}
+
+.presentation-code-block {
+  font-family: var(--font-family-mono);
+  font-size: 0.8125rem;
+  color: var(--color-text-body);
+  background: transparent;
+  padding: 0;
+  border: none;
+}
+
+/* Images */
+.presentation-image-wrapper {
+  margin: 20px 0;
+  display: block;
+}
+
+.presentation-image {
+  display: block;
+  max-width: 100%;
+  height: auto;
+  border-radius: var(--radius-items);
+  border: 1px solid var(--color-border-subtle);
+  box-sizing: border-box;
+}
+
+/* Text formatting */
+.presentation-strong {
+  font-weight: var(--weight-bold);
+  color: var(--color-text-main);
+}
+
+.presentation-em {
+  font-style: italic;
+  color: var(--color-text-body);
+}
+
+.presentation-link {
+  color: var(--color-accent-blue);
+  text-decoration: none;
+}
+
+.presentation-link:hover {
+  text-decoration: underline;
+}
+
+.presentation-hr {
+  border: none;
+  border-top: 1px solid var(--color-border-divider);
+  margin: 24px 0;
+}
