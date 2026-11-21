@@ -31,10 +31,11 @@ const NON_BREAKING_NEXT_IDENTS = new Set(['as', 'satisfies', 'instanceof', 'in',
  */
 function findMatchingDelimiter(tokens, openIdx, openVal, closeVal) {
   let depth = 0;
+  const isBracePair = closeVal === '}' && (openVal === '{' || openVal === '${');
   for (let i = openIdx; i < tokens.length; i++) {
     const t = tokens[i];
     if (t.type === 'punct') {
-      if (t.value === openVal) {
+      if (t.value === openVal || (isBracePair && (t.value === '{' || t.value === '${'))) {
         depth++;
       } else if (t.value === closeVal) {
         depth--;
@@ -65,7 +66,7 @@ function skipAngleBrackets(tokens, startIdx) {
     if (t.type !== 'punct') continue;
     if (t.value === '(') parenDepth++;
     else if (t.value === ')') parenDepth = Math.max(0, parenDepth - 1);
-    else if (t.value === '{') braceDepth++;
+    else if (t.value === '{' || t.value === '${') braceDepth++;
     else if (t.value === '}') braceDepth = Math.max(0, braceDepth - 1);
     else if (t.value === '[') bracketDepth++;
     else if (t.value === ']') bracketDepth = Math.max(0, bracketDepth - 1);
@@ -83,7 +84,7 @@ function skipAngleBrackets(tokens, startIdx) {
 }
 
 /**
- * Advances over any nested balanced `( )`, `{ }`, or `[ ]` group starting at `idx`.
+ * Advances over any nested balanced `( )`, `{ }`, `${ }`, or `[ ]` group starting at `idx`.
  * @param {Array<object>} tokens
  * @param {number} idx
  * @returns {number} Next index after the balanced group, or `idx` if not an opener
@@ -91,7 +92,7 @@ function skipAngleBrackets(tokens, startIdx) {
 function advanceBalancedGroup(tokens, idx) {
   const t = tokens[idx];
   if (!t || t.type !== 'punct') return idx;
-  const pairs = { '(': ')', '{': '}', '[': ']' };
+  const pairs = { '(': ')', '{': '}', '${': '}', '[': ']' };
   const close = pairs[t.value];
   if (!close) return idx;
   const closeIdx = findMatchingDelimiter(tokens, idx, t.value, close);
@@ -112,7 +113,7 @@ function splitTopLevelCommas(tokens, start = 0, end = tokens.length) {
 
   while (i < end) {
     const t = tokens[i];
-    if (t.type === 'punct' && (t.value === '(' || t.value === '{' || t.value === '[')) {
+    if (t.type === 'punct' && (t.value === '(' || t.value === '{' || t.value === '${' || t.value === '[')) {
       i = advanceBalancedGroup(tokens, i);
       continue;
     }
@@ -143,7 +144,7 @@ function splitTopLevelStatements(tokens) {
 
   while (i < tokens.length) {
     const t = tokens[i];
-    if (t.type === 'punct' && (t.value === '(' || t.value === '{' || t.value === '[')) {
+    if (t.type === 'punct' && (t.value === '(' || t.value === '{' || t.value === '${' || t.value === '[')) {
       const next = advanceBalancedGroup(tokens, i);
       for (let k = i; k < next; k++) cur.push(tokens[k]);
       i = next;
@@ -189,7 +190,7 @@ function unwrapExpression(exprTokens) {
     for (let i = 1; i < toks.length; i++) {
       const t = toks[i];
       if (t.type === 'punct') {
-        if (t.value === '(' || t.value === '{' || t.value === '[') depth++;
+        if (t.value === '(' || t.value === '{' || t.value === '${' || t.value === '[') depth++;
         else if (t.value === ')' || t.value === '}' || t.value === ']') depth = Math.max(0, depth - 1);
       } else if (depth === 0 && t.type === 'ident' && (t.value === 'as' || t.value === 'satisfies')) {
         toks = toks.slice(0, i);
@@ -217,7 +218,7 @@ function findTopLevelEquals(tokens, startIdx = 0) {
   while (i < tokens.length) {
     const t = tokens[i];
     if (t.type === 'punct') {
-      if (t.value === '(' || t.value === '{' || t.value === '[') {
+      if (t.value === '(' || t.value === '{' || t.value === '${' || t.value === '[') {
         i = advanceBalancedGroup(tokens, i);
         continue;
       }
@@ -290,7 +291,7 @@ function parseFunctionExpression(rawTokens) {
     while (scanIdx < rawTokens.length) {
       const t = rawTokens[scanIdx];
       if (t.type === 'punct') {
-        if (t.value === '(' || t.value === '{' || t.value === '[') {
+        if (t.value === '(' || t.value === '{' || t.value === '${' || t.value === '[') {
           scanIdx = advanceBalancedGroup(rawTokens, scanIdx);
           continue;
         }
@@ -335,7 +336,7 @@ function scanInnerStatements(tokens, vars, calls, returns) {
     if (t.type === 'ident' && t.value === 'return') {
       let j = i + 1;
       while (j < tokens.length && !(tokens[j].type === 'punct' && (tokens[j].value === ';' || tokens[j].value === '}'))) {
-        if (tokens[j].type === 'punct' && (tokens[j].value === '(' || tokens[j].value === '{' || tokens[j].value === '[')) {
+        if (tokens[j].type === 'punct' && (tokens[j].value === '(' || tokens[j].value === '{' || tokens[j].value === '${' || tokens[j].value === '[')) {
           j = advanceBalancedGroup(tokens, j);
           continue;
         }
@@ -361,7 +362,7 @@ function scanInnerStatements(tokens, vars, calls, returns) {
       if (!prev || !(prev.type === 'punct' && prev.value === '.')) {
         let j = i + 2;
         while (j < tokens.length && !(tokens[j].type === 'punct' && (tokens[j].value === ';' || tokens[j].value === '}'))) {
-          if (tokens[j].type === 'punct' && (tokens[j].value === '(' || tokens[j].value === '{' || tokens[j].value === '[')) {
+          if (tokens[j].type === 'punct' && (tokens[j].value === '(' || tokens[j].value === '{' || tokens[j].value === '${' || tokens[j].value === '[')) {
             j = advanceBalancedGroup(tokens, j);
             continue;
           }
@@ -577,7 +578,7 @@ function collectFunctionDefs(tokens) {
           if (endIdx > eqIdx + 1 && isAsiStatementBreak(tokens[endIdx - 1], tokens[endIdx])) {
             break;
           }
-          if (tokens[endIdx].type === 'punct' && (tokens[endIdx].value === '(' || tokens[endIdx].value === '{' || tokens[endIdx].value === '[')) {
+          if (tokens[endIdx].type === 'punct' && (tokens[endIdx].value === '(' || tokens[endIdx].value === '{' || tokens[endIdx].value === '${' || tokens[endIdx].value === '[')) {
             const afterGroup = advanceBalancedGroup(tokens, endIdx);
             const wasBlock = tokens[endIdx].value === '{';
             endIdx = afterGroup;

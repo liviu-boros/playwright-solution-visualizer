@@ -197,6 +197,16 @@ function scanJsTs(src, options = {}) {
 
       if (hitInterpolation) {
         pushSpan('template_part', partStart, i - 2);
+        if (i - 2 > partStart) {
+          pushToken({
+            type: 'template_middle',
+            value: src.slice(partStart, i - 2),
+            raw: src.slice(partStart, i - 2),
+            start: partStart,
+            end: i - 2,
+            line: partStartLine
+          });
+        }
         pushToken({ type: 'punct', value: '${', raw: '${', start: i - 2, end: i, line });
         state.braceDepth = 1;
       } else {

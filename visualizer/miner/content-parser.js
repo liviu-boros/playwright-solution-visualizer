@@ -24,7 +24,7 @@ function isCallbackArgument(argTokens) {
   for (let k = i; k < argTokens.length; k++) {
     const t = argTokens[k];
     if (t.type === 'punct') {
-      if (t.value === '(' || t.value === '{' || t.value === '[') {
+      if (t.value === '(' || t.value === '{' || t.value === '${' || t.value === '[') {
         k = advanceBalancedGroup(argTokens, k) - 1;
         continue;
       }
@@ -35,11 +35,66 @@ function isCallbackArgument(argTokens) {
 }
 
 /**
+ * Checks whether an argument token slice represents a single template literal containing `${...}` interpolation.
+ * @param {Array<object>} argTokens
+ * @returns {boolean}
+ */
+function isInterpolatedTemplateLiteral(argTokens) {
+  if (!argTokens || argTokens.length < 2) return false;
+  if (argTokens[0].type !== 'template_start' || argTokens[argTokens.length - 1].type !== 'template_end') {
+    return false;
+  }
+  let depth = 0;
+  for (let i = 0; i < argTokens.length; i++) {
+    const tok = argTokens[i];
+    if (tok.type === 'template_start') {
+      depth++;
+    } else if (tok.type === 'template_end') {
+      depth--;
+      if (depth < 0) return false;
+      if (depth === 0 && i < argTokens.length - 1) return false;
+    }
+  }
+  return depth === 0;
+}
+
+/**
+ * Extracts a Playwright test title from a first-argument token slice (string, plain template, or interpolated template).
+ * @param {Array<object>} firstArg
+ * @param {string} [content='']
+ * @returns {string|null}
+ */
+function extractTestTitle(firstArg, content = '') {
+  if (!firstArg || firstArg.length === 0) return null;
+
+  if (firstArg.length === 1 && (firstArg[0].type === 'string' || firstArg[0].type === 'template_full')) {
+    return firstArg[0].value.trim();
+  }
+
+  if (isInterpolatedTemplateLiteral(firstArg)) {
+    const first = firstArg[0];
+    const last = firstArg[firstArg.length - 1];
+    let raw = '';
+    if (typeof content === 'string' && content.length > 0 && typeof first.start === 'number' && typeof last.end === 'number') {
+      raw = content.slice(first.start, last.end);
+    } else {
+      raw = firstArg.map(tok => (tok.raw !== undefined ? tok.raw : tok.value)).join('');
+    }
+    const startOffset = raw.startsWith('`') ? 1 : 0;
+    const endOffset = raw.endsWith('`') ? raw.length - 1 : raw.length;
+    return raw.slice(startOffset, endOffset).trim();
+  }
+
+  return null;
+}
+
+/**
  * Extracts Playwright test declarations while ignoring `test.skip`/`fixme`/`fail`/`slow` annotation calls without callbacks.
  * @param {Array<object>} tokens
+ * @param {string} [content='']
  * @returns {Array<{ name: string }>}
  */
-function extractPlaywrightTests(tokens) {
+function extractPlaywrightTests(tokens, content = '') {
   const items = [];
 
   for (let i = 0; i < tokens.length; i++) {
@@ -68,15 +123,13 @@ function extractPlaywrightTests(tokens) {
     const args = splitTopLevelCommas(tokens, callParenIdx + 1, closeParenIdx);
     if (args.length < 2) continue;
 
-    const firstArg = args[0];
-    if (firstArg.length !== 1 || (firstArg[0].type !== 'string' && firstArg[0].type !== 'template_full')) {
-      continue;
-    }
+    const title = extractTestTitle(args[0], content);
+    if (title === null) continue;
 
     const hasCallback = args.slice(1).some(isCallbackArgument);
     if (!hasCallback) continue;
 
-    items.push({ name: firstArg[0].value.trim() });
+    items.push({ name: title });
   }
 
   return items;
@@ -248,7 +301,7 @@ function parseContent(filePathOrContent, type, optionalContent = null) {
 
   if (type === 'test') {
     const { tokens } = scanJsTs(content, { collectTokens: true, collectSpans: false });
-    return extractPlaywrightTests(tokens);
+    return extractPlaywrightTests(tokens, content);
   }
 
   const sanitizedContent = stripCommentsSafe(content);
@@ -295,6 +348,8 @@ function parseContent(filePathOrContent, type, optionalContent = null) {
 
 module.exports = {
   isCallbackArgument,
+  isInterpolatedTemplateLiteral,
+  extractTestTitle,
   extractPlaywrightTests,
   findClassBodyStart,
   parseAndPushMethod,

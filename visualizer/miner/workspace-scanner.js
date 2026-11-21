@@ -180,6 +180,33 @@ function getFiles(sectionDir, allowedSubfolders, sectionType) {
 }
 
 /**
+ * Builds a lowercase tag ordering map indexed by configuration tag declaration order.
+ * @param {Array<object>|undefined} configTags
+ * @param {Map<string, object>|undefined} tagMap
+ * @returns {Map<string, number>}
+ */
+function buildTagOrderMap(configTags, tagMap) {
+  const orderMap = new Map();
+  const ordered = (Array.isArray(configTags) && configTags.length > 0)
+    ? configTags
+    : (tagMap ? Array.from(tagMap.values()) : []);
+
+  ordered.forEach((tag, idx) => {
+    if (tag && tag.displayName) {
+      const key = tag.displayName.toLowerCase();
+      if (!orderMap.has(key)) orderMap.set(key, idx);
+    }
+  });
+  ordered.forEach((tag, idx) => {
+    if (tag && tag.name) {
+      const key = tag.name.toLowerCase();
+      if (!orderMap.has(key)) orderMap.set(key, idx);
+    }
+  });
+  return orderMap;
+}
+
+/**
  * Crawls configured workspace sections to build lanes, module cards, test metrics, and skip diagnostics.
  */
 class WorkspaceScanner {
@@ -200,6 +227,8 @@ class WorkspaceScanner {
     this.config = config;
     /** @type {Map<string, object>} */
     this.tagMap = tagMap;
+    /** @type {Map<string, number>} */
+    this.tagOrderMap = buildTagOrderMap(config && config.tags, tagMap);
     /** @type {import('./module-resolver').ModuleResolver} */
     this.moduleResolver = moduleResolver;
     /** @type {import('./spec-resolver').SpecDependencyResolver} */
@@ -283,7 +312,7 @@ class WorkspaceScanner {
         itemType: section.type
       };
 
-      const { groupKey, laneBadges } = this.buildModuleLaneGrouping(moduleId, fileTags, subfolderLabel);
+      const { groupKey, laneBadges } = this.buildModuleLaneGrouping(fileTags, subfolderLabel);
       if (!laneMap.has(groupKey)) {
         laneMap.set(groupKey, {
           laneBadges,
@@ -306,7 +335,21 @@ class WorkspaceScanner {
   }
 
   /**
-   * Validates tag prefixes, checks section `allowUntagged` policy, and computes display title.
+   * Returns a new array of tag display names ordered deterministically by config tag order with lexical fallback.
+   * @param {Array<string>} tags
+   * @returns {Array<string>}
+   */
+  sortTags(tags) {
+    return (tags || []).slice().sort((a, b) => {
+      const idxA = this.tagOrderMap.has(a.toLowerCase()) ? this.tagOrderMap.get(a.toLowerCase()) : Number.MAX_SAFE_INTEGER;
+      const idxB = this.tagOrderMap.has(b.toLowerCase()) ? this.tagOrderMap.get(b.toLowerCase()) : Number.MAX_SAFE_INTEGER;
+      if (idxA !== idxB) return idxA - idxB;
+      return a.localeCompare(b);
+    });
+  }
+
+  /**
+   * Validates tag prefixes, checks section `allowUntagged` policy, and computes canonical tag order and display title.
    * @param {string} cleanBaseName
    * @param {string} filePath
    * @param {string} moduleId
@@ -325,12 +368,17 @@ class WorkspaceScanner {
     }
 
     const fileTags = [];
+    const seenTags = new Set();
     let tokenIndex = 0;
 
     while (tokenIndex < tokens.length) {
       const potentialTag = tokens[tokenIndex].toLowerCase();
       if (this.tagMap.has(potentialTag)) {
-        fileTags.push(this.tagMap.get(potentialTag).displayName);
+        const displayName = this.tagMap.get(potentialTag).displayName;
+        if (!seenTags.has(displayName)) {
+          seenTags.add(displayName);
+          fileTags.push(displayName);
+        }
         tokenIndex++;
       } else {
         break;
@@ -346,13 +394,13 @@ class WorkspaceScanner {
 
     const remainingName = tokens.slice(tokenIndex).join('-');
     return {
-      fileTags,
+      fileTags: this.sortTags(fileTags),
       visualTitle: toTitleCase(remainingName || cleanBaseName)
     };
   }
 
   /**
-   * Aggregates test block counts and per-file metrics keyed by tag combination.
+   * Aggregates test block counts and per-file metrics keyed by canonical tag combination.
    * @param {Map<string, object>} metricsMap
    * @param {string} moduleId
    * @param {string} fileName
@@ -362,10 +410,10 @@ class WorkspaceScanner {
    * @param {number} itemCount
    */
   recordTestMetric(metricsMap, moduleId, fileName, visualTitle, fileTags, subfolderLabel, itemCount) {
-    const categoryTags = fileTags.map(t => {
+    const categoryTags = this.sortTags(fileTags.map(t => {
       const found = this.tagMap.get(t.toLowerCase());
       return found ? found.displayName : t;
-    });
+    }));
     const categoryKey = categoryTags.join('::');
     const categoryLabel = categoryTags.join(' ');
 
@@ -387,36 +435,18 @@ class WorkspaceScanner {
   }
 
   /**
-   * Computes lane badge metadata and grouping key for a module card.
-   * @param {string} moduleId
+   * Computes canonical lane badge metadata and badge-only grouping key for a module card.
    * @param {Array<string>} fileTags
    * @param {string|null} subfolderLabel
    * @returns {{ groupKey: string, laneBadges: Array<{ type: string, value: string }> }}
    */
-  buildModuleLaneGrouping(moduleId, fileTags, subfolderLabel) {
-    const laneBadges = [];
-    let groupKey = '';
-
-    if (fileTags.length > 1) {
-      fileTags.forEach(tag => {
-        laneBadges.push({ type: 'tag', value: tag });
-      });
-      if (subfolderLabel) {
-        laneBadges.push({ type: 'subfolder', value: subfolderLabel });
-      }
-      groupKey = `multi:${moduleId}|${laneBadges.map(b => `${b.type}:${b.value}`).join('|')}`;
-    } else if (fileTags.length === 1) {
-      laneBadges.push({ type: 'tag', value: fileTags[0] });
-      if (subfolderLabel) {
-        laneBadges.push({ type: 'subfolder', value: subfolderLabel });
-      }
-      groupKey = laneBadges.map(b => `${b.type}:${b.value}`).join('|');
-    } else {
-      if (subfolderLabel) {
-        laneBadges.push({ type: 'subfolder', value: subfolderLabel });
-      }
-      groupKey = laneBadges.map(b => `${b.type}:${b.value}`).join('|') || 'empty';
+  buildModuleLaneGrouping(fileTags, subfolderLabel) {
+    const orderedTags = this.sortTags(fileTags);
+    const laneBadges = orderedTags.map(tag => ({ type: 'tag', value: tag }));
+    if (subfolderLabel) {
+      laneBadges.push({ type: 'subfolder', value: subfolderLabel });
     }
+    const groupKey = laneBadges.map(b => `${b.type}:${b.value}`).join('|') || 'empty';
 
     return { groupKey, laneBadges };
   }
@@ -430,5 +460,6 @@ module.exports = {
   collectFiles,
   indexUnconfiguredSectionFiles,
   getFiles,
+  buildTagOrderMap,
   WorkspaceScanner
 };

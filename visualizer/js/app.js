@@ -362,7 +362,7 @@ function computeTestMetrics(section) {
     if (!Array.isArray(metric.files)) metric.files = [];
 
     const metricTags = (metric.tags && metric.tags.length > 0) ? metric.tags : [metric.label];
-    const metricTagKey = metricTags.slice().sort().map(t => t.toLowerCase()).join('::');
+    const metricTagKey = metricTags.map(t => t.toLowerCase()).sort().join('::');
 
     for (const lane of section.lanes || []) {
       const laneTags = (lane.laneBadges || [])
