@@ -25,23 +25,36 @@
 
 /* Select header label */
 .panel-select-label {
-  font-size: var(--panel-label-font-size);
+  font-size: var(--font-size-badge-text);
   font-weight: var(--weight-bold);
   text-transform: uppercase;
   letter-spacing: 0.5px;
-  color: var(--panel-label-color);
+  color: var(--color-text-muted);
   white-space: nowrap;
 }
 
 /* Central comparison badge */
 .panel-compare-badge {
-  font-size: var(--compare-badge-font-size);
+  font-size: var(--font-size-badge-text);
   font-weight: var(--weight-black);
   text-transform: uppercase;
   letter-spacing: 1px;
   color: var(--color-text-accent);
-  background: color-mix(in srgb, var(--color-accent-blue) 30%, var(--color-bg-surface-dark));
   border-radius: var(--radius-badge);
-  padding: 4px 8px;
   user-select: none;
+}
+
+/* Vertical divider between control panel groups */
+.panel-separator {
+  width: 1px;
+  height: 24px;
+  background: var(--color-border-divider);
+  flex-shrink: 0;
+}
+
+/* Toggle container wrapper */
+.panel-toggle-wrapper {
+  display: flex;
+  align-items: center;
+  gap: 12px;
 }

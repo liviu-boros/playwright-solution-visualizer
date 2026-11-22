@@ -3,9 +3,11 @@ export function initPanZoom(viewportId, canvasId) {
   const viewport = document.getElementById(viewportId);
   const canvas = document.getElementById(canvasId);
 
+  const initialPanX = 100;
+  const initialPanY = 100;
   let zoom = 1;
-  let panX = 100;
-  let panY = 100;
+  let panX = initialPanX;
+  let panY = initialPanY;
   let isDragging = false;
   let startX, startY;
 
@@ -68,4 +70,15 @@ export function initPanZoom(viewportId, canvasId) {
   window.addEventListener('mouseleave', stopDragging);
 
   applyTransform();
+
+  return {
+    resetPan() {
+      panX = initialPanX;
+      panY = initialPanY;
+      applyTransform();
+    },
+    getTransform() {
+      return { panX, panY, zoom };
+    }
+  };
 }

@@ -16,5 +16,8 @@
   "type": "commonjs",
   "dependencies": {
     "@playwright/test": "^1.61.1"
+  },
+  "devDependencies": {
+    "@types/node": "^26.6.6"
   }
 }

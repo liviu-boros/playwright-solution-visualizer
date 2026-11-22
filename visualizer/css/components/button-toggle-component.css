@@ -1,0 +1,11 @@
+/* Segmented button toggle group container */
+.button-toggle {
+  display: inline-flex;
+  align-items: center;
+  gap: 2px;
+  padding: 2px;
+  background: var(--color-bg-surface-dark);
+  border: 1px solid var(--color-border-input);
+  border-radius: var(--radius-items);
+  box-sizing: border-box;
+}

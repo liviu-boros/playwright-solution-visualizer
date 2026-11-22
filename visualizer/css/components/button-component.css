@@ -1,0 +1,60 @@
+/* Reusable button component */
+.btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 6px;
+  padding: 8px 12px;
+  border-radius: var(--radius-items);
+  font-family: var(--font-family-system);
+  font-size: var(--font-size-subtitle);
+  line-height: var(--line-height-subtitle);
+  font-weight: var(--weight-semibold);
+  color: var(--color-text-muted);
+  background: var(--color-bg-surface-dark);
+  border: none;
+  outline: none;
+  cursor: pointer;
+  white-space: nowrap;
+  user-select: none;
+  box-sizing: border-box;
+}
+
+.btn:hover {
+  color: var(--color-text-main);
+  background: color-mix(in srgb, var(--color-accent-blue) 40%, var(--color-bg-surface-dark));
+}
+
+.btn-label {
+  white-space: nowrap;
+}
+
+/* Segmented button modifier for use inside button toggle groups */
+.btn--segmented {
+  padding: 6px 12px;
+  border-radius: calc(var(--radius-items) - 2px);
+  background: transparent;
+}
+
+/* Active toggle button state */
+.btn--active {
+  color: var(--color-text-accent);
+  background: color-mix(in srgb, var(--color-accent-blue) 25%, var(--color-bg-surface-dark));
+  font-weight: var(--weight-semibold);
+}
+
+.btn--active:hover {
+  color: var(--color-text-accent);
+  background: color-mix(in srgb, var(--color-accent-blue) 25%, var(--color-bg-surface-dark));
+}
+
+/* Disabled button state */
+.btn--disabled {
+  opacity: 0.35;
+  cursor: not-allowed;
+}
+
+.btn--disabled:hover {
+  color: var(--color-text-muted);
+  background: var(--color-bg-surface-dark);
+}

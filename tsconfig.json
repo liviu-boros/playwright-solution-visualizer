@@ -15,8 +15,10 @@
       "@workflows": ["./workflows/index.ts"]
     },
     "strict": true,
+    "allowJs": true,
     "esModuleInterop": true,
-    "skipLibCheck": true
+    "skipLibCheck": true,
+    "types": ["node"]
   },
   "include": [
     "api/**/*",

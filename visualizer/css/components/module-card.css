@@ -3,7 +3,7 @@
   --card-bg-surface: var(--color-bg-surface);
   --card-outline-color: var(--color-border-subtle);
   --card-glow-color: var(--color-accent-blue);
-  --card-glow-alpha: 10%;
+  --card-glow-alpha: 5%;
   width: max-content;
   min-width: max-content;
   padding: 24px;
@@ -28,7 +28,7 @@
     --card-outline-color: color-mix(in srgb, var(--color-accent-blue) 80%, var(--color-border-subtle));
     --card-bg-surface: var(--color-bg-surface-dark);
     --card-glow-alpha: 5%;
-    outline-width: 1px;
+    outline-width: 2px;
 
     .card-title {
       color: var(--color-text-accent);

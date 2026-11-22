@@ -8,6 +8,8 @@
 /* Controls & connection overlays */
 @import url('components/control-panel.css');
 @import url('components/select-component.css');
+@import url('components/button-component.css');
+@import url('components/button-toggle-component.css');
 @import url('components/connections-layer.css');
 
 /* Section & anchor hierarchy */

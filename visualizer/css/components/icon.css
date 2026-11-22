@@ -1,29 +1,29 @@
 /* Base hardware-native vector icon */
 .icon {
   display: inline-block;
-  width: var(--icon-size-md);
-  height: var(--icon-size-md);
+  width: 20px;
+  height: 20px;
   flex-shrink: 0;
   fill: currentColor;
   vertical-align: middle;
 
   /* Small icon variant */
   &.icon--sm {
-    width: var(--icon-size-sm);
-    height: var(--icon-size-sm);
+    width: 16px;
+    height: 16px;
   }
 
   /* Large icon for section anchor */
   &.icon--lg {
-    width: var(--icon-size-lg);
-    height: var(--icon-size-lg);
+    width: 48px;
+    height: 48px;
     fill: var(--color-text-main);
   }
 
   /* Flag status icon */
   &.icon--flag {
-    width: var(--flag-icon-size);
-    height: var(--flag-icon-size);
+    width: 16px;
+    height: 16px;
     color: var(--color-text-main);
     fill: currentColor;
   }
@@ -39,8 +39,8 @@
   display: inline-flex;
   align-items: center;
   justify-content: center;
-  width: var(--icon-size-md);
-  height: var(--icon-size-md);
+  width: 20px;
+  height: 20px;
   flex-shrink: 0;
   font-family: var(--font-family-mono);
   font-size: var(--font-size-subtitle);
@@ -51,7 +51,7 @@
 
 /* Dropdown arrow symbol */
 .custom-select-arrow {
-  font-size: var(--select-arrow-size);
-  color: var(--select-arrow-color);
+  font-size: 12px;
+  color: var(--color-text-muted);
 }
 

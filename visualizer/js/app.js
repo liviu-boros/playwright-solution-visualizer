@@ -1,11 +1,16 @@
 import { SectionBlock, getSectionType } from './components/SectionBlock.js';
 import { initPanZoom } from './pan-zoom.js';
 import { SelectComponent } from './components/SelectComponent.js';
+import { ButtonToggleComponent } from './components/ButtonToggleComponent.js';
 import { initIconManager } from './icon-manager.js';
 import { attachPresentationNotes } from './presentation-notes.js';
 
 let leftSelectComponent = null;
 let rightSelectComponent = null;
+let displayModeToggleComponent = null;
+let displayMode = 'complex';
+let currentDiffedData = null;
+let panZoomController = null;
 let activeSourceCard = null;
 let activeDependencyCards = [];
 let activeReferenceCards = [];
@@ -710,8 +715,17 @@ function setDependencyHighlighting(sourceCard) {
   }
 }
 
+// Filters dataset sections based on active display mode ('complex' | 'simple')
+function filterSectionsForDisplayMode(data, config, mode = 'complex') {
+  if (!Array.isArray(data)) return [];
+  if (mode !== 'simple') return data;
+  return data.filter(section => getSectionType(section, config) === 'test');
+}
+
 // Injects section blocks into the DOM canvas
-async function renderCanvas(data, config) {
+async function renderCanvas(data, config, mode = displayMode) {
+  clearDependencyHighlighting();
+
   const canvas = document.getElementById('canvas');
   canvas.innerHTML = '';
 
@@ -720,7 +734,8 @@ async function renderCanvas(data, config) {
   connectionsLayer.classList.add('connections-layer');
   canvas.appendChild(connectionsLayer);
 
-  for (const section of data) {
+  const visibleSections = filterSectionsForDisplayMode(data, config, mode);
+  for (const section of visibleSections) {
     const hasModules = section.lanes.some(lane => lane.modules.length > 0);
     if (!hasModules) continue;
     canvas.insertAdjacentHTML('beforeend', SectionBlock(section, config));
@@ -814,7 +829,8 @@ async function init() {
       }
 
       const diffedData = diffSnapshots(targetData, baselineData, config);
-      await renderCanvas(diffedData, config);
+      currentDiffedData = diffedData;
+      await renderCanvas(diffedData, config, displayMode);
     };
 
     leftSelectComponent = new SelectComponent({
@@ -851,8 +867,30 @@ async function init() {
     rightContainer.innerHTML = '';
     rightContainer.appendChild(rightSelectComponent.getElement());
 
+    displayModeToggleComponent = new ButtonToggleComponent({
+      id: 'displayModeToggle',
+      ariaLabel: 'Select visualizer display mode',
+      options: [
+        { value: 'complex', label: 'Complex' },
+        { value: 'simple', label: 'Simple' }
+      ],
+      selectedValue: displayMode,
+      onChange: async (newMode) => {
+        displayMode = newMode;
+        if (currentDiffedData) {
+          await renderCanvas(currentDiffedData, config, displayMode);
+        }
+        panZoomController?.resetPan();
+      }
+    });
+    const toggleContainer = document.getElementById('displayModeToggleContainer');
+    if (toggleContainer) {
+      toggleContainer.innerHTML = '';
+      toggleContainer.appendChild(displayModeToggleComponent.getElement());
+    }
+
     await loadDiffView(leftIndex, rightIndex);
-    initPanZoom('viewport', 'canvas');
+    panZoomController = initPanZoom('viewport', 'canvas');
 
     const viewport = document.getElementById('viewport');
     let mouseDownPos = { x: 0, y: 0 };
@@ -886,4 +924,4 @@ if (typeof document !== 'undefined') {
   document.addEventListener('DOMContentLoaded', init);
 }
 
-export { isModuleMatch, normalizeModuleDiffId, diffSnapshots };
+export { isModuleMatch, normalizeModuleDiffId, diffSnapshots, filterSectionsForDisplayMode };

@@ -17,7 +17,6 @@
   --pr-color-white: #ffffff;
   
   --pr-color-green: #3f8d69;
-  /* --pr-color-blue: #2078ac; */
   --pr-color-blue: #3999E9;
   --pr-color-purple: #7456a8;
   --pr-color-red: #a9565c;
@@ -80,7 +79,7 @@
   --radius-flag: 4px;
   --radius-active: 16px;
 
-  /* Tier 4: Typography & iconography */
+  /* Tier 4: Typography */
   --font-family-system: 'Inter', -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
   --font-family-mono: monospace;
 
@@ -125,46 +124,4 @@
   --weight-semibold: 600;
   --weight-bold: 700;
   --weight-black: 900;
-
-  /* Icon sizing scale */
-  --icon-size-lg: 48px;
-  --icon-size-md: 20px;
-  --icon-size-sm: 16px;
-
-  /* Flag indicator sizing */
-  --flag-container-size: 20px;
-  --flag-icon-size: 16px;
-
-  /* Tier 5: Component-specific bindings */
-  --panel-label-font-size: var(--font-size-badge-text);
-  --panel-label-color: var(--color-text-muted);
-  --compare-badge-font-size: var(--font-size-badge-text);
-
-  /* Select trigger component */
-  --select-font-size: var(--font-size-subtitle);
-  --select-text-color: var(--color-text-main);
-  --select-bg: var(--color-bg-surface-dark);
-  --select-bg-hover: color-mix(in srgb, var(--color-accent-blue) 20%, var(--color-bg-surface-dark));
-  --select-border-color: var(--color-border-input);
-  --select-border-color-hover: var(--color-accent-blue);
-  --select-arrow-size: 12px;
-  --select-arrow-color: var(--color-text-muted);
-  --select-arrow-color-active: var(--color-accent-blue);
-
-  /* Options dropdown menu */
-  --select-dropdown-bg: var(--color-bg-surface-dark);
-  --select-dropdown-border: var(--color-border-panel);
-  --select-option-font-size: var(--font-size-subtitle);
-  --select-option-color: var(--color-text-main);
-  --select-option-divider: color-mix(in srgb, var(--color-text-main) 4%, transparent);
-  --select-option-bg-hover: color-mix(in srgb, var(--color-accent-blue) 40%, transparent);
-  --select-option-color-hover: var(--color-text-main);
-  --select-option-bg-selected: color-mix(in srgb, var(--color-accent-blue) 20%, var(--color-bg-surface-dark));
-  --select-option-color-selected: var(--color-text-accent);
-  --select-option-bg-disabled: color-mix(in srgb, var(--color-bg-surface-dark) 25%, transparent);
-
-  /* Dropdown option badges */
-  --select-badge-font-size: var(--font-size-badge-micro);
-  --select-badge-color: var(--color-text-main);
-  --select-badge-bg: var(--color-bg-surface-dark);
 }
