@@ -1456,6 +1456,330 @@ test.describe('sync-visualizer engine unit & integration tests', () => {
     }
   });
 
+  // Miner Fix #1: Multi-tag files with identical badges share one lane (and diff removed modules land cleanly in it)
+  test('Miner Fix #1: multi-tag files with identical badges share a single lane and diff mode places removed cards in that lane', () => {
+    const { result: baselineRun } = runMockMiner({
+      'pages/taga-tagb-alpha.ts': `export class AlphaPage { open() {} }`,
+      'pages/taga-tagb-beta.ts': `export class BetaPage { close() {} }`,
+      'tests/ui/taga-tagb-01-first.spec.ts': `
+        test('First A', async () => {});
+        test('First B', async () => {});
+      `,
+      'tests/ui/taga-tagb-02-second.spec.ts': `
+        test('Second A', async () => {});
+      `,
+      'tests/ui/taga-tagb-03-third.spec.ts': `
+        test('Third A', async () => {});
+      `,
+      'tests/api/taga-tagb-04-api.spec.ts': `
+        test('Api Multi', async () => {});
+      `,
+      'tests/ui/taga-05-single.spec.ts': `
+        test('Single Tag', async () => {});
+      `
+    });
+
+    const uiModelsSection = baselineRun.dataset.find((s: any) => s.title === 'UI Models');
+    expect(uiModelsSection.lanes.length).toBe(1);
+    expect(uiModelsSection.lanes[0].laneBadges).toEqual([
+      { type: 'tag', value: 'TagA' },
+      { type: 'tag', value: 'TagB' }
+    ]);
+    expect(uiModelsSection.lanes[0].modules.map((m: any) => m.id).sort()).toEqual([
+      'pages/taga-tagb-alpha',
+      'pages/taga-tagb-beta'
+    ]);
+
+    const testsSection = baselineRun.dataset.find((s: any) => s.title === 'Tests');
+    const uiMultiLanes = testsSection.lanes.filter(
+      (l: any) => JSON.stringify(l.laneBadges) === JSON.stringify([
+        { type: 'tag', value: 'TagA' },
+        { type: 'tag', value: 'TagB' },
+        { type: 'subfolder', value: 'UI' }
+      ])
+    );
+    expect(uiMultiLanes.length).toBe(1);
+    expect(uiMultiLanes[0].modules.map((m: any) => m.id).sort()).toEqual([
+      'tests/ui/taga-tagb-01-first.spec',
+      'tests/ui/taga-tagb-02-second.spec',
+      'tests/ui/taga-tagb-03-third.spec'
+    ]);
+
+    // Verify no section contains duplicate lanes with identical badges
+    for (const sec of baselineRun.dataset) {
+      const badgeKeys = sec.lanes.map((l: any) => JSON.stringify(l.laneBadges));
+      expect(new Set(badgeKeys).size).toBe(badgeKeys.length);
+    }
+
+    // Target snapshot: remove 'First B' test from spec 01, remove spec 02, add spec 04 replacement
+    const { result: targetRun } = runMockMiner({
+      'pages/taga-tagb-alpha.ts': `export class AlphaPage { open() {} }`,
+      'pages/taga-tagb-beta.ts': `export class BetaPage { close() {} }`,
+      'tests/ui/taga-tagb-01-first.spec.ts': `
+        test('First A', async () => {});
+      `,
+      'tests/ui/taga-tagb-03-third.spec.ts': `
+        test('Third A', async () => {});
+      `,
+      'tests/ui/taga-tagb-04-replacement.spec.ts': `
+        test('Replacement A', async () => {});
+      `,
+      'tests/api/taga-tagb-04-api.spec.ts': `
+        test('Api Multi', async () => {});
+      `,
+      'tests/ui/taga-05-single.spec.ts': `
+        test('Single Tag', async () => {});
+      `
+    });
+
+    const diffed = diffSnapshots(targetRun.dataset, baselineRun.dataset, {
+      scanConfig: [
+        { name: 'Api Models', dir: './api', type: 'class' },
+        { name: 'Workflows', dir: './workflows', type: 'functions' },
+        { name: 'Components', dir: './components', type: 'class' },
+        { name: 'UI Models', dir: './pages', type: 'class' },
+        { name: 'Tests', dir: './tests', type: 'test' }
+      ]
+    });
+
+    const diffTests = diffed.find((s: any) => s.title === 'Tests');
+    const diffUiMultiLanes = diffTests.lanes.filter(
+      (l: any) => JSON.stringify(l.laneBadges) === JSON.stringify([
+        { type: 'tag', value: 'TagA' },
+        { type: 'tag', value: 'TagB' },
+        { type: 'subfolder', value: 'UI' }
+      ])
+    );
+    expect(diffUiMultiLanes.length).toBe(1);
+
+    const laneMods = diffUiMultiLanes[0].modules;
+    const modById = new Map<string, any>(laneMods.map((m: any) => [m.id, m]));
+    expect(modById.size).toBe(4);
+    expect(modById.get('tests/ui/taga-tagb-01-first.spec')?.status).toBeUndefined();
+    expect(modById.get('tests/ui/taga-tagb-01-first.spec')?.items).toContainEqual({ name: 'First B', status: 'removed' });
+    expect(modById.get('tests/ui/taga-tagb-03-third.spec')?.status).toBeUndefined();
+    expect(modById.get('tests/ui/taga-tagb-04-replacement.spec')?.status).toBe('new');
+    expect(modById.get('tests/ui/taga-tagb-02-second.spec')?.status).toBe('removed');
+  });
+
+  // Miner Fix #2: Tags are sorted into canonical config order regardless of filename prefix order
+  test('Miner Fix #2: lane badges, lane grouping keys, module tags, and test metrics are independent of filename tag order', () => {
+    const { result } = runMockMiner(
+      {
+        'tests/ui/taga-tagb-01-first.spec.ts': `test('Alpha', async () => {});`,
+        'tests/ui/tagb-taga-02-second.spec.ts': `test('Beta', async () => {});`,
+        'tests/ui/tagb-tagc-03-third.spec.ts': `test('Gamma', async () => {});`,
+        'tests/ui/tagc-tagb-04-fourth.spec.ts': `test('Delta', async () => {});`,
+        'pages/tagb-tagc-taga-portal.ts': `export class PortalOne {}`,
+        'pages/taga-tagb-tagc-portal-two.ts': `export class PortalTwo {}`,
+        'pages/tagc-tagc-dedup.ts': `export class DedupPage {}`
+      },
+      {
+        tags: [
+          { name: 'tagc', displayName: 'TagC', icon: 'tag-C.svg' },
+          { name: 'taga', displayName: 'TagA', icon: 'tag-A.svg' },
+          { name: 'tagb', displayName: 'TagB', icon: 'tag-B.svg' }
+        ]
+      }
+    );
+
+    const testsSection = result.dataset.find((s: any) => s.title === 'Tests');
+    expect(testsSection.lanes.length).toBe(2);
+
+    const tagATagBLane = testsSection.lanes.find(
+      (l: any) => JSON.stringify(l.laneBadges) === JSON.stringify([
+        { type: 'tag', value: 'TagA' },
+        { type: 'tag', value: 'TagB' },
+        { type: 'subfolder', value: 'UI' }
+      ])
+    );
+    expect(tagATagBLane).toBeDefined();
+    expect(tagATagBLane.modules.map((m: any) => m.id).sort()).toEqual([
+      'tests/ui/taga-tagb-01-first.spec',
+      'tests/ui/tagb-taga-02-second.spec'
+    ]);
+    for (const mod of tagATagBLane.modules) {
+      expect(mod.tags).toEqual(['TagA', 'TagB']);
+    }
+
+    // Config order places TagC before TagB even though 'TagB' sorts before 'TagC' alphabetically
+    const tagCTagBLane = testsSection.lanes.find(
+      (l: any) => JSON.stringify(l.laneBadges) === JSON.stringify([
+        { type: 'tag', value: 'TagC' },
+        { type: 'tag', value: 'TagB' },
+        { type: 'subfolder', value: 'UI' }
+      ])
+    );
+    expect(tagCTagBLane).toBeDefined();
+    expect(tagCTagBLane.modules.map((m: any) => m.id).sort()).toEqual([
+      'tests/ui/tagb-tagc-03-third.spec',
+      'tests/ui/tagc-tagb-04-fourth.spec'
+    ]);
+    for (const mod of tagCTagBLane.modules) {
+      expect(mod.tags).toEqual(['TagC', 'TagB']);
+    }
+
+    // Metrics also collapse into one entry per canonical tag set
+    expect(testsSection.metrics.length).toBe(2);
+    const tagATagBMetric = testsSection.metrics.find((m: any) => m.label === 'TagA TagB');
+    const tagCTagBMetric = testsSection.metrics.find((m: any) => m.label === 'TagC TagB');
+    expect(tagATagBMetric?.count).toBe(2);
+    expect(tagCTagBMetric?.count).toBe(2);
+
+    // Three-tag pages in different orders share one lane in config order [TagC, TagA, TagB], and duplicate tag prefix deduplicates
+    const pagesSection = result.dataset.find((s: any) => s.title === 'UI Models');
+    expect(pagesSection.lanes.length).toBe(2);
+    const threeTagLane = pagesSection.lanes.find(
+      (l: any) => JSON.stringify(l.laneBadges) === JSON.stringify([
+        { type: 'tag', value: 'TagC' },
+        { type: 'tag', value: 'TagA' },
+        { type: 'tag', value: 'TagB' }
+      ])
+    );
+    expect(threeTagLane).toBeDefined();
+    expect(threeTagLane.modules.map((m: any) => m.id).sort()).toEqual([
+      'pages/taga-tagb-tagc-portal-two',
+      'pages/tagb-tagc-taga-portal'
+    ]);
+
+    const dedupLane = pagesSection.lanes.find(
+      (l: any) => JSON.stringify(l.laneBadges) === JSON.stringify([{ type: 'tag', value: 'TagC' }])
+    );
+    expect(dedupLane?.modules.map((m: any) => m.id)).toEqual(['pages/tagc-tagc-dedup']);
+  });
+
+  // Frontend diff metrics guard: computeTestMetrics lowercases tags before sorting so mixed-case tag sets match lanes
+  test('Frontend diff metrics: computeTestMetrics matches mixed-case multi-tag lanes and counts removed baseline specs', () => {
+    const mixedCaseTags = [
+      { name: 'taga', displayName: 'tagA', icon: 'tag-A.svg' },
+      { name: 'tagc', displayName: 'TagC', icon: 'tag-C.svg' }
+    ];
+
+    const { result: baselineRun } = runMockMiner(
+      {
+        'tests/ui/taga-tagc-01-keep.spec.ts': `
+          test('Keep 1', async () => {});
+          test('Keep 2', async () => {});
+        `,
+        'tests/ui/taga-tagc-02-deleted.spec.ts': `
+          test('Deleted 1', async () => {});
+          test('Deleted 2', async () => {});
+          test('Deleted 3', async () => {});
+        `
+      },
+      { tags: mixedCaseTags }
+    );
+
+    const { result: targetRun } = runMockMiner(
+      {
+        'tests/ui/taga-tagc-01-keep.spec.ts': `
+          test('Keep 1', async () => {});
+          test('Keep 2', async () => {});
+        `
+      },
+      { tags: mixedCaseTags }
+    );
+
+    const diffed = diffSnapshots(targetRun.dataset, baselineRun.dataset, {
+      tags: mixedCaseTags,
+      scanConfig: [
+        { name: 'Api Models', dir: './api', type: 'class' },
+        { name: 'Workflows', dir: './workflows', type: 'functions' },
+        { name: 'Components', dir: './components', type: 'class' },
+        { name: 'UI Models', dir: './pages', type: 'class' },
+        { name: 'Tests', dir: './tests', type: 'test' }
+      ]
+    });
+
+    const diffTests = diffed.find((s: any) => s.title === 'Tests');
+    const metric = diffTests.metrics.find((m: any) => m.label === 'tagA TagC');
+    expect(metric).toBeDefined();
+    expect(metric.count).toBe(2);
+    expect(metric.removed).toBe(3);
+    expect(diffTests.totalCount).toBe(2);
+    expect(diffTests.totalRemoved).toBe(3);
+
+    const deletedFileMetric = metric.files.find((f: any) => f.id === 'tests/ui/taga-tagc-02-deleted.spec');
+    expect(deletedFileMetric).toBeDefined();
+    expect(deletedFileMetric.count).toBe(0);
+    expect(deletedFileMetric.removed).toBe(3);
+  });
+
+  // Miner Fix #3: Interpolated template literal test titles are kept as raw template text
+  test('Miner Fix #3: preserves raw template text for interpolated template literal test titles and balances ${...} braces', () => {
+    const { result } = runMockMiner({
+      'pages/taga-search.ts': `export class SearchPage { inputSelector = '#q'; }`,
+      'pages/tagb-results.ts': `export class ResultsPage { open() {} }`,
+      'tests/fixtures/app.fixture.ts': `
+        import { SearchPage } from '../../pages/taga-search';
+        import { ResultsPage } from '../../pages/tagb-results';
+        export const test = base.extend({
+          app: async ({}, use) => {
+            await use({
+              search: new SearchPage(),
+              results: new ResultsPage()
+            });
+          }
+        });
+      `,
+      'tests/ui/taga-parameterized.spec.ts': `
+        import { test } from '../fixtures/app.fixture';
+
+        for (const row of cases) {
+          test(\`case \${name}\`, async ({ app, page }) => {
+            await page.locator(\`\${app.search.inputSelector}\`).fill(name);
+            await app.results.open();
+          });
+
+          test(\`row \${row.id}: \${row.label}\`, async () => {});
+          test(\`computed \${fn(1, 2)}\`, async () => {});
+          test(\`object \${ { label: 'a', id: 1 }.label }\`, async () => {});
+          test(\`nested \${\`inner \${x}\`}\`, async () => {});
+          test(\`comma \${a, b}\`, async () => {});
+          test(\`tagged \${name}\`, { tag: '@smoke' }, async () => {});
+          test.only(\`only \${name}\`, async () => {});
+          test.skip(\`skip \${name}\`, async () => {});
+          test.fixme(\`fixme \${name}\`, async () => {});
+          test.fail(\`fail \${name}\`, async () => {});
+          test.slow(\`slow \${name}\`, async () => {});
+          test(\`plain template\`, async () => {});
+
+          // Should still be ignored (no callback or non-literal expression)
+          test.skip(\`annotation only \${flag}\`);
+          test.fixme(\`annotation \${id}\`, 'not a callback');
+          test.skip(\`annotation arrow arg \${id}\`, \`not cb \${x => x}\`);
+          test(dynamicTitle, async () => {});
+          test(\`part1 \${a}\` + \`part2 \${b}\`, async () => {});
+        }
+      `
+    });
+
+    const testsSection = result.dataset.find((s: any) => s.title === 'Tests');
+    const mod = testsSection.lanes[0].modules[0];
+    const names = mod.items.map((i: any) => i.name);
+
+    expect(names).toEqual([
+      'case ${name}',
+      'row ${row.id}: ${row.label}',
+      'computed ${fn(1, 2)}',
+      "object ${ { label: 'a', id: 1 }.label }",
+      'nested ${`inner ${x}`}',
+      'comma ${a, b}',
+      'tagged ${name}',
+      'only ${name}',
+      'skip ${name}',
+      'fixme ${name}',
+      'fail ${name}',
+      'slow ${name}',
+      'plain template'
+    ]);
+    expect(testsSection.metrics[0].count).toBe(13);
+
+    // Balanced ${...} inside test body also preserves subsequent fixture dependency resolution
+    expect(mod.imports).toContain('pages/taga-search');
+    expect(mod.imports).toContain('pages/tagb-results');
+  });
+
   // Full regression test on the real codebase
   test('sync-visualizer executes on full repository codebase and mines all 101 modules across 5 sections without errors', () => {
     const tempDir = path.resolve(__dirname, '../../scratch/full_run_' + Date.now());
@@ -1485,6 +1809,12 @@ test.describe('sync-visualizer engine unit & integration tests', () => {
 
     const sectionTitles = dataset.map((s: any) => s.title);
     expect(sectionTitles).toEqual(['Api Models', 'Workflows', 'Components', 'UI Models', 'Tests']);
+
+    // Every section has strictly unique lane badge combinations
+    for (const sec of dataset) {
+      const badgeKeys = sec.lanes.map((l: any) => JSON.stringify(l.laneBadges));
+      expect(new Set(badgeKeys).size).toBe(badgeKeys.length);
+    }
 
     const allMods = dataset.flatMap((s: any) => s.lanes.flatMap((l: any) => l.modules));
     expect(allMods.length).toBe(101);
